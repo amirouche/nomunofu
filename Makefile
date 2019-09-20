@@ -52,7 +52,7 @@ repl: ## repl for the win
 
 check: ## run tests using the library test runner (arew specific)
 	mkdir -p profile
-	./run --program make-check.scm
+	./venv scheme --program make-check.scm
 
 todo: ## Things that should be done
 	@grep -nR --color=always TODO src/
