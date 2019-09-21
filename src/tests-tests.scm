@@ -1,11 +1,11 @@
 (library (tests-tests)
 
-  (export smoke-test)
+  (export test-0)
 
   (import (chezscheme)
           (tests))
 
   (begin
 
-    (define smoke-test
+    (define test-0
       (test #t #t))))
