@@ -11,7 +11,7 @@ including other record types and Scheme's predefined types.
 
 ### Reference
 
-#### `(define-record-type ...)`
+#### `(define-record-type ...)` syntax
 
 The following:
 
