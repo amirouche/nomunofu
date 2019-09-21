@@ -30,7 +30,7 @@
         (let ((program `(begin
                           (import ,library-name)
                           (map cons ',exports (list ,@exports)))))
-          (eval program env))))))
+          (reverse (eval program env)))))))
 
 (define (run-one pair)
   (display "*** ")
@@ -39,10 +39,10 @@
   (guard (x (else (display-condition x) (newline)))
     (let ((result ((cdr pair))))
       (when (failure? result)
-        (display "*** expected: ")
+        (display "**** expected: ")
         (write (failure-expected result))
         (newline)
-        (display "*** actual: ")
+        (display "**** actual: ")
         (write (failure-actual result))
         (newline)))))
 
