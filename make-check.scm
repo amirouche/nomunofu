@@ -64,6 +64,7 @@
           (run "./src/tests-tests.scm")
           (run "./src/srfi/srfi-1-tests.scm")
           (run "./src/srfi/srfi-2-tests.scm")
+          (run "./src/srfi/srfi-4-tests.scm")
           )
 
         (for-each run args))))
