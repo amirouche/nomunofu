@@ -19,6 +19,7 @@ SOURCES = 					\
 	src/srfi/srfi-29.md			\
 	src/srfi/srfi-31.md			\
 	src/srfi/srfi-34.md			\
+	src/srfi/srfi-35.md			\
 
 help: ## This help.
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST) | sort
