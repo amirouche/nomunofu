@@ -9,29 +9,29 @@ Various libraries for Chez Scheme (R7RS, SRFI and more...)
 ## Status
 
 
-- [x] SRFI-1: ???
-- [x] SRFI-2: ???
-- [x] SRFI-4: ???
-- [x] SRFI-5: ???
-- [x] SRFI-6: ???
-- [x] SRFI-8: ???
-- [x] SRFI-9: ???
-- [x] SRFI-11: ???
-- [x] SRFI-13: ???
-- [x] SRFI-14: ???
-- [x] SRFI-16: ???
-- [x] SRFI-17: ???
-- [x] SRFI-19: ???
-- [x] SRFI-23: ???
-- [ ] SRFI-25
-- [x] SRFI-26: missing doc
-- [ ] SRFI-27
-- [x] SRFI-28: missing tests
-- [x] SRFI-29: missing tests, missing doc
-- [x] SRFI-31: missing tests, missing doc
-- [x] SRFI-34: missing tests, missing doc
-- [x] SRFI-35: missing tests, missing doc
-- [ ] SRFI-37
+- [] SRFI-1: ???
+- [ ] SRFI-2: ???
+- [ ] SRFI-4: ???
+- [ ] SRFI-5: ???
+- [ ] SRFI-6: ???
+- [ ] SRFI-8: ???
+- [ ] SRFI-9: ???
+- [ ] SRFI-11: ???
+- [ ] SRFI-13: ???
+- [ ] SRFI-14: ???
+- [ ] SRFI-16: ???
+- [ ] SRFI-17: ???
+- [ ] SRFI-19: ???
+- [ ] SRFI-23: ???
+- [ ] SRFI-25: missing
+- [ ] SRFI-26: missing doc
+- [ ] SRFI-27: missing
+- [ ] SRFI-28: missing tests
+- [ ] SRFI-29: missing tests, missing doc
+- [ ] SRFI-31: missing tests, missing doc
+- [ ] SRFI-34: missing tests, missing doc
+- [ ] SRFI-35: missing tests, missing doc
+- [ ] SRFI-37: missing tests, missing doc
 - [ ] SRFI-38
 - [ ] SRFI-39
 - [ ] SRFI-41
