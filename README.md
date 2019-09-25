@@ -36,7 +36,7 @@ Various libraries for Chez Scheme (R7RS, SRFI and more...)
 - [ ] SRFI-39: missing doc
 - [ ] SRFI-41: missing doc, missing tests
 - [ ] SRFI-42: missing doc, missing tests
-- [ ] SRFI-43
+- [ ] SRFI-43: missing doc, missing tests
 - [ ] SRFI-45
 - [ ] SRFI-48
 - [ ] SRFI-51
