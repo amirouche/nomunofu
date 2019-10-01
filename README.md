@@ -9,7 +9,7 @@ Various libraries for Chez Scheme (R7RS, SRFI and more...)
 ## Status
 
 
-- [ ] SRFI-1: ??? (scheme list)
+- [ ] SRFI-1: (scheme list) ???
 - [ ] SRFI-2: ???
 - [ ] SRFI-4: ???
 - [ ] SRFI-5: ???
@@ -18,7 +18,7 @@ Various libraries for Chez Scheme (R7RS, SRFI and more...)
 - [ ] SRFI-9: ???
 - [ ] SRFI-11: ???
 - [ ] SRFI-13: ???
-- [ ] SRFI-14: ??? (scheme charset)
+- [ ] SRFI-14: (scheme charset) ???
 - [ ] SRFI-16: ???
 - [ ] SRFI-17: ???
 - [ ] SRFI-19: ???
@@ -34,7 +34,7 @@ Various libraries for Chez Scheme (R7RS, SRFI and more...)
 - [ ] SRFI-37: missing tests, missing doc
 - [ ] SRFI-38: missing tests, missing doc
 - [ ] SRFI-39: missing doc
-- [ ] SRFI-41: missing doc, missing tests (scheme stream)
+- [ ] SRFI-41: (scheme stream) missing doc, missing tests
 - [ ] SRFI-42: missing doc, missing tests
 - [ ] SRFI-43: missing doc, missing tests
 - [ ] SRFI-45: missing doc, missing tests
