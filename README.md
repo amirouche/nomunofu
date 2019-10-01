@@ -79,3 +79,5 @@ Various libraries for Chez Scheme (R7RS, SRFI and more...)
 - [ ] SRFI-160: (scheme vector @)
 - [ ] SRFI-167
 - [ ] SRFI-168
+- [ ] SRFI-170
+- [ ] SRFI-173
