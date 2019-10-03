@@ -61,7 +61,7 @@ Various libraries for Chez Scheme (R7RS, SRFI and more...)
 - [ ] SRFI-127: (scheme lseq): missing doc, missing tests
 - [ ] SRFI-128: (scheme comparator): missing tests
 - [ ] SRFI-129: not yet
-- [ ] SRFI-132: (scheme sort): not yet
+- [ ] SRFI-132: (scheme sort): missing doc, missing testsx
 - [ ] SRFI-133: (scheme vector): not yet
 - [ ] SRFI-134: (scheme idque)
 - [ ] SRFI-135: (scheme text)
