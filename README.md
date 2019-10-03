@@ -53,7 +53,7 @@ Various libraries for Chez Scheme (R7RS, SRFI and more...)
 - [ ] SRFI-111: (scheme box): missing tests
 - [ ] SRFI-113: (scheme set): missing tests
 - [ ] SRFI-115: (scheme regex): not yet
-- [ ] SRFI-116: (scheme ilist)
+- [ ] SRFI-116: (scheme ilist): not yet
 - [ ] SRFI-117: (scheme list-queue)
 - [ ] SRFI-117
 - [ ] SRFI-124: (scheme ephemeron)
