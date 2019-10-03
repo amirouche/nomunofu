@@ -61,22 +61,22 @@ Various libraries for Chez Scheme (R7RS, SRFI and more...)
 - [ ] SRFI-127: (scheme lseq): missing doc, missing tests
 - [ ] SRFI-128: (scheme comparator): missing tests
 - [ ] SRFI-129: not yet
-- [ ] SRFI-132: (scheme sort): missing doc, missing testsx
-- [ ] SRFI-133: (scheme vector): not yet
-- [ ] SRFI-134: (scheme idque)
-- [ ] SRFI-135: (scheme text)
-- [ ] SRFI-141: (scheme division)
-- [ ] SRFI-143: (scheme fixnum)
-- [ ] SRFI-144: (scheme flonum)
-- [ ] SRFI-145
-- [ ] SRFI-146: (scheme mapping) and (scheme mapping hash)
-- [ ] SRFI-151: (scheme bitwise)
-- [ ] SRFI-152
-- [ ] SRFI-156
-- [ ] SRFI-158: (scheme generator)
-- [ ] SRFI-159: (scheme show)
-- [ ] SRFI-160: (scheme vector @)
-- [ ] SRFI-167
-- [ ] SRFI-168
-- [ ] SRFI-170
-- [ ] SRFI-173
+- [ ] SRFI-132: (scheme sort): missing doc, missing tests
+- [ ] SRFI-133: (scheme vector): missing doc, missing tests
+- [ ] SRFI-134: (scheme idque): not yet
+- [ ] SRFI-135: (scheme text): not yet
+- [ ] SRFI-141: (scheme division): missing doc, missing tests
+- [ ] SRFI-143: (scheme fixnum): missing doc, missing tests
+- [ ] SRFI-144: (scheme flonum): not yet
+- [ ] SRFI-145: not yet
+- [ ] SRFI-146: (scheme mapping) and (scheme mapping hash): missing tests
+- [ ] SRFI-151: (scheme bitwise): missing tests
+- [ ] SRFI-152: not yet
+- [ ] SRFI-156: not yet
+- [ ] SRFI-158: (scheme generator): missing tests
+- [ ] SRFI-159: (scheme show): not yet
+- [ ] SRFI-160: (scheme vector @): not yet
+- [ ] SRFI-167: see around repository
+- [ ] SRFI-168: see around repository
+- [ ] SRFI-170: not yet
+- [ ] SRFI-173: not yet

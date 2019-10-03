@@ -47,6 +47,14 @@ SOURCES = 					\
 	src/arew/srfi/srfi-128.md		\
 	src/arew/srfi/srfi-132.md		\
 	src/arew/srfi/srfi-133.md		\
+	src/arew/srfi/srfi-134.md		\
+	src/arew/srfi/srfi-135.md		\
+	src/arew/srfi/srfi-141.md		\
+	src/arew/srfi/srfi-143.md		\
+	src/arew/srfi/srfi-144.md		\
+	src/arew/srfi/srfi-146.md		\
+	src/arew/srfi/srfi-151.md		\
+	src/arew/srfi/srfi-158.md		\
 
 help: ## This help.
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST) | sort
