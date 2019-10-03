@@ -46,9 +46,9 @@ Various libraries for Chez Scheme (R7RS, SRFI and more...)
 - [ ] SRFI-64: no
 - [ ] SRFI-67: missing doc, missing tests
 - [ ] SRFI-69: missing doc, missing tests
-- [ ] SRFI-78
-- [ ] SRFI-98
-- [ ] SRFI-99
+- [ ] SRFI-78: no
+- [ ] SRFI-98: missing doc, missing tests
+- [ ] SRFI-99:
 - [ ] SRFI-101: (scheme rlist)
 - [ ] SRFI-111: (scheme box)
 - [ ] SRFI-113: (scheme set)
