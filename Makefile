@@ -52,7 +52,9 @@ help: ## This help.
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST) | sort
 
 doc:
-	pandoc $(SOURCES) -o arew-scheme.pdf
+	cat $(SOURCES) > arew-scheme.md
+	pandoc arew-scheme.md -o arew-scheme.html
+	pandoc arew-scheme.html -o arew-scheme.pdf
 
 repl: ## repl for the win
 	@./run
