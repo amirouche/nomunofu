@@ -1,5 +1,21 @@
 SOURCES = 					\
 	README.md				\
+	src/arew/scheme/base.md			\
+	src/arew/scheme/case-lambda.md		\
+	src/arew/scheme/char.md			\
+	src/arew/scheme/complex.md		\
+	src/arew/scheme/cxr.md			\
+	src/arew/scheme/eval.md			\
+	src/arew/scheme/file.md			\
+	src/arew/scheme/inexact.md		\
+	src/arew/scheme/lazy.md			\
+	src/arew/scheme/load.md			\
+	src/arew/scheme/process-context.md	\
+	src/arew/scheme/r5rs.md			\
+	src/arew/scheme/read.md			\
+	src/arew/scheme/repl.md			\
+	src/arew/scheme/time.md			\
+	src/arew/scheme/write.md		\
 	src/arew/srfi/srfi-1.md			\
 	src/arew/srfi/srfi-2.md			\
 	src/arew/srfi/srfi-4.md			\
@@ -76,3 +92,6 @@ todo: ## Things that should be done
 
 xxx: ## Things that require attention
 	@grep -nR --color=always --before-context=2  --after-context=2 XXX src/
+
+clean: ## Remove useless files...
+	rm arew-scheme.*
