@@ -5,9 +5,7 @@ This library is based on [SRFI-151](https://srfi.schemers.org/srfi-151/).
 ### Abstract
 
 This library offers a coherent and comprehensive set of procedures for
-performing bitwise logical operations on integers; it is accompanied
-by a reference implementation of the spec in terms of a set of seven
-core operators.
+performing bitwise logical operations on integers.
 
 ### Reference
 
@@ -17,8 +15,8 @@ Returns the bitwise complement of i; that is, all 1 bits are changed
 to 0 bits and all 0 bits to 1 bits.
 
 ```scheme
-  (bitwise-not 10) => -11
-  (bitwise-not -37) => 36
+(bitwise-not 10) ;; => -11
+(bitwise-not -37) ;; => 36
 ```
 
 The following ten procedures correspond to the useful set of
