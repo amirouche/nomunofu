@@ -5,7 +5,5 @@
   (import (chezscheme)
           (tests))
 
-  (begin
-
-    (define test-0
-      (test #t #t))))
+  (define test-0
+    (test #t #t)))
