@@ -46,33 +46,33 @@ Libraries used in
 
 ### R7RS-large
 
-- scheme list: SRFI-1:
-- scheme charset: SRFI-14:
-- scheme stream: SRFI-41:
-- scheme rlist: SRFI-101:
+- scheme bitwise: SRFI-151:
 - scheme box: SRFI-111:
-- scheme set: SRFI-113:
-- scheme regex: SRFI-115:
-- scheme ilist: SRFI-116:
-- scheme list-queue: SRFI-117:
-- scheme ephemeron: SRFI-124:
-- scheme hash-table: SRFI-125:
-- scheme lseq: SRFI-127:
+- scheme bytevector: rnrs bytevectors:
+- scheme charset: SRFI-14:
 - scheme comparator: SRFI-128:
-- scheme sort: SRFI-132:
-- scheme vector: SRFI-133:
-- scheme idque: SRFI-134:
-- scheme text: SRFI-135:
 - scheme division: SRFI-141:
+- scheme ephemeron: SRFI-124:
 - scheme fixnum: SRFI-143:
 - scheme flonum: SRFI-144:
-- scheme mapping: SRFI-146:
-- scheme mapping hash: SRFI-146:
-- scheme bitwise: SRFI-151:
 - scheme generator: SRFI-158:
+- scheme hash-table: SRFI-125:
+- scheme idque: SRFI-134:
+- scheme ilist: SRFI-116:
+- scheme list-queue: SRFI-117:
+- scheme list: SRFI-1:
+- scheme lseq: SRFI-127:
+- scheme mapping hash: SRFI-146:
+- scheme mapping: SRFI-146:
+- scheme regex: SRFI-115:
+- scheme rlist: SRFI-101:
+- scheme set: SRFI-113:
 - scheme show: SRFI-159:
+- scheme sort: SRFI-132:
+- scheme stream: SRFI-41:
+- scheme text: SRFI-135:
 - scheme vector @: SRFI-160:
-- scheme bytevector: rnrs bytevectors:
+- scheme vector: SRFI-133:
 
 ### SRFI
 
