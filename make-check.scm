@@ -1,5 +1,6 @@
 #!/usr/bin/env scheme
 (import (chezscheme))
+(import (only (arew srfi srfi-1) map-in-order))
 (import (tests))
 
 
@@ -56,7 +57,7 @@
   (newline)
   (let ((library-name (guess-library-name filepath)))
     (let ((tests (library-exports* filepath library-name)))
-      (apply + (map run-one tests)))))
+      (apply + (map-in-order run-one tests)))))
 
 ;; TODO: replace with glob pattern
 (define filepaths
@@ -83,7 +84,7 @@
                (begin
                  (display "* tests")
                  (newline)
-                 (apply + (map run filepaths)))
-               (apply + (map run args))))))
+                 (apply + (map-in-order run filepaths)))
+               (apply + (map-in-order run args))))))
 
 (profile-dump-html "profile/")
