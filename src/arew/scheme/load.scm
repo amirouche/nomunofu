@@ -5,7 +5,9 @@
 (library (arew scheme load)
   (export load)
   (import
-   (rnrs)
+   (arew scheme base)
+   (arew scheme case-lambda)
+   (arew scheme read)
    (arew scheme eval)
    (arew scheme repl))
 
