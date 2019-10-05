@@ -24,6 +24,8 @@ Libraries used in
 - scheme list:
 - scheme mapping:
 - scheme mapping hash:
+- srfi srfi-145:
+
 
 ### R7RS-small
 
