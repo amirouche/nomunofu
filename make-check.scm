@@ -38,13 +38,16 @@
   (newline)
   (guard (x (else (display-condition x) (newline)))
     (let ((result ((cdr pair))))
-      (when (failure? result)
-        (display "**** expected: ")
-        (write (failure-expected result))
-        (newline)
-        (display "**** actual: ")
-        (write (failure-actual result))
-        (newline)))))
+      (if (failure? result)
+          (begin
+            (display "**** expected: ")
+            (write (failure-expected result))
+            (newline)
+            (display "**** actual: ")
+            (write (failure-actual result))
+            (newline)
+            1)
+          0))))
 
 (define (run filepath)
   ;; run the tests found at FILEPATH
@@ -53,24 +56,29 @@
   (newline)
   (let ((library-name (guess-library-name filepath)))
     (let ((tests (library-exports* filepath library-name)))
-      (for-each run-one tests))))
+      (apply + (map run-one tests)))))
+
+
+(define filepaths
+  (list "./src/tests-tests.scm"
+        ;; scheme
+        "./src/arew/scheme/base-tests.scm"
+        "./src/arew/scheme/case-lambda-tests.scm"
+        ;; srfi
+        "./src/arew/srfi/srfi-151-tests.scm"))
+
+(define (exit* count)
+  (if (zero? count)
+      (exit 0)
+      (exit 1)))
 
 (parameterize ([compile-profile 'source])
   (let ((args (cdr (command-line))))
-    (if (null? args)
-        (begin
-          (display "* tests")
-          (newline)
-          (run "./src/tests-tests.scm")
-          (run "./src/arew/scheme/base-tests.scm")
-          (run "./src/arew/scheme/case-lambda-tests.scm")
-          ;; (run "./src/srfi/srfi-1-tests.scm")
-          ;; (run "./src/srfi/srfi-2-tests.scm")
-          ;; (run "./src/srfi/srfi-4-tests.scm")
-          ;; (run "./src/srfi/srfi-16-tests.scm")
-          ;; (run "./src/srfi/srfi-26-tests.scm")
-          )
-
-        (for-each run args))))
+    (exit* (if (null? args)
+               (begin
+                 (display "* tests")
+                 (newline)
+                 (apply + (map run filepaths)))
+               (apply + (map run args))))))
 
 (profile-dump-html "profile/")
