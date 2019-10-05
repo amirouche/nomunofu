@@ -21,7 +21,7 @@ Libraries used in
 - scheme comparator: wip
 - scheme generator: wip
 - scheme hash-table: wip
-- scheme list:
+- scheme list: wip
 - scheme mapping:
 - scheme mapping hash:
 - srfi srfi-145:
@@ -62,7 +62,7 @@ Libraries used in
 - scheme idque: SRFI-134:
 - scheme ilist: SRFI-116:
 - scheme list-queue: SRFI-117:
-- scheme list: SRFI-1:
+- scheme list: SRFI-1: wip
 - scheme lseq: SRFI-127:
 - scheme mapping hash: SRFI-146:
 - scheme mapping: SRFI-146:
@@ -78,7 +78,7 @@ Libraries used in
 
 ### SRFI
 
-- SRFI-1: scheme list:
+- SRFI-1: scheme list: wip
 - SRFI-2:
 - SRFI-4:
 - SRFI-5:
