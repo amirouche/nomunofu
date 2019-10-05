@@ -25,7 +25,7 @@ Various libraries for Chez Scheme (R7RS, SRFI and more...)
 - (scheme r5rs): wip
 - (scheme read): wip
 - (scheme repl): wip
-- (scheme time):
+- (scheme time): wip
 - (scheme write):
 
 ### R7RS-large
