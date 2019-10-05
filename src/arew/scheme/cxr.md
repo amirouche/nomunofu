@@ -2,8 +2,8 @@
 ## `(arew scheme cxr)`
 
 Exports the following procedure which are the compositions of from
-three to four `car` and `cdr` operations. For example caddar could be
-defined by:
+three to four `car` and `cdr` operations. For example `caddar` could
+be defined:
 
 ```scheme
 (define caddar
