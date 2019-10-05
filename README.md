@@ -18,7 +18,7 @@ Libraries used in
 - scheme bitwise: ok
 - scheme bytevector: wip
 - scheme case-lambda: ok
-- scheme comparator:
+- scheme comparator: wip
 - scheme generator:
 - scheme hash-table:
 - scheme list:
@@ -52,7 +52,7 @@ Libraries used in
 - scheme box: SRFI-111:
 - scheme bytevector: rnrs bytevectors: wip
 - scheme charset: SRFI-14:
-- scheme comparator: SRFI-128:
+- scheme comparator: SRFI-128: wip
 - scheme division: SRFI-141:
 - scheme ephemeron: SRFI-124:
 - scheme fixnum: SRFI-143:
@@ -128,7 +128,7 @@ Libraries used in
 - SRFI-125: scheme hash-table:
 - SRFI-126:
 - SRFI-127: scheme lseq:
-- SRFI-128: scheme comparator:
+- SRFI-128: scheme comparator: wip
 - SRFI-129: not yet
 - SRFI-132: scheme sort:
 - SRFI-133: scheme vector:
