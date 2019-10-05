@@ -15,8 +15,8 @@ Libraries used in
 [around](https://github.com/scheme-live/around-ordered-key-value-stores/):
 
 - scheme base: ok
-- scheme bitwise:
-- scheme bytevector:
+- scheme bitwise: ok
+- scheme bytevector: wip
 - scheme case-lambda: ok
 - scheme comparator:
 - scheme generator:
@@ -48,9 +48,9 @@ Libraries used in
 
 ### R7RS-large
 
-- scheme bitwise: SRFI-151:
+- scheme bitwise: SRFI-151: ok
 - scheme box: SRFI-111:
-- scheme bytevector: rnrs bytevectors:
+- scheme bytevector: rnrs bytevectors: wip
 - scheme charset: SRFI-14:
 - scheme comparator: SRFI-128:
 - scheme division: SRFI-141:
