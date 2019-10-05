@@ -2,6 +2,6 @@
 ;; SPDX-License-Identifier: CC0-1.0
 #!r6rs
 
-(library (scheme case-lambda)
+(library (arew scheme case-lambda)
   (export case-lambda)
   (import (rnrs)))
