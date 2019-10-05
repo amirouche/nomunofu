@@ -51,6 +51,7 @@ SOURCES = 					\
 	src/arew/srfi/srfi-67.md		\
 	src/arew/srfi/srfi-69.md		\
 	src/arew/srfi/srfi-98.md		\
+	src/arew/srfi/srfi-99.md		\
 	src/arew/srfi/srfi-101.md		\
 	src/arew/srfi/srfi-111.md		\
 	src/arew/srfi/srfi-113.md		\

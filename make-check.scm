@@ -66,6 +66,7 @@
         "./src/arew/scheme/case-lambda-tests.scm"
         ;; srfi
         "./src/arew/srfi/srfi-1-tests.scm"
+        "./src/arew/srfi/srfi-146-tests.scm"
         "./src/arew/srfi/srfi-151-tests.scm"
         "./src/arew/srfi/srfi-158-tests.scm"
 

@@ -1,4 +1,4 @@
-(library (srfi srfi-145)
+(library (arew srfi srfi-145)
   (export assume)
 
   (import (chezscheme))

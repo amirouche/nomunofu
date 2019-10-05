@@ -18,4 +18,4 @@
           string-accumulator bytevector-accumulator bytevector-accumulator!
           sum-accumulator product-accumulator)
 
-  (import (arew srfi srif-158)))
+  (import (arew srfi srfi-158)))

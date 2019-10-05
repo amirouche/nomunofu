@@ -22,9 +22,9 @@ Libraries used in
 - scheme generator: wip
 - scheme hash-table: wip
 - scheme list: wip
-- scheme mapping:
+- scheme mapping: wip
 - scheme mapping hash:
-- srfi srfi-145:
+- srfi srfi-145: wip
 
 
 ### R7RS-small
@@ -65,7 +65,7 @@ Libraries used in
 - scheme list: SRFI-1: wip
 - scheme lseq: SRFI-127:
 - scheme mapping hash: SRFI-146:
-- scheme mapping: SRFI-146:
+- scheme mapping: SRFI-146: wip
 - scheme regex: SRFI-115:
 - scheme rlist: SRFI-101:
 - scheme set: SRFI-113:
@@ -138,7 +138,7 @@ Libraries used in
 - SRFI-143: scheme fixnum:
 - SRFI-144: scheme flonum:
 - SRFI-145:
-- SRFI-146: scheme mapping scheme mapping hash:
+- SRFI-146: scheme mapping scheme mapping hash: wip
 - SRFI-151: scheme bitwise:
 - SRFI-152:
 - SRFI-156:

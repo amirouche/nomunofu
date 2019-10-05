@@ -16,6 +16,9 @@
 
   (define (exact-integer? x) (and (integer? x) (exact? x)))
 
+  (define (error* msg . args)
+    (apply error 'comparator msg args))
+
   ;; Copyright (C) John Cowan (2015). All Rights Reserved.
   ;;
   ;; Permission is hereby granted, free of charge, to any person
@@ -92,8 +95,8 @@
     (make-raw-comparator
      (if (eq? type-test #t) (lambda (x) #t) type-test)
      (if (eq? equality #t) (lambda (x y) (eqv? (ordering x y) 0)) equality)
-     (if ordering ordering (lambda (x y) (error "ordering not supported")))
-     (if hash hash (lambda (x y) (error "hashing not supported")))
+     (if ordering ordering (lambda (x y) (error* "ordering not supported")))
+     (if hash hash (lambda (x y) (error* "hashing not supported")))
      (if ordering #t #f)
      (if hash #t #f)))
 
@@ -103,11 +106,11 @@
   (define (comparator-test-type comparator obj)
     ((comparator-type-test-predicate comparator) obj))
 
-  ;; Invoke the test type and throw an error if it fails
+  ;; Invoke the test type and throw an error* if it fails
   (define (comparator-check-type comparator obj)
     (if (comparator-test-type comparator obj)
         #t
-        (error "comparator type check failed" comparator obj)))
+        (error* "comparator type check failed" comparator obj)))
 
   ;; Invoke the hash function
   (define (comparator-hash comparator obj)
