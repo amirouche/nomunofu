@@ -1,6 +1,7 @@
 SOURCES = 					\
 	README.md				\
 	src/arew/scheme/base.md			\
+	src/arew/scheme/bytevector.md		\
 	src/arew/scheme/case-lambda.md		\
 	src/arew/scheme/char.md			\
 	src/arew/scheme/complex.md		\
@@ -69,6 +70,7 @@ SOURCES = 					\
 	src/arew/srfi/srfi-141.md		\
 	src/arew/srfi/srfi-143.md		\
 	src/arew/srfi/srfi-144.md		\
+	src/arew/srfi/srfi-145.md		\
 	src/arew/srfi/srfi-146.md		\
 	src/arew/srfi/srfi-151.md		\
 	src/arew/srfi/srfi-158.md		\
