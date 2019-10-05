@@ -2,8 +2,8 @@
 ;; SPDX-License-Identifier: CC0-1.0
 #!r6rs
 
-(library (scheme repl)
+(library (arew scheme repl)
   (export
     interaction-environment)
   (import
-    (akku-r7rs compat)))
+    (only (chezscheme) interaction-environment)))

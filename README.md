@@ -23,8 +23,8 @@ Various libraries for Chez Scheme (R7RS, SRFI and more...)
 - (scheme load): wip
 - (scheme process-context): wip
 - (scheme r5rs): wip
-- (scheme read):
-- (scheme repl):
+- (scheme read): wip
+- (scheme repl): wip
 - (scheme time):
 - (scheme write):
 
