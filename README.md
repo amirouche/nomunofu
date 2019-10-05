@@ -12,7 +12,7 @@ Various libraries for Chez Scheme (R7RS, SRFI and more...)
 ### R7RS-small
 
 - (scheme base): ok
-- (scheme case-lambda):
+- (scheme case-lambda): ok
 - (scheme char):
 - (scheme complex):
 - (scheme cxr):

@@ -13,7 +13,7 @@
     string-upcase)
   (import
     (rnrs)
-    (only (srfi :43) vector-binary-search))
+    (only (srfi srfi-43) vector-binary-search))
 
 ;; The table can be extracted with:
 ;; awk -F ';' '/ZERO;Nd/ {print "#x"$1}' UnicodeData.txt
