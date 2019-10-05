@@ -20,7 +20,7 @@ Libraries used in
 - scheme case-lambda: ok
 - scheme comparator: wip
 - scheme generator: wip
-- scheme hash-table:
+- scheme hash-table: wip
 - scheme list:
 - scheme mapping:
 - scheme mapping hash:
@@ -58,7 +58,7 @@ Libraries used in
 - scheme fixnum: SRFI-143:
 - scheme flonum: SRFI-144:
 - scheme generator: SRFI-158: wip
-- scheme hash-table: SRFI-125:
+- scheme hash-table: SRFI-125: wip
 - scheme idque: SRFI-134:
 - scheme ilist: SRFI-116:
 - scheme list-queue: SRFI-117:
@@ -125,7 +125,7 @@ Libraries used in
 - SRFI-116: scheme ilist:
 - SRFI-117: scheme list-queue:
 - SRFI-124: scheme ephemeron:
-- SRFI-125: scheme hash-table:
+- SRFI-125: scheme hash-table: wip
 - SRFI-126:
 - SRFI-127: scheme lseq:
 - SRFI-128: scheme comparator: wip
