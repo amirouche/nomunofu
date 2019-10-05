@@ -58,14 +58,17 @@
     (let ((tests (library-exports* filepath library-name)))
       (apply + (map run-one tests)))))
 
-
+;; TODO: replace with glob pattern
 (define filepaths
   (list "./src/tests-tests.scm"
         ;; scheme
         "./src/arew/scheme/base-tests.scm"
         "./src/arew/scheme/case-lambda-tests.scm"
         ;; srfi
-        "./src/arew/srfi/srfi-151-tests.scm"))
+        "./src/arew/srfi/srfi-151-tests.scm"
+        "./src/arew/srfi/srfi-158-tests.scm"
+
+        ))
 
 (define (exit* count)
   (if (zero? count)

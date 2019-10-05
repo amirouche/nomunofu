@@ -19,7 +19,7 @@ Libraries used in
 - scheme bytevector: wip
 - scheme case-lambda: ok
 - scheme comparator: wip
-- scheme generator:
+- scheme generator: wip
 - scheme hash-table:
 - scheme list:
 - scheme mapping:
@@ -57,7 +57,7 @@ Libraries used in
 - scheme ephemeron: SRFI-124:
 - scheme fixnum: SRFI-143:
 - scheme flonum: SRFI-144:
-- scheme generator: SRFI-158:
+- scheme generator: SRFI-158: wip
 - scheme hash-table: SRFI-125:
 - scheme idque: SRFI-134:
 - scheme ilist: SRFI-116:
@@ -142,6 +142,6 @@ Libraries used in
 - SRFI-151: scheme bitwise:
 - SRFI-152:
 - SRFI-156:
-- SRFI-158: scheme generator:
+- SRFI-158: scheme generator: wip
 - SRFI-159: scheme show:
 - SRFI-160: scheme vector @:
