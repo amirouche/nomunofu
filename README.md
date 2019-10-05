@@ -16,7 +16,7 @@ Various libraries for Chez Scheme (R7RS, SRFI and more...)
 - (scheme char): wip
 - (scheme complex): wip
 - (scheme cxr): wip
-- (scheme eval):
+- (scheme eval): wip
 - (scheme file):
 - (scheme inexact):
 - (scheme lazy):
