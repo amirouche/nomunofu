@@ -1,8 +1,7 @@
 #!r6rs
 ;; Copyright 2010 Derick Eddington.  My MIT-style license is in the file named
 ;; LICENSE from the original collection this file is distributed with.
-
-(library (srfi srfi-42)
+(library (arew srfi srfi-42)
   (export
     do-ec list-ec append-ec string-ec string-append-ec vector-ec
     vector-of-length-ec sum-ec product-ec min-ec max-ec any?-ec
@@ -14,10 +13,10 @@
   (import
     (rnrs)
     (rnrs r5rs)
-    (srfi srif-39)
-    (srfi srfi-23 tricks)
-    (for (srfi private vanish) expand)
-    (srfi private include))
+    (arew srfi srfi-39)
+    (arew srfi srfi-23 tricks)
+    (for (arew srfi private vanish) expand)
+    (arew srfi private include))
 
   (define-syntax :-dispatch
     (identifier-syntax

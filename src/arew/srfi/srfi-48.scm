@@ -34,14 +34,14 @@
 ; The implementation below requires SRFI-6 (Basic string ports),
 ; and SRFI-38 (External Representation for Data With Shared Structure).
 
-(library (srfi srfi-48)
+(library (arew srfi srfi-48)
   (export
     format)
   (import
     (rnrs)
-    (srfi srfi-48 compat)
-    (srfi srfi-6)
-    (srfi srfi-38))
+    (arew srfi srfi-48 compat)
+    (arew srfi srfi-6)
+    (arew srfi srfi-38))
 
   (define ascii-tab #\tab)
 

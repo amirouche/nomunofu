@@ -1,8 +1,8 @@
-(library (srfi srfi-29)
+(library (arew srfi srfi-29)
   (export current-language current-country current-locale-details
           declare-bundle! store-bundle store-bundle! load-bundle!
           localized-template)
-  (import (rnrs) (srfi srfi-6))
+  (import (rnrs) (arew srfi srfi-6))
 
   (define (current-locale-details . args)
     (error 'current-locale-details

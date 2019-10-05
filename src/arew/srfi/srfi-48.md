@@ -1,4 +1,4 @@
-## `(srfi srfi-48)`
+## `(arew srfi srfi-48)`
 
 This is based on [SRFI-48](https://srfi.schemers.org/srfi-48/).
 

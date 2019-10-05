@@ -14,7 +14,7 @@
 ;;; TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 ;;; PERFORMANCE OF THIS SOFTWARE.
 
-(library (srfi srfi-39)
+(library (arew srfi srfi-39)
   (export make-parameter
           parameterize)
   (import (only (chezscheme) make-parameter parameterize)))

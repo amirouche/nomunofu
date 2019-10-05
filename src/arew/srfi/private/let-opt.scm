@@ -33,7 +33,7 @@
 
 ;;; Made into an R6RS library by Derick Eddington.
 
-(library (srfi private let-opt)
+(library (arew srfi private let-opt)
   (export
     let-optionals* :optional)
   (import
@@ -44,7 +44,7 @@
 ;;; This form is for evaluating optional arguments and their defaults
 ;;; in simple procedures that take a *single* optional argument. It is
 ;;; a macro so that the default will not be computed unless it is needed.
-;;; 
+;;;
 ;;; REST-ARG is a rest list from a lambda -- e.g., R in
 ;;;     (lambda (a b . r) ...)
 ;;; - If REST-ARG has 0 elements, evaluate DEFAULT-EXP and return that.
@@ -93,7 +93,7 @@
      (call-with-values (lambda () (xparser arg))
        (lambda (rest var ...)
          (%let-optionals* rest (opt-clause ...) body ...))))
-    
+
     ((%let-optionals* arg ((var default) opt-clause ...) body ...)
      (call-with-values (lambda () (if (null? arg) (values default '())
 				      (values (car arg) (cdr arg))))

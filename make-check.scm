@@ -62,6 +62,7 @@
           (display "* tests")
           (newline)
           (run "./src/tests-tests.scm")
+          (run "./src/arew/scheme/base-tests.scm")
           ;; (run "./src/srfi/srfi-1-tests.scm")
           ;; (run "./src/srfi/srfi-2-tests.scm")
           ;; (run "./src/srfi/srfi-4-tests.scm")

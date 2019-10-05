@@ -1,7 +1,7 @@
-(library (srfi private helpers)
+(library (arew srfi private helpers)
   (export enumerate)
   (import (rnrs))
-  
+
   (define enumerate
     (lambda (ls)
       (let f ([ls ls] [i 0])

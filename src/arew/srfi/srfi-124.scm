@@ -1,4 +1,4 @@
-(library (srfi srfi-124)
+(library (arew srfi srfi-124)
   (export ephemeron?
           make-ephemeron
           ephemeron-broken?

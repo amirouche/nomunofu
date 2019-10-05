@@ -1,4 +1,4 @@
-(define-library (srfi srfi-128)
+(library (arew srfi srfi-128)
   (export comparator? comparator-ordered? comparator-hashable? make-comparator
           make-pair-comparator make-list-comparator make-vector-comparator
           make-eq-comparator make-eqv-comparator make-equal-comparator
@@ -10,8 +10,8 @@
           comparator-hash hash-bound hash-salt =? <? >? <=? >=?
           comparator-if<=>)
   (import (except (rnrs) define-record-type)
-          (srfi srfi-99)
-          (srfi srfi-39)
+          (arew srfi srfi-99)
+          (arew srfi srfi-39)
           (only (rnrs r5rs) modulo))
 
   (define (exact-integer? x) (and (integer? x) (exact? x)))

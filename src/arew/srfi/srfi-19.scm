@@ -2,7 +2,7 @@
 ;; Copyright 2010 Derick Eddington.  My MIT-style license is in the file named
 ;; LICENSE from the original collection this file is distributed with.
 
-(library (srfi srfi-19)
+(library (arew srfi srfi-19)
   (export
     time-duration
     time-monotonic
@@ -88,10 +88,10 @@
     (rnrs)
     (rnrs r5rs)
     (rnrs mutable-strings)
-    (prefix (srfi :19 time compat) host:)
-    (srfi :6 basic-string-ports)
-    (for (srfi private vanish) expand)
-    (srfi private include))
+    (prefix (arew srfi srfi-19 compat) host:)
+    (arew srfi srfi-6)
+    (for (arew srfi private vanish) expand)
+    (arew srfi private include))
 
   (define-syntax define-struct
     (lambda (stx)

@@ -1,4 +1,4 @@
-(define-library (srfi srfi-117)
+(library (arew srfi srfi-117)
   (export
    make-list-queue list-queue list-queue-copy list-queue-unfold list-queue-unfold-right
    list-queue? list-queue-empty?
@@ -9,7 +9,7 @@
    list-queue-map list-queue-map! list-queue-for-each
    )
   (import
-   (only (srfi srfi-23) error)
+   (only (arew srfi srfi-23) error)
    (except (rnrs base) error)
    (rnrs control)
    (rnrs mutable-pairs)

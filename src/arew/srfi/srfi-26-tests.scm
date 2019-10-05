@@ -1,4 +1,4 @@
-(library (srfi srfi-26-tests)
+(library (arew srfi srfi-26-tests)
 
   (export test-01
           test-02
@@ -28,7 +28,8 @@
           test-26)
 
   (import (chezscheme)
-          (tests))
+          (tests)
+          (arew srfi srfi-26))
 
 
   ;; CONFIDENCE TEST FOR IMPLEMENTATION OF SRFI-26
@@ -53,7 +54,7 @@
 
   (begin
 
-    (define env (environment '(chezscheme) '(srfi srfi-26)))
+    (define env (environment '(chezscheme) '(arew srfi srfi-26)))
 
     ;; cut
 

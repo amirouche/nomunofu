@@ -2,13 +2,13 @@
 ;; Copyright 2009 Derick Eddington.  My MIT-style license is in the file named
 ;; LICENSE from the original collection this file is distributed with.
 
-(library (srfi private include)
-  (export 
+(library (arew srfi private include)
+  (export
     include/resolve)
-  (import 
-    (rnrs) 
-    (for (srfi private include compat) expand))
-  
+  (import
+    (rnrs)
+    (for (arew srfi private include compat) expand))
+
   (define-syntax include/resolve
     (lambda (stx)
       (define (include/lexical-context ctxt filename)
@@ -31,10 +31,10 @@
                       (loop (cons x a))))))))))
       (syntax-case stx ()
         ((ctxt (lib-path* ...) file-path)
-         (for-all (lambda (s) (and (string? s) (positive? (string-length s)))) 
+         (for-all (lambda (s) (and (string? s) (positive? (string-length s))))
                   (syntax->datum #'(lib-path* ... file-path)))
-         (let ((p (apply string-append 
-                         (map (lambda (ps) (string-append "/" ps)) 
+         (let ((p (apply string-append
+                         (map (lambda (ps) (string-append "/" ps))
                               (syntax->datum #'(lib-path* ... file-path)))))
                (sp (search-paths)))
            (let loop ((search sp))

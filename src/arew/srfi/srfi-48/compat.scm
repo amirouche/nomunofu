@@ -14,6 +14,6 @@
 ;;; TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 ;;; PERFORMANCE OF THIS SOFTWARE.
 
-(library (srfi srfi-48 compat)
+(library (arew srfi srfi-48 compat)
   (export pretty-print)
   (import (only (chezscheme) pretty-print)))

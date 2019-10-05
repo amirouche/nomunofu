@@ -2,7 +2,7 @@
 ;; Copyright 2010 Derick Eddington.  My MIT-style license is in the file named
 ;; LICENSE from the original collection this file is distributed with.
 
-(library (srfi srfi-9)
+(library (arew srfi srfi-9)
   (export
     (rename (my:define-record-type define-record-type)))
   (import

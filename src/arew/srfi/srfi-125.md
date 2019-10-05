@@ -1,4 +1,4 @@
-## `(srfi srfi-125)`
+## `(arew srfi srfi-125)`
 
 This library is based on
 [srfi-125](https://srfi.schemers.org/srfi-125/).

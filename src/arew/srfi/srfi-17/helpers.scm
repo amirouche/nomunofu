@@ -1,4 +1,4 @@
-(library (srfi srfi-17 helpers)
+(library (arew srfi srfi-17 helpers)
   (export $list-set!
           $hashtable-set! $eq-hashtable-set! $symbol-hashtable-set!
           $set-caar! $set-cadr! $set-cdar! $set-cddr!

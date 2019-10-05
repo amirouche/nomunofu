@@ -3,7 +3,7 @@
 ;; SPDX-License-Identifier: (MIT OR BSD-3-Clause OR LicenseRef-LICENSE)
 #!r6rs
 
-(library (srfi srfi-14 inversion-list)
+(library (arew srfi srfi-14 inversion-list)
   (export
     inversion-list?
     make-empty-inversion-list
@@ -33,8 +33,8 @@
   (import
     (except (rnrs) define-record-type)
     (rnrs r5rs)
-    (srfi srfi-9)
-    (srfi private include))
+    (arew srfi srfi-9)
+    (arew srfi private include))
 
   (define-syntax define-record-discloser
     (syntax-rules ()
@@ -48,4 +48,4 @@
                         #'(define-record-type typename
                             (constructor field-init* ...) etc ...))))))
 
-    (include/resolve ("srfi" "srfi-14") "inversion-list.body.scm")))
+    (include/resolve ("arew" "srfi" "srfi-14") "inversion-list.body.scm")))

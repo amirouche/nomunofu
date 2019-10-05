@@ -1,6 +1,6 @@
-(library (srfi srfi-28)
+(library (arew srfi srfi-28)
   (export format)
-  (import (rnrs) (srfi srfi-6))
+  (import (rnrs) (arew srfi srfi-6))
 
   ;; reference implementation from srfi :28 documentation
 

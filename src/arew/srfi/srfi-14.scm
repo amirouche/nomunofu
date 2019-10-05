@@ -3,7 +3,7 @@
 ;; SPDX-License-Identifier: (MIT OR BSD-3-Clause OR LicenseRef-LICENSE)
 #!r6rs
 
-(library (srfi srfi-14)
+(library (arew srfi srfi-14)
   (export
     ; Predicates & comparison
     char-set? char-set= char-set<= char-set-hash
@@ -40,12 +40,12 @@
     (except (rnrs) define-record-type)
     (rnrs mutable-strings)
     (rnrs r5rs)
-    (rename (only (srfi srfi-1) partition)
+    (rename (only (arew srfi srfi-1) partition)
             (partition partition-list))
-    (srfi srfi-9)
-    (srfi private include)
-    (srfi private let-opt)
-    (srfi srfi-14 inversion-list))
+    (arew srfi srfi-9)
+    (arew srfi private include)
+    (arew srfi private let-opt)
+    (arew srfi srfi-14 inversion-list))
 
   (define-syntax define-record-discloser
     (syntax-rules ()
@@ -86,6 +86,6 @@
              #'(lambda (fixed-args ... . rest)
                  (let-optionals* rest (opt-args ...) body ...))))])))
 
-  (include/resolve ("srfi" "srfi-14") "srfi-14.body.scm")
-  (include/resolve ("srfi" "srfi-14") "srfi-14-base-char-sets.scm")
-  (include/resolve ("srfi" "srfi-14") "srfi-14-char-sets.scm"))
+  (include/resolve ("arew" "srfi" "srfi-14") "srfi-14.body.scm")
+  (include/resolve ("arew" "srfi" "srfi-14") "srfi-14-base-char-sets.scm")
+  (include/resolve ("arew" "srfi" "srfi-14") "srfi-14-char-sets.scm"))

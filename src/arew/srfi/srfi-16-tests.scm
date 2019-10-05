@@ -1,11 +1,11 @@
-(library (srfi srfi-16-tests)
+(library (arew srfi srfi-16-tests)
 
   (export test-1
           test-2)
 
   (import (except (chezscheme) case-lambda add1)
           (tests)
-          (srfi srfi-16))
+          (arew srfi srfi-16))
 
   (begin
 

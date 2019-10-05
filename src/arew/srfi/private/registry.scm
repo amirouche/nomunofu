@@ -2,14 +2,14 @@
 ;; Copyright 2010 Derick Eddington.  My MIT-style license is in the file named
 ;; LICENSE from the original collection this file is distributed with.
 
-(library (srfi private registry)
+(library (arew srfi private registry)
   (export
     expand-time-features
     run-time-features
     available-features)
   (import
     (rnrs)
-    (for (prefix (srfi private platform-features) platform-)
+    (for (prefix (arew srfi private platform-features) platform-)
          run expand))
 
   (define-syntax make-expand-time-features

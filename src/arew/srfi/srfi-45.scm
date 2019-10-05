@@ -23,7 +23,7 @@
 
 ;; Modified by Andreas Rottmann to use records instead of mutable pairs.
 
-(library (srfi srfi-45)
+(library (arew srfi srfi-45)
   (export delay
           lazy
           force

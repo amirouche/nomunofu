@@ -3,7 +3,7 @@
 ;; under an MIT-style license. See the file LICENSE in the original
 ;; collection this file is distributed with.
 
-(library (srfi srfi-69)
+(library (arew srfi srfi-69)
   (export
     ;; Type constructors and predicate
     make-hash-table hash-table? alist->hash-table

@@ -2,10 +2,10 @@
 ;; Copyright 2009 Derick Eddington.  My MIT-style license is in the file named
 ;; LICENSE from the original collection this file is distributed with.
 
-(library (srfi private OS-id-features)
+(library (arew srfi private OS-id-features)
   (export
     OS-id-features)
-  (import 
+  (import
     (rnrs))
 
   (define (OS-id-features OS-id features-alist)

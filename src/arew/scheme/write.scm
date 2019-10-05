@@ -5,7 +5,7 @@
 
 ;; TODO: Get a writer that outputs with R7RS syntax.
 
-(library (scheme write)
+(library (arew scheme write)
   (export
     display write write-shared write-simple)
   (import

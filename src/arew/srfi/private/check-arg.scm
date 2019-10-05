@@ -5,7 +5,7 @@
 ;; If your Scheme system doesn't have a stack-tracing debugger, you can change
 ;; this to use the version which actually does check.
 
-(library (srfi private check-arg)
+(library (arew srfi private check-arg)
   (export
     check-arg)
   (import

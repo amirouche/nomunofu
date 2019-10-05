@@ -1,4 +1,4 @@
-## `(srfi srfi-128)`
+## `(arew srfi srfi-128)`
 
 This library is based on [SRFI-128](https://srfi.schemers.org/srfi-128/).
 

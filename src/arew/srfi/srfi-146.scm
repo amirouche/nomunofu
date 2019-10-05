@@ -20,7 +20,7 @@
 ;; CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ;; SOFTWARE.
 
-(define-library (scheme mapping)
+(library (arew srfi srfi-146)
   (export mapping mapping-unfold
 	  mapping/ordered mapping-unfold/ordered
 	  mapping? mapping-contains? mapping-empty? mapping-disjoint?

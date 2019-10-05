@@ -1,6 +1,6 @@
-(library (srfi private define-values)
+(library (arew srfi private define-values)
   (export define-values)
-  (import (rnrs) (srfi private helpers))
+  (import (rnrs) (arew srfi private helpers))
 
   (define-syntax define-values
     (lambda (x)

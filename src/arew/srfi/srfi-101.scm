@@ -22,7 +22,7 @@
 ;; OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR
 ;; THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-(library (srfi srfi-101)
+(library (arew srfi srfi-101)
   (export (rename (ra:quote quote)
                   (ra:pair? pair?)
                   (ra:cons cons)

@@ -1,4 +1,4 @@
-(library (srfi srfi-35)
+(library (arew srfi srfi-35)
   (export make-condition-type condition-type? condition-has-type?
           condition-ref make-compound-condition
           extract-condition define-condition-type
@@ -14,9 +14,9 @@
       &message message-condition? condition-message
       define-record-type
       error)
-    (only (srfi :1) lset= lset-intersection lset-difference any)
-    (srfi :9)
-    (srfi :23))
+    (only (arew srfi srfi-1) lset= lset-intersection lset-difference any)
+    (arew srfi srfi-9)
+    (arew srfi srfi-23))
 
   ;; reference implementation from srfi 35: overlaps some of r6rs conditions
 

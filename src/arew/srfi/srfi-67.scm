@@ -2,7 +2,7 @@
 ;; Copyright 2010 Derick Eddington.  My MIT-style license is in the file named
 ;; LICENSE from the original collection this file is distributed with.
 
-(library (srfi srif-67)
+(library (arew srfi srfi-67)
   (export
    </<=? </<? <=/<=? <=/<? <=? <? =?
    >/>=? >/>? >=/>=? >=/>? >=? >?
@@ -21,9 +21,9 @@
   (import
    (except (rnrs) error)
    (only (rnrs r5rs) modulo)
-   (only (srfi srfi-27 random-bits) random-integer)
-   (srfi srfi-23 error)
-   (srfi private include))
+   (only (arew srfi srfi-27) random-integer)
+   (arew srfi srfi-23)
+   (arew srfi private include))
 
   ;; Copyright (c) 2005 Sebastian Egner and Jens Axel S{\o}gaard.
   ;;

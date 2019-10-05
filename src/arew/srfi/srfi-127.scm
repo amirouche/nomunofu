@@ -1,4 +1,4 @@
-(library (srfi srfi-127)
+(library (arew srfi srfi-127)
   (export generator->lseq lseq? lseq=?
           lseq-car lseq-first lseq-cdr lseq-rest lseq-ref lseq-take lseq-drop
           lseq-realize lseq->generator lseq-length lseq-append lseq-zip

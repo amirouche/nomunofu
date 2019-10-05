@@ -1,9 +1,9 @@
-(library (srfi srfi-51)
+(library (arew srfi srfi-51)
   (export rest-values arg-and arg-ands err-and err-ands arg-or arg-ors err-or err-ors)
   (import (except (rnrs) error)
-          (only (srfi srif-1) every append-reverse)
-          (srfi srif-23)
-          (srfi private include))
+          (only (arew srfi srfi-1) every append-reverse)
+          (arew srfi srfi-23)
+          (arew srfi private include))
 
   ;;
   ;; Reference implementation of SRFI 51

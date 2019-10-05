@@ -2,7 +2,7 @@
 ;; Copyright 2009 Derick Eddington.  My MIT-style license is in the file named
 ;; LICENSE from the original collection this file is distributed with.
 
-(library (srfi srfi-43)
+(library (arew srfi srfi-43)
   (export
     ;;; * Constructors
     make-vector vector
@@ -37,10 +37,10 @@
   (import
     (except (rnrs) vector-map vector-for-each)
     (rnrs r5rs)
-    (srfi :23 error tricks)
-    (srfi :8 receive)
-    (for (srfi private vanish) expand)
-    (srfi private include))
+    (arew srfi srfi-23 tricks)
+    (arew srfi srfi-8)
+    (for (arew srfi private vanish) expand)
+    (arew srfi private include))
 
   ;; I do these let-syntax tricks so the original vector-lib.scm file does
   ;; not have to be modified at all.
@@ -66,5 +66,5 @@
         (vanish-define define-syntax
          (receive))))
     (SRFI-23-error->R6RS "(library (srfi :43 vectors))"
-     (include/resolve ("srfi" "srfi-43") "srfi-43.body.scm")))
+     (include/resolve ("arew" "srfi" "srfi-43") "srfi-43.body.scm")))
 )

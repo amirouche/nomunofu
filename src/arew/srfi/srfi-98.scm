@@ -14,7 +14,7 @@
 ;;; TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 ;;; PERFORMANCE OF THIS SOFTWARE.
 
-(library (srfi srfi-98)
+(library (arew srfi srfi-98)
   (export get-environment-variables
           (rename (getenv get-environment-variable)))
   (import (rnrs)

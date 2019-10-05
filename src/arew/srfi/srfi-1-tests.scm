@@ -22,7 +22,7 @@
 ;; - Adapted to arew scheme tests
 ;;
 
-(library (srfi srfi-1-tests)
+(library (arew srfi srfi-1-tests)
 
   (export test-0001
           test-0002
@@ -204,7 +204,7 @@
                 zero? set! number? symbol? integer? remainder
                 unquote)
           (tests)
-          (srfi srfi-1))
+          (arew srfi srfi-1))
 
   (begin
 

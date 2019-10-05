@@ -1,4 +1,4 @@
-(library (srfi srfi-113)
+(library (arew srfi srfi-113)
   (export
    set set-unfold
    set? set-contains? set-empty? set-disjoint?
@@ -34,11 +34,11 @@
    bag-increment! bag-decrement! bag->set set->bag set->bag!
    bag->alist alist->bag)
 
-  (import (scheme base))
-  (import (scheme write))
-  (import (scheme case-lambda))
-  (import (scheme comparator))
-  (import (scheme hash-table))
+  (import (arew scheme base)
+          (arew scheme write)
+          (arew scheme case-lambda)
+          (arew scheme comparator)
+          (arew scheme hash-table))
 
   (begin
 

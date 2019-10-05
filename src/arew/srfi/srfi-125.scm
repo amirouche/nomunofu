@@ -11,7 +11,7 @@
 ;;; you make to this software so that they may be incorporated within
 ;;; it to the benefit of the Scheme community.
 ;;;
-(library (scheme hash-table)
+(library (arew srfi srfi-125)
 
   (export
    make-hash-table
@@ -59,10 +59,10 @@
    hash-table-difference!
    hash-table-xor!)
 
-  (import (scheme base)
-          (scheme case-lambda)
-          (scheme comparator)
-          (prefix (srfi srfi-69) s69:))
+  (import (arew scheme base)
+          (arew scheme case-lambda)
+          (arew scheme comparator)
+          (prefix (arew srfi srfi-69) s69:))
 
 
   (begin

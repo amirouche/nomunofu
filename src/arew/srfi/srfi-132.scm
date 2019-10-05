@@ -1,4 +1,4 @@
-(library (srfi srfi-132)
+(library (arew srfi srfi-132)
   (export
     list-sorted? vector-sorted? list-merge vector-merge list-sort vector-sort
     list-stable-sort vector-stable-sort list-merge! vector-merge! list-sort!

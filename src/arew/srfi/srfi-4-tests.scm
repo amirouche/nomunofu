@@ -1,4 +1,4 @@
-(library (srfi srfi-4-tests)
+(library (arew srfi srfi-4-tests)
 
   (export test-1
           test-2
@@ -13,8 +13,8 @@
 
   (import (chezscheme)
           (tests)
-          (srfi srfi-4)
-          (srfi srfi-2))
+          (arew srfi srfi-4)
+          (arew srfi srfi-2))
 
   (begin
 

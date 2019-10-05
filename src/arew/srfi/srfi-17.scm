@@ -1,4 +1,4 @@
-(library (srfi srfi-17)
+(library (arew srfi srfi-17)
   (export getter-with-setter set!
           car cdr
           caar cadr cdar cddr
@@ -19,7 +19,7 @@
           foreign-ref fxvector-ref hashtable-ref eq-hashtable-ref
           symbol-hashtable-ref list-ref)
   (import (rename (chezscheme) (set! cs:set!))
-          (srfi srfi-17 helpers))
+          (arew srfi srfi-17 helpers))
 
   (define getter-with-setter-prop)
 
