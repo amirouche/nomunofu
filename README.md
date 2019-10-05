@@ -13,8 +13,8 @@ Various libraries for Chez Scheme (R7RS, SRFI and more...)
 
 - (scheme base): ok
 - (scheme case-lambda): ok
-- (scheme char):
-- (scheme complex):
+- (scheme char): wip
+- (scheme complex): wip
 - (scheme cxr):
 - (scheme eval):
 - (scheme file):
