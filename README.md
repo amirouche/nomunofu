@@ -21,8 +21,8 @@ Various libraries for Chez Scheme (R7RS, SRFI and more...)
 - (scheme inexact): wip
 - (scheme lazy): wip
 - (scheme load): wip
-- (scheme process-context): wipx
-- (scheme r5rs):
+- (scheme process-context): wip
+- (scheme r5rs): wip
 - (scheme read):
 - (scheme repl):
 - (scheme time):

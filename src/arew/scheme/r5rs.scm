@@ -2,7 +2,7 @@
 ;; SPDX-License-Identifier: CC0-1.0
 #!r6rs
 
-(library (scheme r5rs)
+(library (arew scheme r5rs)
   (export
     * + - ... / < <= = => > >= abs acos and angle append apply
     asin assoc assq assv atan begin boolean? caaaar caaadr caaar
@@ -43,15 +43,15 @@
     zero?)
   (import
     (except (rnrs r5rs) delay force)
-    (scheme base)
-    (scheme inexact)
-    (scheme complex)
-    (scheme cxr)
-    (scheme file)
-    (scheme char)
-    (scheme read)
-    (scheme write)
-    (scheme eval)
-    (scheme repl)
-    (scheme load)
-    (scheme lazy)))
+    (arew scheme base)
+    (arew scheme inexact)
+    (arew scheme complex)
+    (arew scheme cxr)
+    (arew scheme file)
+    (arew scheme char)
+    (arew scheme read)
+    (arew scheme write)
+    (arew scheme eval)
+    (arew scheme repl)
+    (arew scheme load)
+    (arew scheme lazy)))
