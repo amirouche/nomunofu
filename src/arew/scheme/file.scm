@@ -2,7 +2,7 @@
 ;; SPDX-License-Identifier: CC0-1.0
 #!r6rs
 
-(library (scheme file)
+(library (arew scheme file)
   (export
     call-with-input-file call-with-output-file delete-file file-exists?
     open-binary-input-file open-binary-output-file
