@@ -48,6 +48,7 @@ source: http://r7rs.org/
 - scheme time: wip
 - scheme write: wip
 
+
 ### R7RS-large
 
 source: http://r7rs.org/
@@ -79,6 +80,7 @@ source: http://r7rs.org/
 - scheme text: SRFI-135:
 - scheme vector @: SRFI-160:
 - scheme vector: SRFI-133:
+
 
 ### SRFI
 
@@ -153,6 +155,7 @@ source: https://github.com/arcfide/chez-srfi
 - SRFI-159: scheme show:
 - SRFI-160: scheme vector @:
 
+
 ### Purely Functional Data Structures in Scheme
 
 source: https://github.com/ijp/pfds/
@@ -168,9 +171,9 @@ source: https://github.com/ijp/pfds/
 - pfds heaps:
 - pfds hamts:
 
+
 ### Wishlist
 
-- REDIS alternative
 - argon2
 - ascii table
 - ascii tree
@@ -198,6 +201,7 @@ source: https://github.com/ijp/pfds/
 - matplotlib / dask / plotly alternative
 - pathlib
 - psutil
+- redis alternative
 - snowball stemmer
 - subprocess
 - sxml->html
