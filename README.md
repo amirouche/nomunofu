@@ -23,11 +23,13 @@ Libraries used in
 - scheme hash-table: wip
 - scheme list: wip
 - scheme mapping: wip
-- scheme mapping hash:
+- scheme mapping hash: todo
 - srfi srfi-145: wip
 
 
 ### R7RS-small
+
+source: http://r7rs.org/
 
 - scheme base: ok
 - scheme case-lambda: ok
@@ -47,6 +49,8 @@ Libraries used in
 - scheme write: wip
 
 ### R7RS-large
+
+source: http://r7rs.org/
 
 - scheme bitwise: SRFI-151: ok
 - scheme box: SRFI-111:
@@ -77,6 +81,9 @@ Libraries used in
 - scheme vector: SRFI-133:
 
 ### SRFI
+
+source: https://srfi.schemers.org/
+source: https://github.com/arcfide/chez-srfi
 
 - SRFI-1: scheme list: wip
 - SRFI-2:
@@ -145,3 +152,55 @@ Libraries used in
 - SRFI-158: scheme generator: wip
 - SRFI-159: scheme show:
 - SRFI-160: scheme vector @:
+
+### Purely Functional Data Structures in Scheme
+
+source: https://github.com/ijp/pfds/
+
+- pfds queues:
+- pfds deques:
+- pfds bbtrees:
+- pfds sets:
+- pfds dlists:
+- pfds priority-search-queues:
+- pfds finger trees:
+- pfds sequences:
+- pfds heaps:
+- pfds hamts:
+
+### Wishlist
+
+- REDIS alternative
+- argon2
+- ascii table
+- ascii tree
+- background task scheduler
+- blake2
+- bsd sockets
+- calendar
+- cell terminal (termbox, libtickit, cowan)
+- command-line parser
+- commonmark
+- datetime
+- elasticsearch alternative
+- fibers (non blocking ports + channels)
+- formatter
+- graph (e.g. networkx)
+- headless browser automation
+- html->sxml
+- http client
+- http server
+- image manipulation
+- industria cryptography
+- json
+- linter
+- logging, structured logging
+- matplotlib / dask / plotly alternative
+- pathlib
+- psutil
+- snowball stemmer
+- subprocess
+- sxml->html
+- terminal colors
+- xml->sxml
+- xpath
