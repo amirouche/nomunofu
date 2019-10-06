@@ -13,6 +13,16 @@ Various libraries for Chez Scheme (R7RS, SRFI and more...)
 - wip: need more tests or documentation
 - ok: code, doc and tests were reviewed
 
+
+### Next step
+
+- SRFI-167: pack: add list, vectors and rewiew
+- SRFI-167: engine: add make-default-engine, see mailing-list
+- SRFI-167: memory: add options, errors and tests hooks
+- SRFI-167: wiredtiger: add options, errors and tests hooks
+- SRFI-168: add options, errors and tests hooks
+- SRFI-173: almost ready
+
 ### R7RS-small
 
 source: http://r7rs.org/
