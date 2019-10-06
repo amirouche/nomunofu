@@ -1,6 +1,0 @@
-(define-library (gleckler hamt-test)
-  (import (scheme base)
-          (srfi :64)
-          (only (gleckler hamt) fragment->mask))
-  (export run-hamt-core-tests)
-  (include "hamt-test.scm"))

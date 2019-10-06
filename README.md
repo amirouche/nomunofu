@@ -9,21 +9,25 @@ Various libraries for Chez Scheme (R7RS, SRFI and more...)
 
 ## Status
 
+- no: not planned
+- wip: need more tests or documentation
+- ok: code, doc and tests were reviewed
+
 ### Next step
 
 Libraries used in
 [around](https://github.com/scheme-live/around-ordered-key-value-stores/):
 
-- scheme base: ok
-- scheme bitwise: ok
+- scheme base: wip
+- scheme bitwise: wip
 - scheme bytevector: wip
-- scheme case-lambda: ok
+- scheme case-lambda: wip
 - scheme comparator: wip
 - scheme generator: wip
 - scheme hash-table: wip
 - scheme list: wip
 - scheme mapping: wip
-- scheme mapping hash: todo
+- scheme mapping hash: wip
 - srfi srfi-145: wip
 
 
@@ -31,8 +35,8 @@ Libraries used in
 
 source: http://r7rs.org/
 
-- scheme base: ok
-- scheme case-lambda: ok
+- scheme base: wip
+- scheme case-lambda: wip
 - scheme char: wip
 - scheme complex: wip
 - scheme cxr: wip
@@ -53,7 +57,7 @@ source: http://r7rs.org/
 
 source: http://r7rs.org/
 
-- scheme bitwise: SRFI-151: ok
+- scheme bitwise: SRFI-151: wip
 - scheme box: SRFI-111:
 - scheme bytevector: rnrs bytevectors: wip
 - scheme charset: SRFI-14:
@@ -69,7 +73,7 @@ source: http://r7rs.org/
 - scheme list-queue: SRFI-117:
 - scheme list: SRFI-1: wip
 - scheme lseq: SRFI-127:
-- scheme mapping hash: SRFI-146:
+- scheme mapping hash: SRFI-146: wip
 - scheme mapping: SRFI-146: wip
 - scheme regex: SRFI-115:
 - scheme rlist: SRFI-101:
@@ -138,7 +142,7 @@ source: https://github.com/arcfide/chez-srfi
 - SRFI-126:
 - SRFI-127: scheme lseq:
 - SRFI-128: scheme comparator: wip
-- SRFI-129: not yet
+- SRFI-129:
 - SRFI-132: scheme sort:
 - SRFI-133: scheme vector:
 - SRFI-134: scheme idque:
@@ -147,7 +151,8 @@ source: https://github.com/arcfide/chez-srfi
 - SRFI-143: scheme fixnum:
 - SRFI-144: scheme flonum:
 - SRFI-145:
-- SRFI-146: scheme mapping scheme mapping hash: wip
+- SRFI-146: scheme mapping: wip
+- SRFI-146: scheme mapping hash: wip
 - SRFI-151: scheme bitwise:
 - SRFI-152:
 - SRFI-156:

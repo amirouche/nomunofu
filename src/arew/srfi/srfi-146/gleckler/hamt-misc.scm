@@ -21,39 +21,48 @@
 ;; WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 ;; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 ;; DEALINGS IN THE SOFTWARE.
+(library (arew srfi srfi-146 gleckler hamt-misc)
+  (export assert do-list
+	  make-string-hash-table
+	  with-output-to-string)
+  (import (arew scheme base)
+	  (arew scheme case-lambda)
+          (only (arew srfi srfi-69) string-hash)
+	  (only (arew srfi srfi-125) make-hash-table)
+	  (only (arew srfi srfi-128) make-comparator))
 
-(define-syntax assert
-  (syntax-rules ()
-    ((_ (operator argument ...))
-     (unless (operator argument ...)
-       (error "Assertion failed:"
-	      '(operator argument ...)
-	      (list 'operator argument ...))))
-    ((_ expression)
-     (unless expression
-       (error "Assertion failed:" 'expression)))))
+  (define-syntax assert
+    (syntax-rules ()
+      ((_ (operator argument ...))
+       (unless (operator argument ...)
+         (error "Assertion failed:"
+	        '(operator argument ...)
+	        (list 'operator argument ...))))
+      ((_ expression)
+       (unless expression
+         (error "Assertion failed:" 'expression)))))
 
-(define-syntax do-list
-  (syntax-rules ()
-    ((_ (variable list) body ...)
-     (do ((remaining list (cdr remaining)))
-	 ((null? remaining))
-       (let ((variable (car remaining)))
-	 body ...)))
-    ((_ (element-variable index-variable list) body ...)
-     (do ((remaining list (cdr remaining))
-	  (index-variable 0 (+ index-variable 1)))
-	 ((null? remaining))
-       (let ((element-variable (car remaining)))
-	 body ...)))))
+  (define-syntax do-list
+    (syntax-rules ()
+      ((_ (variable list) body ...)
+       (do ((remaining list (cdr remaining)))
+	   ((null? remaining))
+         (let ((variable (car remaining)))
+	   body ...)))
+      ((_ (element-variable index-variable list) body ...)
+       (do ((remaining list (cdr remaining))
+	    (index-variable 0 (+ index-variable 1)))
+	   ((null? remaining))
+         (let ((element-variable (car remaining)))
+	   body ...)))))
 
-(define string-comparator
-  (make-comparator string? string=? #f deprecated:string-hash))
+  (define string-comparator
+    (make-comparator string? string=? #f string-hash))
 
-(define (make-string-hash-table)
-  (make-hash-table string-comparator))
+  (define (make-string-hash-table)
+    (make-hash-table string-comparator))
 
-(define (with-output-to-string thunk)
-  (parameterize ((current-output-port (open-output-string)))
-    (thunk)
-    (get-output-string (current-output-port))))
+  (define (with-output-to-string thunk)
+    (parameterize ((current-output-port (open-output-string)))
+      (thunk)
+      (get-output-string (current-output-port)))))

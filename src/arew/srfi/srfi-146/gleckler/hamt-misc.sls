@@ -1,9 +1,0 @@
-(define-library (gleckler hamt-misc)
-  (import (scheme base)
-	  (scheme case-lambda)
-	  (only (srfi :125) make-hash-table deprecated:string-hash)
-	  (only (srfi :128) make-comparator))
-  (export assert do-list
-	  make-string-hash-table
-	  with-output-to-string)
-  (include "hamt-misc.scm"))

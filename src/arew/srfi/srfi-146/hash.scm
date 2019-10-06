@@ -77,7 +77,7 @@
   ;; CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   ;; SOFTWARE.
 
-;;; Implementation layer
+  ;; Implementation layer
 
   (define (tree-search comparator tree obj failure success)
     (let ((entry (phm/get tree obj)))
@@ -112,7 +112,7 @@
        (tree-for-each (lambda item (yield item))
 		      tree))))
 
-;;; New types
+  ;; New types
 
   (define-record-type <hashmap>
     (%make-hashmap comparator tree)
@@ -126,7 +126,7 @@
 		   (make-phm (comparator-hash-function comparator)
 			     (comparator-equality-predicate comparator))))
 
-;;; Exported procedures
+  ;; Exported procedures
 
   ;; Constructors
 
