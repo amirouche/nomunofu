@@ -13,27 +13,10 @@ Various libraries for Chez Scheme (R7RS, SRFI and more...)
 - wip: need more tests or documentation
 - ok: code, doc and tests were reviewed
 
-### Next step
-
-Libraries used in
-[around](https://github.com/scheme-live/around-ordered-key-value-stores/):
-
-- scheme base: wip
-- scheme bitwise: wip
-- scheme bytevector: wip
-- scheme case-lambda: wip
-- scheme comparator: wip
-- scheme generator: wip
-- scheme hash-table: wip
-- scheme list: wip
-- scheme mapping: wip
-- scheme mapping hash: wip
-- srfi srfi-145: wip
-
-
 ### R7RS-small
 
 source: http://r7rs.org/
+source: https://akkuscm.org/
 
 - scheme base: wip
 - scheme case-lambda: wip
