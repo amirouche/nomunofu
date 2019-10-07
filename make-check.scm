@@ -71,6 +71,7 @@
         "./src/arew/srfi/srfi-146/hash-tests.scm"
         "./src/arew/srfi/srfi-151-tests.scm"
         "./src/arew/srfi/srfi-158-tests.scm"
+        "./src/arew/srfi/srfi-173-tests.scm"
 
         ))
 
