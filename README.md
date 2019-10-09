@@ -53,7 +53,7 @@ source: http://r7rs.org/
 source: https://peterlane.netlify.com/chez-libs/
 
 - scheme bitwise: SRFI-151: wip
-- scheme box: SRFI-111:
+- scheme box: SRFI-111: wip
 - scheme bytevector: rnrs bytevectors: wip
 - scheme charset: SRFI-14:
 - scheme comparator: SRFI-128: wip
@@ -130,7 +130,7 @@ source: https://peterlane.netlify.com/chez-libs/
 - SRFI-98:
 - SRFI-99:
 - SRFI-101: scheme rlist:
-- SRFI-111: scheme box:
+- SRFI-111: scheme box: wip
 - SRFI-113: scheme set:
 - SRFI-115: scheme regex:
 - SRFI-116: scheme ilist:
