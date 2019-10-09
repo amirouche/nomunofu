@@ -1,4 +1,4 @@
-#!/usr/bin/env scheme
+#!/usr/bin/env -S scheme --program
 (import (chezscheme))
 (import (only (arew srfi srfi-1) map-in-order))
 (import (tests))
