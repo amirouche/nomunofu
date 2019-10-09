@@ -56,7 +56,7 @@
     ;; pack
 
     (define (struct:pack>Q integer)
-      (let ((bytevector (make-bytevector 8)))
+      (let ((bytevector (make-bytevector 8 0)))
         (let loop ((index 0))
           (unless (= index 8)
             (bytevector-u8-set! bytevector
@@ -207,7 +207,7 @@
 
     (define (unpack-positive-integer bv code position)
       (let* ((n (- code 20))
-             (sub (make-bytevector 8)))
+             (sub (make-bytevector 8 0)))
         (let loop ((index 0))
           (unless (= index n)
             (bytevector-u8-set! sub (+ (- 8 n) index) (bytevector-u8-ref bv (+ position 1 index)))
@@ -217,7 +217,7 @@
     (define (unpack-negative-integer bv code position)
       (let* ((n (- 20 code))
              (maxv (vector-ref *limits* n))
-             (sub (make-bytevector 8)))
+             (sub (make-bytevector 8 0)))
         (let loop ((index 0))
           (unless (= index n)
             (bytevector-u8-set! sub (+ (- 8 n) index) (bytevector-u8-ref bv (+ position 1 index)))
