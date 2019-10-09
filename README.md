@@ -175,7 +175,7 @@ source: https://github.com/ijp/pfds/
 - pfds sets:
 - pfds dlists:
 - pfds priority-search-queues:
-- pfds finger trees:
+- pfds finger trees: wip
 - pfds sequences:
 - pfds heaps:
 - pfds hamts:
@@ -215,5 +215,5 @@ source: https://github.com/ijp/pfds/
 - subprocess
 - sxml->html
 - terminal colors
-- xml->sxml: https://github.com/jclark/microxml-js
+- xml->sxml: https://github.com/jclark/microxml-js or https://dev.yorhel.nl/yxml
 - xpath
