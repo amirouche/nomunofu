@@ -58,7 +58,7 @@ source: https://peterlane.netlify.com/chez-libs/
 - scheme charset: SRFI-14:
 - scheme comparator: SRFI-128: wip
 - scheme division: SRFI-141:
-- scheme ephemeron: SRFI-124:
+- scheme ephemeron: SRFI-124: wip
 - scheme fixnum: SRFI-143:
 - scheme flonum: SRFI-144:
 - scheme generator: SRFI-158: wip
@@ -135,7 +135,7 @@ source: https://peterlane.netlify.com/chez-libs/
 - SRFI-115: scheme regex:
 - SRFI-116: scheme ilist:
 - SRFI-117: scheme list-queue:
-- SRFI-124: scheme ephemeron:
+- SRFI-124: scheme ephemeron: wip
 - SRFI-125: scheme hash-table: wip
 - SRFI-126:
 - SRFI-127: scheme lseq:
