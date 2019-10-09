@@ -16,7 +16,6 @@ Various libraries for Chez Scheme (R7RS, SRFI and more...)
 
 ### Next step
 
-- SRFI-167: pack: add list, vectors and rewiew
 - SRFI-167: engine: add make-default-engine, see mailing-list
 - SRFI-167: memory: add options, errors and tests hooks
 - SRFI-167: wiredtiger: add options, errors and tests hooks
@@ -26,6 +25,7 @@ Various libraries for Chez Scheme (R7RS, SRFI and more...)
 ### R7RS-small
 
 source: http://r7rs.org/
+
 source: https://akkuscm.org/
 
 - scheme base: wip
@@ -49,6 +49,8 @@ source: https://akkuscm.org/
 ### R7RS-large
 
 source: http://r7rs.org/
+
+source: https://peterlane.netlify.com/chez-libs/
 
 - scheme bitwise: SRFI-151: wip
 - scheme box: SRFI-111:
@@ -82,7 +84,10 @@ source: http://r7rs.org/
 ### SRFI
 
 source: https://srfi.schemers.org/
+
 source: https://github.com/arcfide/chez-srfi
+
+source: https://peterlane.netlify.com/chez-libs/
 
 - SRFI-1: scheme list: wip
 - SRFI-2:
@@ -152,6 +157,12 @@ source: https://github.com/arcfide/chez-srfi
 - SRFI-158: scheme generator: wip
 - SRFI-159: scheme show:
 - SRFI-160: scheme vector @:
+- SRFI-167: pack:
+- SRFI-167: engine:
+- SRFI-167: memory:
+- SRFI-167: wiredtiger:
+- SRFI-168:
+- SRFI-173: ok
 
 
 ### Purely Functional Data Structures in Scheme
@@ -204,5 +215,5 @@ source: https://github.com/ijp/pfds/
 - subprocess
 - sxml->html
 - terminal colors
-- xml->sxml
+- xml->sxml: https://github.com/jclark/microxml-js
 - xpath

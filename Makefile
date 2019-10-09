@@ -74,10 +74,24 @@ SOURCES = 					\
 	src/arew/srfi/srfi-146.md		\
 	src/arew/srfi/srfi-151.md		\
 	src/arew/srfi/srfi-158.md		\
+	src/arew/srfi/srfi-167.md		\
+	src/arew/srfi/srfi-167/pack.md		\
+	src/arew/srfi/srfi-167/engine.md	\
+	src/arew/srfi/srfi-167/memory.md	\
+	src/arew/srfi/srfi-167/wiredtiger.md	\
 	src/arew/srfi/srfi-173.md		\
+	src/arew/data/base/lsm.md		\
 
 help: ## This help.
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST) | sort
+
+sqlite-lsm:
+	cp patches/MakefileLSM submodules/sqlite/
+	cd submodules/sqlite/ && make -f MakefileLSM lsm.so
+	mkdir -p local/lib/
+	cp submodules/sqlite/lsm.so local/lib
+
+init: sqlite-lsm
 
 doc:
 	cat $(SOURCES) > arew-scheme.md

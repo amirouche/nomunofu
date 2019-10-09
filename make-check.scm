@@ -72,7 +72,8 @@
         "./src/arew/srfi/srfi-151-tests.scm"
         "./src/arew/srfi/srfi-158-tests.scm"
         "./src/arew/srfi/srfi-173-tests.scm"
-
+	"./src/arew/srfi/srfi-167/pack-tests.scm"
+	"./src/arew/srfi/srfi-167/memory-tests.scm"
         ))
 
 (define (exit* count)
