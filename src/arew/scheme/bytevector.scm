@@ -1,7 +1,4 @@
 (library (arew scheme bytevector)
-
-  (import (rnrs bytevectors))
-
   (export endianness
           native-endianness bytevector?
           make-bytevector bytevector-length bytevector=? bytevector-fill!
@@ -41,4 +38,5 @@
           bytevector-ieee-double-native-set!
 
           string->utf8 string->utf16 string->utf32
-          utf8->string utf16->string utf32->string))
+          utf8->string utf16->string utf32->string)
+    (import (rnrs bytevectors)))
