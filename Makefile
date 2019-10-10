@@ -78,7 +78,6 @@ SOURCES = 					\
 	src/arew/srfi/srfi-167/pack.md		\
 	src/arew/srfi/srfi-167/engine.md	\
 	src/arew/srfi/srfi-167/memory.md	\
-	src/arew/srfi/srfi-167/wiredtiger.md	\
 	src/arew/srfi/srfi-173.md		\
 	src/arew/data/base/lsm.md		\
 
