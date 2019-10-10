@@ -151,7 +151,7 @@ source: https://peterlane.netlify.com/chez-libs/
 - SRFI-145:
 - SRFI-146: scheme mapping: wip
 - SRFI-146: scheme mapping hash: wip
-- SRFI-151: scheme bitwise:
+- SRFI-151: scheme bitwise: wip
 - SRFI-152:
 - SRFI-156:
 - SRFI-158: scheme generator: wip
