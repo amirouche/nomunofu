@@ -39,9 +39,9 @@ Return the procedure `okvs-range-remove!`.
 
 Return the procedure `okvs-range`.
 
-#### `(engine-range-prefix engine)`
+#### `(engine-prefix-range engine)`
 
-Return the procedure `okvs-range-prefix`.
+Return the procedure `okvs-prefix-range`.
 
 #### `(engine-hook-on-transaction-begin engine)`
 

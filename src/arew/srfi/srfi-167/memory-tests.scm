@@ -20,7 +20,7 @@
 ;;; WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 ;;; FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 ;;; OTHER DEALINGS IN THE SOFTWARE.
-(library (arew srfi srfi-167 memory)
+(library (arew srfi srfi-167 memory-tests)
 
   (export test-00
           test-01
@@ -142,23 +142,28 @@
 
   (define test-06
     (test
-     '((#vu8(20 17) . #vu8(3))
-       (#vu8(20 16 1) . #vu8(2)))
+     '((#vu8(20 16) . #vu8(2))
+       (#vu8(20 16 1) . #vu8(2))
+       (#vu8(20 17) . #vu8(3))
+       (#vu8(20 17 1) . #vu8(2)))
      (let ((okvs (okvs-open #f)))
        ;; set
-       (let ((transaction (okvs-transaction-begin okvs)))
-         (okvs-set! transaction #vu8(20 17 01) #vu8(2))
-         (okvs-set! transaction #vu8(20 17) #vu8(3))
-         (okvs-set! transaction #vu8(42 42) #vu8(5))
-         (okvs-set! transaction #vu8(01 02) #vu8(1))
-         (okvs-set! transaction #vu8(20 16) #vu8(2))
-         (okvs-set! transaction #vu8(20 16 01) #vu8(2))
-         (okvs-transaction-commit transaction))
+       (okvs-in-transaction okvs
+         (lambda (transaction)
+           (okvs-set! transaction #vu8(20 17 01) #vu8(2))
+           (okvs-set! transaction #vu8(20 17) #vu8(3))
+           (okvs-set! transaction #vu8(42 42) #vu8(5))
+           (okvs-set! transaction #vu8(01 02) #vu8(1))
+           (okvs-set! transaction #vu8(20 16) #vu8(2))
+           (okvs-set! transaction #vu8(20 16 01) #vu8(2))))
        ;; get
-       (let* ((transaction (okvs-transaction-begin okvs))
-              (out (generator->list (okvs-prefix transaction
-                                                 #vu8(20)
-                                                 '((offset . 1) (limit . 2) (reverse? #t))))))
+       (let ((out (okvs-in-transaction okvs
+                    (lambda (transaction)
+                      (generator->list (okvs-prefix-range transaction
+                                                          #vu8(20)
+                                                          '((offset . 1)
+                                                            (limit . 2)
+                                                            (reverse? #t))))))))
          (okvs-close okvs)
          out))))
 
