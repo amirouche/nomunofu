@@ -11,67 +11,258 @@ is an unglamorous but very useful capability for text-processing code
 
 ### Reference
 
-#### ->char-set
-#### char-set
-#### char-set->list
-#### char-set->string
-#### char-set-adjoin
-#### char-set-adjoin!
-#### char-set-any
-#### char-set-complement
-#### char-set-complement!
-#### char-set-contains?
-#### char-set-copy
-#### char-set-count
-#### char-set-cursor
-#### char-set-cursor-next
-#### char-set-delete
-#### char-set-delete!
-#### char-set-diff+intersection
-#### char-set-diff+intersection!
-#### char-set-difference
-#### char-set-difference!
-#### char-set-every
-#### char-set-filter
-#### char-set-filter!
-#### char-set-fold
-#### char-set-for-each
-#### char-set-hash
-#### char-set-intersection
-#### char-set-intersection!
-#### char-set-map
-#### char-set-ref
-#### char-set-size
-#### char-set-unfold
-#### char-set-unfold!
-#### char-set-union
-#### char-set-union!
-#### char-set-xor
-#### char-set-xor!
-#### char-set:ascii
-#### char-set:blank
-#### char-set:digit
-#### char-set:empty
-#### char-set:full
-#### char-set:graphic
-#### char-set:hex-digit
-#### char-set:iso-control
-#### char-set:letter
-#### char-set:letter+digit
-#### char-set:lower-case
-#### char-set:printing
-#### char-set:punctuation
-#### char-set:symbol
-#### char-set:title-case
-#### char-set:upper-case
-#### char-set:whitespace
-#### char-set<=
-#### char-set=
-#### char-set?
-#### end-of-char-set?
-#### list->char-set
-#### list->char-set!
-#### string->char-set
-#### string->char-set!
-#### ucs-range->char-set
-#### ucs-range->char-set!)
+#### `->char-set`
+
+TODO
+
+#### `char-set`
+
+TODO
+
+#### `char-set->list`
+
+TODO
+
+#### `char-set->string`
+
+TODO
+
+#### `char-set-adjoin`
+
+TODO
+
+#### `char-set-adjoin!`
+
+TODO
+
+#### `char-set-any`
+
+TODO
+
+#### `char-set-complement`
+
+TODO
+
+#### `char-set-complement!`
+
+TODO
+
+#### `char-set-contains?`
+
+TODO
+
+#### `char-set-copy`
+
+TODO
+
+#### `char-set-count`
+
+TODO
+
+#### `char-set-cursor`
+
+TODO
+
+#### `char-set-cursor-next`
+
+TODO
+
+#### `char-set-delete`
+
+TODO
+
+#### `char-set-delete!`
+
+TODO
+
+#### `char-set-diff+intersection`
+
+TODO
+
+#### `char-set-diff+intersection!`
+
+TODO
+
+#### `char-set-difference`
+
+TODO
+
+#### `char-set-difference!`
+
+TODO
+
+#### `char-set-every`
+
+TODO
+
+#### `char-set-filter`
+
+TODO
+
+#### `char-set-filter!`
+
+TODO
+
+#### `char-set-fold`
+
+TODO
+
+#### `char-set-for-each`
+
+TODO
+
+#### `char-set-hash`
+
+TODO
+
+#### `char-set-intersection`
+
+TODO
+
+#### `char-set-intersection!`
+
+TODO
+
+#### `char-set-map`
+
+TODO
+
+#### `char-set-ref`
+
+TODO
+
+#### `char-set-size`
+
+TODO
+
+#### `char-set-unfold`
+
+TODO
+
+#### `char-set-unfold!`
+
+TODO
+
+#### `char-set-union`
+
+TODO
+
+#### `char-set-union!`
+
+TODO
+
+#### `char-set-xor`
+
+TODO
+
+#### `char-set-xor!`
+
+TODO
+
+#### `char-set:ascii`
+
+TODO
+
+#### `char-set:blank`
+
+TODO
+
+#### `char-set:digit`
+
+TODO
+
+#### `char-set:empty`
+
+TODO
+
+#### `char-set:full`
+
+TODO
+
+#### `char-set:graphic`
+
+TODO
+
+#### `char-set:hex-digit`
+
+TODO
+
+#### `char-set:iso-control`
+
+TODO
+
+#### `char-set:letter`
+
+TODO
+
+#### `char-set:letter+digit`
+
+TODO
+
+#### `char-set:lower-case`
+
+TODO
+
+#### `char-set:printing`
+
+TODO
+
+#### `char-set:punctuation`
+
+TODO
+
+#### `char-set:symbol`
+
+TODO
+
+#### `char-set:title-case`
+
+TODO
+
+#### `char-set:upper-case`
+
+TODO
+
+#### `char-set:whitespace`
+
+TODO
+
+#### `char-set<=`
+
+TODO
+
+#### `char-set=`
+
+TODO
+
+#### `char-set?`
+
+TODO
+
+#### `end-of-char-set?`
+
+TODO
+
+#### `list->char-set`
+
+TODO
+
+#### `list->char-set!`
+
+TODO
+
+#### `string->char-set`
+
+TODO
+
+#### `string->char-set!`
+
+TODO
+
+#### `ucs-range->char-set`
+
+TODO
+
+#### `ucs-range->char-set!`
+
+TODO

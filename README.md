@@ -55,7 +55,7 @@ source: https://peterlane.netlify.com/chez-libs/
 - scheme bitwise: SRFI-151: wip
 - scheme box: SRFI-111: wip
 - scheme bytevector: rnrs bytevectors: wip
-- scheme charset: SRFI-14:
+- scheme charset: SRFI-14: wip
 - scheme comparator: SRFI-128: wip
 - scheme division: SRFI-141:
 - scheme ephemeron: SRFI-124: wip
@@ -98,7 +98,7 @@ source: https://peterlane.netlify.com/chez-libs/
 - SRFI-9:
 - SRFI-11:
 - SRFI-13:
-- SRFI-14: scheme charset:
+- SRFI-14: scheme charset: wip
 - SRFI-16:
 - SRFI-17:
 - SRFI-19:

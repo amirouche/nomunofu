@@ -4,6 +4,7 @@ SOURCES = 					\
 	src/arew/scheme/bytevector.md		\
 	src/arew/scheme/case-lambda.md		\
 	src/arew/scheme/char.md			\
+	src/arew/scheme/charset.md		\
 	src/arew/scheme/complex.md		\
 	src/arew/scheme/cxr.md			\
 	src/arew/scheme/eval.md			\
