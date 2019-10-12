@@ -186,6 +186,8 @@ source: https://github.com/ijp/pfds/
 ### Arew Specific
 
 - arew data json: wip
+- arew data yxml: wip
+- arew data microxml: wip
 - arew data parser combinator: wip
 - arew stream: wip
 
@@ -208,7 +210,7 @@ source: https://github.com/ijp/pfds/
 - formatter
 - graph (e.g. networkx)
 - headless browser automation
-- html->sxml
+- html->sxml, see https://github.com/google/gumbo-parser or easier htmlprag
 - http client
 - http server
 - image manipulation
@@ -224,5 +226,5 @@ source: https://github.com/ijp/pfds/
 - subprocess
 - sxml->html
 - terminal colors
-- xml->sxml: https://github.com/jclark/microxml-js or https://dev.yorhel.nl/yxml
-- xpath
+- sxml->xml
+- xpath, see xpath
