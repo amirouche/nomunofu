@@ -10,7 +10,7 @@
   (export list->stream
           stream->list
           stream-null
-          stream-null?
+          stream-empty?
           stream-car
           stream-map
           stream-for-each
@@ -19,7 +19,8 @@
           stream-concatenate
           stream-length
           ;; stream-group
-          ;; stream-sort)
+          ;; stream-sort
+          )
   (import
     (arew scheme base))
 
