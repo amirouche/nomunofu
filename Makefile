@@ -80,6 +80,9 @@ SOURCES = 					\
 	src/arew/srfi/srfi-167/engine.md	\
 	src/arew/srfi/srfi-167/memory.md	\
 	src/arew/srfi/srfi-173.md		\
+	src/arew/stream.md			\
+	src/arew/data/json.md			\
+	src/arew/data/parser/combinator.md	\
 	src/arew/data/base/lsm.md		\
 
 help: ## This help.

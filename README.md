@@ -11,16 +11,18 @@ Various libraries for Chez Scheme (R7RS, SRFI and more...)
 
 - no: not planned
 - wip: need more tests or documentation
+- review?: need review
 - ok: code, doc and tests were reviewed
 
 
-### Next step
+### Next steps
 
 - SRFI-167: engine: add make-default-engine, see mailing-list
 - SRFI-167: memory: add options, errors and tests hooks
 - SRFI-167: wiredtiger: add options, errors and tests hooks
 - SRFI-168: add options, errors and tests hooks
 - SRFI-173: almost ready
+
 
 ### R7RS-small
 
@@ -179,6 +181,13 @@ source: https://github.com/ijp/pfds/
 - pfds sequences:
 - pfds heaps:
 - pfds hamts:
+
+
+### Arew Specific
+
+- arew data json: wip
+- arew data parser combinator: wip
+- arew stream: wip
 
 
 ### Wishlist
