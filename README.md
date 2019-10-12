@@ -213,7 +213,7 @@ source: https://github.com/ijp/pfds/
 - http server
 - image manipulation
 - industria cryptography
-- json
+- json writer
 - linter
 - logging, structured logging
 - matplotlib / dask / plotly alternative
