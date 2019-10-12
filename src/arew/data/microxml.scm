@@ -115,9 +115,9 @@
                        ((8) (loop (+ index 1)))
                        ((9) (loop (+ index 1)))))))))
         (if error?
-            'parse
+            #f
             (if (= (yxml-eof yxml) 0)
                 (sxmlize (eval! 'finalize))
-                'eof)))))
+                #f)))))
 
   )
