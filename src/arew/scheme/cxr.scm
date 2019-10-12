@@ -2,7 +2,7 @@
 ;; SPDX-License-Identifier: CC0-1.0
 #!r6rs
 
-(library (scheme cxr)
+(library (arew scheme cxr)
   (export
     caaaar caaadr caaar caadar caaddr caadr cadaar cadadr cadar
     caddar cadddr caddr cdaaar cdaadr cdaar cdadar cdaddr cdadr
