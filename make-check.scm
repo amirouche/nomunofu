@@ -81,6 +81,7 @@
         ))
 
 (define (exit* count)
+  (profile-dump-html "profile/")
   (if (zero? count)
       (exit 0)
       (exit 1)))
@@ -93,5 +94,3 @@
                  (newline)
                  (apply + (map-in-order run filepaths)))
                (apply + (map-in-order run args))))))
-
-(profile-dump-html "profile/")
