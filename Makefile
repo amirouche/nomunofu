@@ -104,7 +104,8 @@ doc:
 repl: ## repl for the win
 	@./run
 
-check: ## run tests using the library test runner (arew specific)
+check: ## run tests using the library test runner
+	rm -rf profile
 	mkdir -p profile
 	./venv scheme --program make-check.scm
 
