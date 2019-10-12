@@ -88,10 +88,17 @@ SOURCES = 					\
 help: ## This help.
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST) | sort
 
-sqlite-lsm:
+local/lib:
+	mkdir -p local/lib
+
+yxml:
+	cd submodules/yxml && make
+	cd submodules/yxml && gcc -shared -o libyxml.so yxml.o
+	cp submodules/yxml/libyxml.so local/lib/
+
+sqlite-lsm: local/lib
 	cp patches/MakefileLSM submodules/sqlite/
 	cd submodules/sqlite/ && make -f MakefileLSM lsm.so
-	mkdir -p local/lib/
 	cp submodules/sqlite/lsm.so local/lib
 
 init: sqlite-lsm
@@ -104,9 +111,11 @@ doc:
 repl: ## repl for the win
 	@./run
 
-check: ## run tests using the library test runner
+profile-clean:
 	rm -rf profile
 	mkdir -p profile
+
+check: profile-clean ## run tests using the library test runner
 	./venv scheme --program make-check.scm
 
 todo: ## Things that should be done
