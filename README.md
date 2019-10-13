@@ -228,4 +228,4 @@ source: https://github.com/ijp/pfds/
 - sxml->html
 - terminal colors
 - sxml->xml
-- xpath, see xpath
+- xpath, see sxpath
