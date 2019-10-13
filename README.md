@@ -219,6 +219,7 @@ source: https://github.com/ijp/pfds/
 - linter
 - logging, structured logging
 - matplotlib / dask / plotly alternative
+- minisat
 - pathlib
 - psutil
 - redis alternative
