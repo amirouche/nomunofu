@@ -304,45 +304,46 @@
        [x integer-32]
        [y integer-32]))
 
-    (define-record-type <event-key>
-      (make-event-key mode value)
-      event-key?
-      (mode event-key-mode)
-      (value event-key-value))
+    (define-record-type <event>
+      (%make-event type a b c d)
+      event?
+      (type event-type)
+      (a event-a)
+      (b event-b)
+      (c event-c)
+      (d event-d))
 
-    (define-record-type <event-char>
-      (make-event-char char)
-      event-char?
-      (char event-char))
+    ;; TODO: assume (from srfi-145) on event-type
+    (define event-char event-a)
 
-    (define-record-type <event-resize>
-      (make-event-resize width height)
-      event-resize?
-      (width event-resize-width)
-      (height event-resize-height))
+    (define event-key-mod event-a)
+    (define event-key-key event-b)
 
-    (define-record-type <event-mouse>
-      (make-event-mouse mode key x y)
-      event-mouse?
-      (mode event-mouse-mode)
-      (key event-mouse-key)
-      (x event-mouse-x)
-      (y event-mouse-y))
+    (define event-resize-width event-a)
+    (define event-resize-height event-b)
 
-    (define (%make-event type event)
+    (define event-mouse-mod event-a)
+    (define event-mouse-key event-b)
+    (define event-mouse-x event-c)
+    (define event-mouse-y event-d)
+
+    (define (make-event type event)
       (case type
-        ((-1) (raise 'termbox-error))
+        ((-1) (error 'termbox "event error"))
         ((0) #f)
-        ((1) (if (equal? (ftype-ref tb-event (ch) event) 0)
-                 (make-event-key (ftype-ref tb-event (mod) event)
-                                 (ftype-ref tb-event (key) event))
-                 (make-event-char (ftype-ref tb-event (ch) event))))
-        ((2) (make-event-resize (ftype-ref tb-event (w) event)
-                                (ftype-ref tb-event (h) event)))
-        ((3) (make-event-mouse (ftype-ref tb-event (mod) event)
-                               (ftype-ref tb-event (key) event)
-                               (ftype-ref tb-event (x) event)
-                               (ftype-ref tb-event (y) event)))))
+        ((1) (if (= (ftype-ref tb-event (ch) event) 0)
+                 (%make-event 'key
+                              (ftype-ref tb-event (mod) event)
+                              (ftype-ref tb-event (key) event))
+                 (%make-event 'char (ftype-ref tb-event (ch) event))))
+        ((2) (%make-event 'resize
+                          (ftype-ref tb-event (w) event)
+                          (ftype-ref tb-event (h) event)))
+        ((3) (%make-event 'mouse
+                          (ftype-ref tb-event (mod) event)
+                          (ftype-ref tb-event (key) event)
+                          (ftype-ref tb-event (x) event)
+                          (ftype-ref tb-event (y) event)))))
 
     (define (make-tb-event)
       (make-ftype-pointer tb-event (foreign-alloc (ftype-sizeof tb-event))))
@@ -350,11 +351,11 @@
     (define (tb-peek-event timeout)
       (let ((proc (foreign-procedure* int "tb_peek_event" void* int)))
         (let ((event (make-tb-event)))
-          (%make-event (proc (ftype-pointer-address event) timeout) event))))
+          (make-event (proc (ftype-pointer-address event) timeout) event))))
 
     (define (tb-poll-event)
       (let ((proc (foreign-procedure* int "tb_poll_event" void*)))
         (let ((event (make-tb-event)))
-          (%make-event (proc (ftype-pointer-address event)) event))))
+          (make-event (proc (ftype-pointer-address event)) event))))
 
     ))
