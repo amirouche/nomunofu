@@ -190,6 +190,7 @@ source: https://github.com/ijp/pfds/
 - arew data microxml: wip
 - arew data parser combinator: wip
 - arew stream: wip
+- arew termbox: wip
 
 
 ### Wishlist
