@@ -92,7 +92,7 @@ help: ## This help.
 local/lib:
 	mkdir -p local/lib
 
-yxml:
+yxml: local/lib
 	cd submodules/yxml && make
 	cd submodules/yxml && gcc -shared -o libyxml.so yxml.o
 	cp submodules/yxml/libyxml.so local/lib/
@@ -102,7 +102,12 @@ sqlite-lsm: local/lib
 	cd submodules/sqlite/ && make -f MakefileLSM lsm.so
 	cp submodules/sqlite/lsm.so local/lib
 
-init: sqlite-lsm
+termbox: local/lib
+	cd submodules/termbox-truecolor/ && ./waf configure
+	cd submodules/termbox-truecolor/ && ./waf
+	cp submodules/termbox-truecolor/build/src/libtermbox.so local/lib/
+
+init: sqlite-lsm yxml termbox
 
 doc:
 	cat $(SOURCES) > arew-scheme.md

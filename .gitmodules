@@ -4,3 +4,6 @@
 [submodule "submodules/yxml"]
 	path = submodules/yxml
 	url = https://g.blicky.net/yxml.git/
+[submodule "submodules/termbox-truecolor"]
+	path = submodules/termbox-truecolor
+	url = https://github.com/amirouche/termbox-truecolor
