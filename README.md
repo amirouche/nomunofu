@@ -202,7 +202,7 @@ source: https://github.com/ijp/pfds/
 - blake2
 - bsd sockets
 - calendar
-- cell terminal (termbox, libtickit, cowan)
+- cell terminal (termbox, libtickit, cowan, weinholt text-mode)
 - command-line parser
 - commonmark
 - datetime
