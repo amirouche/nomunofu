@@ -16,7 +16,7 @@ The **server** is shipped as a set of binaries for amd64 Ubuntu 18.04
 your own instance in no-time.  The server exposes a HTTP/1.0 interface
 that allows to query for triples.  It is as simple as possible and
 only allows to query using pattern matching.  The end-user does not
-directly interact with the server. Querying is done in Python see the
+directly interact with the server.  Querying is done in Python see the
 following paragraph.
 
 The **client**, written in Python, is smarter!  It will query the server
