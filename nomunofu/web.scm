@@ -1,0 +1,60 @@
+(define-module (nomunofu web))
+
+(import (scheme base))
+
+(import (ice-9 match))
+(import (web http))
+(import (rnrs io ports))
+
+(import (nomunofu app))
+(import (nomunofu log))
+(import (nomunofu fash))
+(import (nomunofu generator))
+(import (nomunofu okvs engine))
+(import (nomunofu okvs nstore))
+(import (nomunofu web server))
+(import (nomunofu web helpers))
+
+
+(define (handle/transaction transaction nstore body port)
+  (generator-map->list fash->alist
+                       (nstore-select transaction nstore
+                                      (list (nstore-var 's)
+                                            (nstore-var 'p)
+                                            (nstore-var 'o)))))
+
+(define (alist->json alist port)
+  (put-char port #\{)
+  (let loop ((alist alist))
+    (if (pair? (cdr alist))
+        (let ((head (car alist)))
+          (put-char port #\")
+          (put-string port (symbol->string (car head)))
+          (put-char port #\")
+          (put-char port #\:)
+          (write (cdr head) port)
+          (put-char port #\,)
+          (loop (cdr alist)))
+        (let ((head (car alist)))
+          (put-char port #\")
+          (put-string port (symbol->string (car head)))
+          (put-char port #\")
+          (put-char port #\:)
+          (write (cdr head) port))))
+  (put-char port #\})
+  (put-char port #\newline))
+
+(define (handle app body port)
+  (let ((out (engine-in-transaction (app-engine app) (app-okvs app)
+               (lambda (transaction)
+                 (handle/transaction transaction (app-nstore app) body port)))))
+    (for-each (lambda (item) (alist->json item port)) out)))
+
+(define-public (subcommand-serve app port)
+  (log-info "web server starting at PORT" port)
+  (run-server port
+              (lambda (request body port)
+                (write-response-line (cons 1 0) 200 "OK" port)
+                (put-string port "\r\n")
+                (handle app body port)
+                (close-port port))))
