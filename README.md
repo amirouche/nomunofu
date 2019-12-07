@@ -11,7 +11,7 @@ is required.  Good knowledge of Python is recommended.  Keep
 
 There is two part in this application:
 
-The server is shipped as a set of binaries for amd64 Ubuntu 18.04
+The **server** is shipped as a set of binaries for amd64 Ubuntu 18.04
 (LTS) with a ready-made database files, that will allow you to spin
 your own instance in no-time.  The server exposes a HTTP/1.0 interface
 that allows to query for triples.  It is as simple as possible and
@@ -19,7 +19,7 @@ only allows to query using pattern matching.  The end-user does not
 directly interact with the server. Querying is done in Python see the
 following paragraph.
 
-The *client*, written in Python, is smarter!  It will query the server
+The **client**, written in Python, is smarter!  It will query the server
 and refine its results based on the user query.  User queries are
 expressed using Python code.
 
