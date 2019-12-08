@@ -20,5 +20,11 @@ repl: ## Start a guile REPL with rlwrap
 web: ## Start the default web server
 	guile -L . nomunofu.scm serve 8080
 
+index: test.nt ## Index test.nt
+	guile -L . nomunofu.scm index test.nt
+
 query: ## Send a query to the server
 	curl --data "@query.scm" http://localhost:8080/
+
+clean:
+	rm -f okvs.wt* WiredTiger*
