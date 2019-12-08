@@ -104,9 +104,13 @@
 (define-public (subcommand-index app filename)
   (call-with-input-file filename
     (lambda (port)
-      (let loop ((line (read-line port)))
+      (let loop ((line (read-line port))
+                 (index 0))
         (unless (eof-object? line)
           (let ((items (turtle->scheme line)))
+            (when (= (modulo index 10000) 0)
+              (display index) (newline))
             (when items
               (add app items))
-            (loop (read-line port))))))))
+            (loop (read-line port)
+                  (+ index 1))))))))
