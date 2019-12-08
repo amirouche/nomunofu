@@ -1,6 +1,7 @@
 (define-module (nomunofu web))
 
 (import (scheme base))
+(import (scheme list))
 (import (scheme assume))
 
 (import (ice-9 match))
@@ -13,50 +14,58 @@
 (import (nomunofu generator))
 (import (nomunofu okvs engine))
 (import (nomunofu okvs nstore))
+(import (nomunofu okvs ustore))
 (import (nomunofu web server))
 (import (nomunofu web helpers))
 
 
-(define (make-query pattern)
+(define (%make-query txn ustore item)
+  (if (pair? (car pattern))
+      (cons (nstore-var (cdar pattern)) out)
+      (maybe-object->ulid txn ustore (car pattern)) out))
+
+(define (make-query txn ustore pattern)
   (assume (= (length pattern) 3))
-  (let loop ((pattern pattern)
-             (out '()))
-    (if (null? pattern)
-        (reverse out)
-        (if (pair? (car pattern))
-            (loop (cdr pattern) (cons (nstore-var (cdar pattern)) out))
-            (loop (cdr pattern) (cons (car pattern) out))))))
+  (map (lambda (item) (%make-query txn ustore item)) pattern))
 
-(define (handle/transaction transaction nstore patterns port)
-  (generator-for-each
-   (lambda (item) (alist->json (fash->alist item) port))
-   (let loop ((patterns (cdr patterns))
-              (generator (nstore-select transaction nstore (make-query (car patterns)))))
-     (if (null? patterns)
-         generator
-         (loop (cdr patterns)
-               ((nstore-where transaction nstore (make-query (car patterns))) generator))))))
-
-(define (alist->json alist port)
+(define (alist->json txn ustore alist port)
   (put-char port #\{)
   (let loop ((alist alist))
     (if (pair? (cdr alist))
-        (let ((head (car alist)))
+        (let* ((head (car alist))
+               (object (ulid->object txn ustore (cdr head))))
           (put-char port #\")
           (put-string port (symbol->string (car head)))
           (put-char port #\")
           (put-char port #\:)
-          (write (cdr head) port)
+          (write object port)
           (put-char port #\,)
           (loop (cdr alist)))
-        (let ((head (car alist)))
+        (let* ((head (car alist))
+               (object (ulid->object txn ustore (cdr head))))
           (put-char port #\")
           (put-string port (symbol->string (car head)))
           (put-char port #\")
           (put-char port #\:)
-          (write (cdr head) port))))
+          (write object port))))
   (put-char port #\})
   (put-char port #\newline))
+
+(define (handle/transaction transaction nstore ustore patterns port)
+  (let ((items (make-query transaction ustore (car patterns))))
+    (if (not (every values items))
+        #f
+        (generator-for-each
+         (lambda (item) (alist->json transaction ustore (fash->alist item) port))
+         (let loop ((patterns (cdr patterns))
+                    (generator (nstore-select transaction nstore items)))
+           (if (null? patterns)
+               generator
+               (let ((items (make-query transaction ustore (car patterns))))
+                 (if (not (every values items))
+                     #f
+                     (loop (cdr patterns)
+                           ((nstore-where transaction nstore items) generator))))))))))
 
 (define (decode bytevector)
   (call-with-input-string
@@ -74,7 +83,7 @@
         #f
         (engine-in-transaction (app-engine app) (app-okvs app)
           (lambda (transaction)
-            (handle/transaction transaction (app-nstore app) patterns port))))))
+            (handle/transaction transaction (app-nstore app) (app-ustore app) patterns port))))))
 
 (define-public (subcommand-serve app port)
   (log-info "web server starting at PORT" port)

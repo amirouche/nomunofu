@@ -7,22 +7,28 @@
 (import (nomunofu log))
 (import (nomunofu okvs engine))
 (import (nomunofu okvs nstore))
+(import (nomunofu okvs ustore))
 
 
-(define (add/transaction transaction nstore items)
-  (nstore-add! transaction nstore items))
+(define (add/transaction transaction nstore ustore items)
+  (nstore-add! transaction
+               nstore
+               (map (lambda (item) (object->ulid transaction ustore item))
+                    items)))
 
 (define (add app items)
   (engine-in-transaction (app-engine app) (app-okvs app)
     (lambda (transaction)
-      (add/transaction transaction (app-nstore app) items))))
+      (add/transaction transaction (app-nstore app) (app-ustore app) items))))
 
 (define (decode chars)
   (let loop ((chars chars)
              (out '()))
     (if (null? chars)
         (list->string (reverse out))
-        (if (char=? (car chars) #\\)
+        (if (and (char=? (car chars) #\\)
+                 (not (null? (cdr chars)))
+                 (char=? (cadr chars) #\u))
             (loop (drop chars 6)
                   (cons (integer->char
                          (string->number
