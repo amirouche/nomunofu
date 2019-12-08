@@ -66,7 +66,7 @@
 (export okvs-transaction-state)
 
 ;; TODO: redo this with an alist
-(define (connection-config cache create? memory? wal read-only? eviction-trigger eviction mmap)
+(define (connection-config cache create? memory? wal read-only? eviction-trigger eviction-target eviction mmap)
   (let ((out '()))
     (when cache
       ;; cache is size number in bytes, convert to MB
@@ -86,6 +86,10 @@
     (when eviction-trigger
       (set! out (cons (string-append "eviction_trigger="
                                      (number->string eviction-trigger))
+                      out)))
+    (when eviction-target
+      (set! out (cons (string-append "eviction_target="
+                                     (number->string eviction-target))
                       out)))
     (when eviction
       (let ((min (assq-ref eviction 'min))
@@ -136,12 +140,22 @@
         (wal #f)
         (read-only? #f)
         (eviction-trigger #f)
+        (eviction-target #f)
         (eviction #f)
         (mmap #t) ;; XXX: default configuration
         )
     (let loop ((config config))
       (if (null? config)
-          (values cache isolation create? memory? wal read-only? eviction-trigger eviction mmap)
+          (values cache
+                  isolation
+                  create?
+                  memory?
+                  wal
+                  read-only?
+                  eviction-trigger
+                  eviction-target
+                  eviction
+                  mmap)
           (begin (case (caar config)
                    ((cache) (set! cache (cdar config)))
                    ((isolation) (set! isolation (cdar config)))
@@ -150,6 +164,7 @@
                    ((wal) (set! wal (cdar config)))
                    ((read-only?) (set! read-only? (cdar config)))
                    ((eviction-trigger) (set! eviction-trigger (cdar config)))
+                   ((eviction-target) (set! eviction-target (cdar config)))
                    ((eviction) (set! eviction (cdar config)))
                    ((mmap) (set! mmap (cdar config)))
                    (else
@@ -158,7 +173,7 @@
 
 (define (%okvs home config)
   (call-with-values (lambda () (okvs-config config))
-    (lambda (cache isolation create? memory? wal read-only? eviction-trigger eviction mmap)
+    (lambda (cache isolation create? memory? wal read-only? eviction-trigger eviction-target eviction mmap)
       (unless home
         (error 'okvs/wiredtiger NO-HOME-ERROR home))
       (let ((cnx (wt:connection-open home
@@ -168,6 +183,7 @@
                                                         wal
                                                         read-only?
                                                         eviction-trigger
+                                                        eviction-target
                                                         eviction
                                                         mmap))))
         (unless create?

@@ -1,6 +1,7 @@
 (import (scheme base))
 (import (scheme process-context))
 (import (ice-9 match))
+(import (ice-9 threads))
 
 (import (nomunofu app))
 (import (nomunofu log))
@@ -25,7 +26,11 @@
 ;; for read only.
 (define %config `((cache . ,(* 5 1024 1024))
                   (wal . ,(* 1 1024 1024))
-                  (mmap . #f)))
+                  (mmap . #f)
+                  (eviction-trigger . 65)
+                  (eviction-target . 50)
+                  (eviction (min . 1)
+                            (max . ,(current-processor-count)))))
 
 (define engine (make-default-engine))
 (define ustore (make-ustore engine '(0)))
