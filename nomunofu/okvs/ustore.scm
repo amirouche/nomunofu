@@ -28,6 +28,17 @@
 
 (export make-ustore)
 
+(define-public (maybe-object->ulid transaction ustore object)
+  (let ((engine (ustore-engine ustore)))
+    (let* ((value (engine-pack engine object))
+           (hash (sha256 value))
+           (key (engine-pack engine
+                             (append (ustore-prefix ustore)
+                                     %sha256->ulid
+                                     (list hash)))))
+      ;; try to get ulid from sha256->ulid subspace
+      (engine-ref engine transaction key))))
+
 (define-public (object->ulid transaction ustore object)
   (let ((engine (ustore-engine ustore)))
     (let* ((value (engine-pack engine object))
