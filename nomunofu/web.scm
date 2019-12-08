@@ -91,5 +91,6 @@
               (lambda (request body port)
                 (write-response-line (cons 1 0) 200 "OK" port)
                 (put-string port "\r\n")
-                (handle app body port)
+                (guard (ex (else #f)) ;; TODO: improve error handling
+                  (handle app body port))
                 (close-port port))))
