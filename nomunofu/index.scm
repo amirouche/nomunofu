@@ -89,6 +89,5 @@
         (unless (eof-object? line)
           (let ((items (turtle->scheme line)))
             (when items
-              (log-trace "adding" (cons line items))
               (add app items))
             (loop (read-line port))))))))
