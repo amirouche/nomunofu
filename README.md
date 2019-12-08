@@ -6,7 +6,6 @@ Querying wikidata made easy
 
 ![no muss, no fuss](https://raw.githubusercontent.com/amirouche/nomunofu/master/luca-colapinto-I378DhssWqU-unsplash.jpg)
 
-
 This project aims to make querying wikidata much easier, and hopefully
 also much faster.  No prior knowledge of SPARQL or semantic web tools
 is required.  Good knowledge of Python is recommended.  Keep
