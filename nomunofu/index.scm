@@ -17,10 +17,23 @@
     (lambda (transaction)
       (add/transaction transaction (app-nstore app) items))))
 
+(define (decode chars)
+  (let loop ((chars chars)
+             (out '()))
+    (if (null? chars)
+        (list->string (reverse out))
+        (if (char=? (car chars) #\\)
+            (loop (drop chars 6)
+                  (cons (integer->char
+                         (string->number
+                          (list->string (drop (take chars 6) 2)) 16))
+                        out))
+            (loop (cdr chars) (cons (car chars) out))))))
+
 (define (turtle-parse-string chars)
   (call-with-values (lambda () (span (lambda (x) (not (char=? x #\"))) chars))
     (lambda (item rest)
-      (values (list->string item) (cdr rest)))))
+      (values (decode item) (cdr rest)))))
 
 (define (turtle-parse-iri chars)
   (call-with-values (lambda () (span (lambda (x) (not (char=? x #\>))) chars))
