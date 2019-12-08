@@ -20,9 +20,9 @@
 
 
 (define (%make-query txn ustore item)
-  (if (pair? (car pattern))
-      (cons (nstore-var (cdar pattern)) out)
-      (maybe-object->ulid txn ustore (car pattern)) out))
+  (if (pair? item)
+      (nstore-var (cdr item))
+      (maybe-object->ulid txn ustore item)))
 
 (define (make-query txn ustore pattern)
   (assume (= (length pattern) 3))
