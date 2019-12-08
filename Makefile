@@ -18,4 +18,4 @@ repl: ## Start a guile REPL with rlwrap
 	rlwrap guile -L .
 
 web: ## start the default web server
-	guile -L . nomunofu.scm 8080
+	guile -L . nomunofu.scm serve 8080
