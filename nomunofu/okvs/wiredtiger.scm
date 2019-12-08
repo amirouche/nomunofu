@@ -70,7 +70,7 @@
   (let ((out '()))
     (when cache
       ;; cache is size number in bytes, convert to MB
-      (let ((cache (inexact->exact (/ cache 1024))))
+      (let ((cache (inexact->exact (round (/ cache 1024)))))
         (set! out (cons (string-append "cache_size=" (number->string cache) "MB") out))))
     (unless create?
       (set! out (cons "create" out)))
