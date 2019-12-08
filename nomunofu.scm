@@ -15,6 +15,15 @@
 
 (log-toggle!)
 
+
+(define (memory-total)
+  (let ((port (open-input-file "/proc/meminfo")))
+    (let* ((line (read-line port))
+           (value (cadr (string-split line #\:)))
+           (value (string-trim-both value))
+           (value (car (string-split value #\space))))
+      (string->number value))))
+
 ;; TODO: rework the config to include eviction trigger and eviction
 ;; target, max number of thread set to the count of cpu core:
 ;;
@@ -24,7 +33,7 @@
 
 ;; TODO: when opening for serving, it is possible to open the database
 ;; for read only.
-(define %config `((cache . ,(* 5 1024 1024))
+(define %config `((cache . ,(exact (round (* (memory-total) 0.8))))
                   (wal . ,(* 1 1024 1024))
                   (mmap . #f)
                   (eviction-trigger . 65)
