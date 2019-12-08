@@ -1,6 +1,7 @@
 (define-module (nomunofu web))
 
 (import (scheme base))
+(import (scheme assume))
 
 (import (ice-9 match))
 (import (web http))
@@ -16,12 +17,25 @@
 (import (nomunofu web helpers))
 
 
-(define (handle/transaction transaction nstore body port)
-  (generator-map->list fash->alist
-                       (nstore-select transaction nstore
-                                      (list (nstore-var 's)
-                                            (nstore-var 'p)
-                                            (nstore-var 'o)))))
+(define (make-query pattern)
+  (assume (= (length pattern) 3))
+  (let loop ((pattern pattern)
+             (out '()))
+    (if (null? pattern)
+        (reverse out)
+        (if (pair? (car pattern))
+            (loop (cdr pattern) (cons (nstore-var (cdar pattern)) out))
+            (loop (cdr pattern) (cons (car pattern) out))))))
+
+(define (handle/transaction transaction nstore patterns port)
+  (generator-for-each
+   (lambda (item) (alist->json (fash->alist item) port))
+   (let loop ((patterns (cdr patterns))
+              (generator (nstore-select transaction nstore (make-query (car patterns)))))
+     (if (null? patterns)
+         generator
+         (loop (cdr patterns)
+               ((nstore-where transaction nstore (make-query (car patterns))) generator))))))
 
 (define (alist->json alist port)
   (put-char port #\{)
@@ -44,11 +58,23 @@
   (put-char port #\})
   (put-char port #\newline))
 
+(define (decode bytevector)
+  (call-with-input-string
+   (utf8->string bytevector)
+   (lambda (port)
+     (let loop ((item (read port))
+                (out '()))
+       (if (eof-object? item)
+           (reverse out)
+           (loop (read port) (cons item out)))))))
+
 (define (handle app body port)
-  (let ((out (engine-in-transaction (app-engine app) (app-okvs app)
-               (lambda (transaction)
-                 (handle/transaction transaction (app-nstore app) body port)))))
-    (for-each (lambda (item) (alist->json item port)) out)))
+  (let* ((patterns (decode body)))
+    (if (null? patterns)
+        #f
+        (engine-in-transaction (app-engine app) (app-okvs app)
+          (lambda (transaction)
+            (handle/transaction transaction (app-nstore app) patterns port))))))
 
 (define-public (subcommand-serve app port)
   (log-info "web server starting at PORT" port)

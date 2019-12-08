@@ -17,5 +17,8 @@ xxx: ## Things that require attention
 repl: ## Start a guile REPL with rlwrap
 	rlwrap guile -L .
 
-web: ## start the default web server
+web: ## Start the default web server
 	guile -L . nomunofu.scm serve 8080
+
+query: ## Send a query to the server
+	curl --data "@query.scm" http://localhost:8080/
