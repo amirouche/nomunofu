@@ -32,7 +32,7 @@
 ;; TODO: Check statistics.
 
 ;; TODO: when opening for serving, it is possible to open the database
-;; for read only.
+;; in readonly mode
 (define %config `((cache . ,(exact (round (* (memory-total) 0.8))))
                   (wal . ,(* 1 1024 1024))
                   (mmap . #f)
