@@ -1,0 +1,4 @@
+(define-module (nomunofu wiredtiger config)
+  #:export (%libwiredtiger))
+
+(define %libwiredtiger "@WIREDTIGER@/lib/libwiredtiger.so")
