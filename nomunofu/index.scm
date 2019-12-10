@@ -66,7 +66,8 @@
      (else (raise (cons 'not-implemented (car chars)))))))
 
 (define (turtle-parse-datetime object)
-  (guard (ex (else #f)) ;; TODO: sometime there is weird values like: -34000-01-01T00:00:00Z
+  (guard (ex (else object)) ;; TODO: sometime there is weird values
+                            ;; like: -34000-01-01T00:00:00Z
     (car (mktime (car (strptime "%FT%T" object)) "UTC"))))
 
 (define (turtle->scheme string)
