@@ -51,14 +51,18 @@
     (lambda (item rest)
       (values (string->number (list->string item)) (cdr rest)))))
 
+(define (turtle-parse-gensym chars)
+  (call-with-values (lambda () (span (compose not char-whitespace?) chars))
+    (lambda (item rest)
+      (values (list->string item) (cdr rest)))))
+
 (define (turtle-parse-item chars)
   (let ((chars (find-tail (compose not char-whitespace?) chars)))
     (cond
      ((char=? (car chars) #\") (turtle-parse-string (cdr chars)))
      ((char=? (car chars) #\<) (turtle-parse-iri (cdr chars)))
      ((char-numeric? (car chars)) (turtle-parse-number chars))
-     ;; TODO: use gensym?
-     ((char=? (car chars) #\_) (values #f '()))
+     ((char=? (car chars) #\_) (turtle-parse-gensym chars))
      (else (raise (cons 'not-implemented (car chars)))))))
 
 (define (turtle-parse-datetime object)
