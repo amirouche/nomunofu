@@ -100,6 +100,10 @@
                                 (list subject predicate out)
                                 #f)))
                          (else (raise type)))))
+                     ((char=? (car rest) #\@)
+                      (if (string=? (list->string (take rest 3)) "@en")
+                          (list subject predicate object)
+                          #f))
                      ((and subject predicate object) (list subject predicate object))
                      (else (raise (list subject predicate object)))))))))))))
 
