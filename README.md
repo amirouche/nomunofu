@@ -6,66 +6,98 @@ Querying wikidata made easy
 
 ![no muss, no fuss](https://raw.githubusercontent.com/amirouche/nomunofu/master/luca-colapinto-I378DhssWqU-unsplash.jpg)
 
-This project aims to make querying wikidata much easier, and hopefully
-also much faster.  No prior knowledge of SPARQL or semantic web tools
-is required.  Good knowledge of Python is recommended.  Keep
-[wikidata.org](https://wikidata.org) around.
+nomunofu is database server written in GNU Guile that is powered by
+WiredTiger ordered key-value store, based on SRFI-167 and SRFI-168.
 
-There is two part in this application:
+It allows to store and query triples. The goal is to make it much
+easier, definitely faster to query as much as possible tuples of three
+items. To achieve that goal, the server part of the database is made
+very simple, and it only knows how to do pattern matching. Also, it is
+possible to swap the storage engine to something that is horizontally
+scalable and resilient (read: foundationdb).
 
-The **server** is shipped as a set of binaries for amd64 Ubuntu 18.04
-(LTS) with a ready-made database files, that will allow you to spin
-your own instance in no-time.  The server exposes a HTTP/1.0 interface
-that allows to query for triples.  It is as simple as possible and
-only allows to query using pattern matching.  The end-user does not
-directly interact with the server.  Querying is done in Python see the
-following paragraph.
+Portable binaries for the current release (v0.1.3) with a small database
+file can be retrieved with the following command:
 
-The **client**, written in Python, is smarter!  It will query the server
-and refine its results based on the user query.  User queries are
-expressed using Python code.
+  $ wget [https://hyper.dev/nomunofu-v0.1.3.tar.gz](https://hyper.dev/nomunofu-v0.1.3.tar.gz)
 
-## Python Client API
+The uncompressed directory is 7GB.
 
-### Quick Start
+Once you have downloaded the tarball, you can do the following cli
+dance to run the database server:
+
+$ tar xf nomunofu-v0.1.3.tar.gz && cd nomunofu && ./nomunofu serve 8080
+
+The database will be available on port 8080. Then you can use the
+python client `nomunofu.py` to do queries.
+
+An example query that run on a subset of wikidata:
+
+> instance of (P31) government (Q3624078)
+
+The python code looks like:
 
 ```python
-from nomunofu import Nomunofu
-from nomunofu import var
+In [1]: from nomunofu import Nomunofu
+In [2]: from nomunofu import var
+In [3]: nomunofu = Nomunofu('http://localhost:8080');
+In [4]: nomunofu.query(
+(var('uid'),
+ 'http://www.wikidata.org/prop/direct/P31',
+ 'http://www.wikidata.org/entity/Q3624078'),
+(var('uid'),
+ 'http://www.w3.org/2000/01/rdf-schema#label',
+ var('label')))
 
-
-nomunofu = Nomunofu('https://data.hyper.dev:8080')
-out = nomunofu.query(
-    ("Q1", "name", var("name"))
-)
-print(out)  # => [{'name': 'Universe'}]
+Out[4]:
+[{'uid': 'http://www.wikidata.org/entity/Q31',
+'label': 'Belgium'},
+ {'uid': 'http://www.wikidata.org/entity/Q183',
+'label': 'Germany'},
+ {'uid': 'http://www.wikidata.org/entity/Q148',
+'label': 'China'},
+ {'uid': 'http://www.wikidata.org/entity/Q148',
+'label': "People's Republic of China"},
+ {'uid': 'http://www.wikidata.org/entity/Q801',
+'label': 'Israel'},
+ {'uid': 'http://www.wikidata.org/entity/Q45',
+'label': 'Portugal'},
+ {'uid': 'http://www.wikidata.org/entity/Q155',
+'label': 'Brazil'},
+ {'uid': 'http://www.wikidata.org/entity/Q916',
+'label': 'Angola'},
+ {'uid': 'http://www.wikidata.org/entity/Q233',
+'label': 'Malta'},
+ {'uid': 'http://www.wikidata.org/entity/Q878',
+'label': 'United Arab Emirates'},
+ {'uid': 'http://www.wikidata.org/entity/Q686',
+'label': 'Vanuatu'},
+ {'uid': 'http://www.wikidata.org/entity/Q869',
+'label': 'Thailand'},
+ {'uid': 'http://www.wikidata.org/entity/Q863',
+'label': 'Tajikistan'},
+ {'uid': 'http://www.wikidata.org/entity/Q1049',
+'label': 'Sudan'},
+ {'uid': 'http://www.wikidata.org/entity/Q1044',
+'label': 'Sierra Leone'},
+ {'uid': 'http://www.wikidata.org/entity/Q912',
+'label': 'Mali'},
+ {'uid': 'http://www.wikidata.org/entity/Q819',
+'label': 'Laos'},
+ {'uid': 'http://www.wikidata.org/entity/Q298',
+'label': 'Chile'},
+ {'uid': 'http://www.wikidata.org/entity/Q398',
+'label': 'Bahrain'},
+ {'uid': 'http://www.wikidata.org/entity/Q12560',
+'label': 'Ottoman Empire'}]
 ```
 
-### `var(name)`
+As of right now there is less than 10 000 000 triples that were
+imported. Blank nodes are included, and only English labels are
+imported.
 
-Instantiate a variable named `name`.
+You can grab the source code with the following command:
 
-### `Nomunofu(url)`
+$ git clone [https://github.com/amirouche/nomunofu](https://github.com/amirouche/nomunofu)
 
-This will instantiate an object that will allow to query the server.
-`url` must point to a nomunofu server.
-
-### `Nomunofu.query(*patterns, limit=None, offset=None)`
-
-Return a list of dictionaries where variables of `patterns` are
-associated with the corresponding value as returned by the server.  A
-pattern is a tuple of three items aka. triples that can have variable
-object returned by `var(name)`, as an item.
-
-### `Nomunofu.count(*patterns)`
-
-Return the equivalent of `len(nomunofu.query(*patterns))` but in more
-efficient way.
-
-### `Nomunofu.sum(name, *patterns)`
-
-Compute the sum of values taken by the variable `name` in `patterns`.
-
-### `Nomunofu.avg(name, *patterns)`
-
-Compute the average of values taken by the variable `name` in `patterns`.
+I hope you have a good day!
