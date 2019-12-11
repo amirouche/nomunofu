@@ -1,7 +1,8 @@
 WiredTiger*
 okvs.wt*
-work
-done
+work/
+latest-lexemes*
+test.nt*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
