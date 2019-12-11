@@ -17,6 +17,10 @@ class var:
         self.name = name
 
 
+class NomunofuException(Exception):
+    pass
+
+
 class Nomunofu:
 
     def __init__(self, url):
@@ -48,6 +52,9 @@ class Nomunofu:
         log.debug("query is: %r", query)
 
         response = requests.get(self.url, data=json.dumps(query))
+        if response.status_code == 400:
+            raise NomunofuException(response.json())
+
         response.raise_for_status()
 
         # Then parse json lines using io.StringIO to allow to stream

@@ -20,14 +20,14 @@
 (import (nomunofu web helpers))
 
 
-(define (%make-query txn ustore item)
+(define (%make-pattern txn ustore item)
   (if (pair? item)
       (nstore-var (string->symbol (car item)))
       (maybe-object->ulid txn ustore item)))
 
-(define (make-query txn ustore pattern)
+(define (make-pattern txn ustore pattern)
   (assume (= (length pattern) 3))
-  (map (lambda (item) (%make-query txn ustore item)) pattern))
+  (map (lambda (item) (%make-pattern txn ustore item)) pattern))
 
 (define (alist->json txn ustore alist port)
   (put-char port #\{)
@@ -52,47 +52,61 @@
   (put-char port #\})
   (put-char port #\newline))
 
-(define (handle/transaction transaction nstore ustore patterns port)
-  (let ((items (make-query transaction ustore (car patterns))))
-    (log-trace "items" items)
-    (if (not (every values items))
-        #f
-        (generator-for-each
-         (lambda (item) (alist->json transaction ustore (fash->alist item) port))
-         (let loop ((patterns (cdr patterns))
-                    (generator (nstore-select transaction nstore items)))
-           (if (null? patterns)
-               generator
-               (let ((items (make-query transaction ustore (car patterns))))
-                 (if (not (every values items))
-                     #f
-                     (loop (cdr patterns)
-                           ((nstore-where transaction nstore items) generator))))))))))
+(define (invalid? pattern)
+  (every nstore-var? pattern))
+
+(define (query/transaction transaction nstore ustore patterns port)
+  (let ((pattern (make-pattern transaction ustore (car patterns))))
+    (if (invalid? pattern)
+        (begin
+          (start-response port 400 "Bad request")
+          (write "A query can not start with a pattern that is only variables" port))
+        (begin
+          (start-response port 200 "OK")
+          (generator-for-each
+           (lambda (item) (alist->json transaction ustore (fash->alist item) port))
+           (let loop ((patterns (cdr patterns))
+                      (generator (nstore-select transaction nstore pattern)))
+             (if (null? patterns)
+                 generator
+                 (let ((pattern (make-pattern transaction ustore (car patterns))))
+                   (loop (cdr patterns)
+                         ((nstore-where transaction nstore pattern) generator))))))))))
 
 (define (parse bytevector)
   (json->scheme (utf8->string bytevector)))
 
 (define (handle app body port)
   (let* ((query (parse body)))
-    (log-trace "query" query)
     (match (car query)
       ("query"
-       (log-trace "query is query")
        (if (null? (cdr query))
-           #f
+           (begin
+             (start-response port 400 "Bad Request")
+             (write "No pattern found" port))
            (engine-in-transaction (app-engine app) (app-okvs app)
              (lambda (transaction)
-               (handle/transaction transaction (app-nstore app) (app-ustore app) (cdr query) port))))))))
+               (query/transaction transaction
+                                   (app-nstore app)
+                                   (app-ustore app)
+                                   (cdr query)
+                                   port)))))
+      (else
+       (start-response port 400 "Bad Request")
+       (write "Unkown action" port)))))
 
 (define (on-error ex)
   (log-panic "error while handling request" ex))
+
+(define (start-response port code reason)
+  (write-response-line (cons 1 0) code reason port)
+  (put-string port "\r\n"))
 
 (define-public (subcommand-serve app port)
   (log-info "web server starting at PORT" port)
   (run-server port
               (lambda (request body port)
-                (write-response-line (cons 1 0) 200 "OK" port)
-                (put-string port "\r\n")
-                (guard (ex (else (on-error ex) #f)) ;; TODO: improve error handling
+
+                (guard (ex (else (on-error ex) #f))
                   (handle app body port))
                 (close-port port))))
