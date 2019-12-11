@@ -20,8 +20,15 @@ repl: ## Start a guile REPL with rlwrap
 web: ## Start the default web server
 	guile -L . nomunofu.scm serve 8080
 
-index: test.nt ## Index test.nt
-	guile -L . nomunofu.scm index test.nt
+latest-lexemes.nt:
+	wget https://dumps.wikimedia.org/wikidatawiki/entities/latest-lexemes.nt.bz2
+	bzip2 -d latest-lexemes.nt.bz2
+
+index: test.nt.gz ## Index test.nt
+	gunzip test.nt.gz
+	mkdir -p work done
+	cd work && split --lines 1000000 ../test.nt
+	bash index.sh work/
 
 query: ## Send a query to the server
 	./query.py
