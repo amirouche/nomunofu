@@ -11,6 +11,7 @@
 (import (nomunofu app))
 (import (nomunofu log))
 (import (nomunofu fash))
+(import (nomunofu json))
 (import (nomunofu generator))
 (import (nomunofu okvs engine))
 (import (nomunofu okvs nstore))
@@ -21,7 +22,7 @@
 
 (define (%make-query txn ustore item)
   (if (pair? item)
-      (nstore-var (cdr item))
+      (nstore-var (string->symbol (car item)))
       (maybe-object->ulid txn ustore item)))
 
 (define (make-query txn ustore pattern)
@@ -53,6 +54,7 @@
 
 (define (handle/transaction transaction nstore ustore patterns port)
   (let ((items (make-query transaction ustore (car patterns))))
+    (log-trace "items" items)
     (if (not (every values items))
         #f
         (generator-for-each
@@ -67,23 +69,23 @@
                      (loop (cdr patterns)
                            ((nstore-where transaction nstore items) generator))))))))))
 
-(define (decode bytevector)
-  (call-with-input-string
-   (utf8->string bytevector)
-   (lambda (port)
-     (let loop ((item (read port))
-                (out '()))
-       (if (eof-object? item)
-           (reverse out)
-           (loop (read port) (cons item out)))))))
+(define (parse bytevector)
+  (json->scheme (utf8->string bytevector)))
 
 (define (handle app body port)
-  (let* ((patterns (decode body)))
-    (if (null? patterns)
-        #f
-        (engine-in-transaction (app-engine app) (app-okvs app)
-          (lambda (transaction)
-            (handle/transaction transaction (app-nstore app) (app-ustore app) patterns port))))))
+  (let* ((query (parse body)))
+    (log-trace "query" query)
+    (match (car query)
+      ("query"
+       (log-trace "query is query")
+       (if (null? (cdr query))
+           #f
+           (engine-in-transaction (app-engine app) (app-okvs app)
+             (lambda (transaction)
+               (handle/transaction transaction (app-nstore app) (app-ustore app) (cdr query) port))))))))
+
+(define (on-error ex)
+  (log-panic "error while handling request" ex))
 
 (define-public (subcommand-serve app port)
   (log-info "web server starting at PORT" port)
@@ -91,6 +93,6 @@
               (lambda (request body port)
                 (write-response-line (cons 1 0) 200 "OK" port)
                 (put-string port "\r\n")
-                (guard (ex (else #f)) ;; TODO: improve error handling
+                (guard (ex (else (on-error ex) #f)) ;; TODO: improve error handling
                   (handle app body port))
                 (close-port port))))

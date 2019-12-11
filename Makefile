@@ -24,7 +24,7 @@ index: test.nt ## Index test.nt
 	guile -L . nomunofu.scm index test.nt
 
 query: ## Send a query to the server
-	curl --data "@query.scm" http://localhost:8080/
+	./query.py
 
 clean:
 	rm -f okvs.wt* WiredTiger*
