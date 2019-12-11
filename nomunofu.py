@@ -26,7 +26,7 @@ class Nomunofu:
     def __init__(self, url):
         self.url = url
 
-    def query(self, *patterns):
+    def query(self, *patterns, limit=None, offset=None):
         # Validation
         for pattern in patterns:
             assert len(pattern) == 3  # noqa
@@ -51,7 +51,12 @@ class Nomunofu:
 
         log.debug("query is: %r", query)
 
-        response = requests.get(self.url, data=json.dumps(query))
+        params = dict()
+        if offset is not None:
+            params['offset'] = offset
+        if limit is not None:
+            params['limit'] = limit
+        response = requests.get(self.url, data=json.dumps(query), params=params)
         if response.status_code == 400:
             raise NomunofuException(response.json())
 

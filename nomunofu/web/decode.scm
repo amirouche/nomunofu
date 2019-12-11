@@ -53,4 +53,4 @@
                                   (string-split string #\&)))))
       (list->alist (map (match-lambda
                           ((key value)
-                           (cons (uri-decode key) (uri-decode value)))) pairs)))))
+                           (cons (string->symbol (uri-decode key)) (uri-decode value)))) pairs)))))

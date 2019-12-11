@@ -6,6 +6,8 @@
 
 (import (ice-9 match))
 (import (web http))
+(import (web request))
+(import (web uri))
 (import (rnrs io ports))
 
 (import (nomunofu app))
@@ -18,6 +20,7 @@
 (import (nomunofu okvs ustore))
 (import (nomunofu web server))
 (import (nomunofu web helpers))
+(import (nomunofu web decode))
 
 
 (define (%make-pattern txn ustore item)
@@ -55,7 +58,17 @@
 (define (invalid? pattern)
   (every nstore-var? pattern))
 
-(define (query/transaction transaction nstore ustore patterns port)
+(define (limit+offset options)
+  (let* ((limit (and options (and=> (assq 'limit options)
+                                    (compose string->number cadr))))
+         (offset (and options (and=> (assq 'offset options)
+                                     (compose string->number cadr)))))
+    (if limit
+        (set! limit (min 1000 limit))
+        (set! limit 1000))
+    (values limit offset)))
+
+(define (query/transaction transaction nstore ustore patterns options port)
   (let ((pattern (make-pattern transaction ustore (car patterns))))
     (if (invalid? pattern)
         (begin
@@ -63,21 +76,28 @@
           (write "A query can not start with a pattern that is only variables" port))
         (begin
           (start-response port 200 "OK")
-          (generator-for-each
-           (lambda (item) (alist->json transaction ustore (fash->alist item) port))
-           (let loop ((patterns (cdr patterns))
-                      (generator (nstore-select transaction nstore pattern)))
-             (if (null? patterns)
-                 generator
-                 (let ((pattern (make-pattern transaction ustore (car patterns))))
-                   (loop (cdr patterns)
-                         ((nstore-where transaction nstore pattern) generator))))))))))
+          (call-with-values (lambda () (limit+offset options))
+            (lambda (limit offset)
+              (generator-for-each
+               (lambda (item) (alist->json transaction ustore (fash->alist item) port))
+               (let loop ((patterns (cdr patterns))
+                          (generator (nstore-select transaction nstore pattern)))
+                 (if (null? patterns)
+                     (begin
+                       (when offset
+                         (set! generator (gdrop generator offset)))
+                       (when limit
+                         (set! generator (gtake generator limit)))
+                       generator)
+                     (let ((pattern (make-pattern transaction ustore (car patterns))))
+                       (loop (cdr patterns)
+                             ((nstore-where transaction nstore pattern) generator))))))))))))
 
 (define (parse bytevector)
   (json->scheme (utf8->string bytevector)))
 
-(define (handle app body port)
-  (let* ((query (parse body)))
+(define (handle app body options port)
+  (let ((query (parse body)))
     (match (car query)
       ("query"
        (if (null? (cdr query))
@@ -90,6 +110,7 @@
                                    (app-nstore app)
                                    (app-ustore app)
                                    (cdr query)
+                                   options
                                    port)))))
       (else
        (start-response port 400 "Bad Request")
@@ -106,7 +127,7 @@
   (log-info "web server starting at PORT" port)
   (run-server port
               (lambda (request body port)
-
                 (guard (ex (else (on-error ex) #f))
-                  (handle app body port))
+                  (let ((options (and=> (uri-query (request-uri request)) decode)))
+                    (handle app body options port)))
                 (close-port port))))

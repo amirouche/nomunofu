@@ -13,7 +13,9 @@ out = nomunofu.query(
         var('about'),
         schema('about'),
         var('uid'),
-    )
+    ),
+    limit=5,
+    offset=7,
 )
 
 for item in out:
