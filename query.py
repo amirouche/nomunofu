@@ -22,6 +22,8 @@ for item in out:
     print(item)
 
 # this is silly, but test data, does not have interesting integers.
-print('count', nomunofu.count('out', (var('uid'), wikibase('identifiers'), var('out'))))
+print('count', nomunofu.count((var('uid'), wikibase('identifiers'), var('out'))))
+
 print('sum', nomunofu.sum('out', (var('uid'), wikibase('identifiers'), var('out'))))
+
 print('average', nomunofu.average('out', (var('uid'), wikibase('identifiers'), var('out'))))

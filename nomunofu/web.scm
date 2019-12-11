@@ -128,17 +128,22 @@
                                     value)
                       out))))))
 
-(define (count app name patterns)
+(define (count app patterns)
   (engine-in-transaction (app-engine app) (app-okvs app)
     (lambda (transaction)
-      (aggregate (string->symbol name)
-                 transaction
-                 (app-nstore app)
-                 (app-ustore app)
-                 patterns
-                 0
-                 (lambda (value out) (+ out 1))))))
-
+      (let ((pattern (make-pattern transaction (app-ustore app) (car patterns))))
+        (if (invalid? pattern)
+            #f
+            (generator-fold
+             (lambda (item out) (pk out) (+ out 1))
+             0
+             (let loop ((patterns (cdr patterns))
+                        (generator (nstore-select transaction (app-nstore app) pattern)))
+               (if (null? patterns)
+                   generator
+                   (let ((pattern (make-pattern transaction (app-ustore app) (car patterns))))
+                     (loop (cdr patterns)
+                           ((nstore-where transaction (app-nstore app) pattern) generator)))))))))))
 
 (define (average app name patterns)
   (engine-in-transaction (app-engine app) (app-okvs app)
@@ -195,7 +200,7 @@
                (start-response port 400 "Bad Request")
                (write "nomunofu!" port)))))
       ("count"
-       (let ((out (count app (cadr query) (cddr query))))
+       (let ((out (count app (cddr query))))
          (if out
              (begin
                (start-response port 200 "OK")

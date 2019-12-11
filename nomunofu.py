@@ -95,8 +95,8 @@ class Nomunofu:
     def sum(self, name, *patterns):
         return self._aggregation('sum', name, patterns)
 
-    def count(self, name, *patterns):
-        return self._aggregation('count', name, patterns)
+    def count(self, *patterns):
+        return self._aggregation('count', False, patterns)
 
 # helpers for rdf namespaces
 
