@@ -135,7 +135,7 @@
         (if (invalid? pattern)
             #f
             (generator-fold
-             (lambda (item out) (pk out) (+ out 1))
+             (lambda (item out) out (+ out 1))
              0
              (let loop ((patterns (cdr patterns))
                         (generator (nstore-select transaction (app-nstore app) pattern)))
@@ -223,8 +223,7 @@
   (log-info "web server starting at PORT" port)
   (run-server port
               (lambda (request body port)
-                ;; (guard (ex (else (on-error ex) #f))
-                (begin
+                (guard (ex (else (on-error ex) #f))
                   (let ((options (and=> (uri-query (request-uri request)) decode)))
                     (handle app body options port)))
                 (close-port port))))
