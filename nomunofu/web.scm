@@ -96,6 +96,70 @@
 (define (parse bytevector)
   (json->scheme (utf8->string bytevector)))
 
+(define (aggregate symbol transaction nstore ustore patterns seed proc)
+  (let ((pattern (make-pattern transaction ustore (car patterns))))
+    (if (invalid? pattern)
+        #f
+        (generator-fold
+         (lambda (item out) (and out
+                                 (and=> (fash-ref item symbol)
+                                        (lambda (value) (proc value out)))))
+         seed
+         (let loop ((patterns (cdr patterns))
+                    (generator (nstore-select transaction nstore pattern)))
+           (if (null? patterns)
+               generator
+               (let ((pattern (make-pattern transaction ustore (car patterns))))
+                 (loop (cdr patterns)
+                       ((nstore-where transaction nstore pattern) generator)))))))))
+
+(define (sum app name patterns)
+  (engine-in-transaction (app-engine app) (app-okvs app)
+    (lambda (transaction)
+      (aggregate (string->symbol name)
+                 transaction
+                 (app-nstore app)
+                 (app-ustore app)
+                 patterns
+                 0
+                 (lambda (value out)
+                   (+ (ulid->object transaction
+                                    (app-ustore app)
+                                    value)
+                      out))))))
+
+(define (count app name patterns)
+  (engine-in-transaction (app-engine app) (app-okvs app)
+    (lambda (transaction)
+      (aggregate (string->symbol name)
+                 transaction
+                 (app-nstore app)
+                 (app-ustore app)
+                 patterns
+                 0
+                 (lambda (value out) (+ out 1))))))
+
+
+(define (average app name patterns)
+  (engine-in-transaction (app-engine app) (app-okvs app)
+    (lambda (transaction)
+      (let ((count 0))
+        (and=>
+         (aggregate (string->symbol name)
+                     transaction
+                     (app-nstore app)
+                     (app-ustore app)
+                     patterns
+                     0
+                     (lambda (value out)
+                       (set! count (+ count 1))
+                       (+ (ulid->object transaction
+                                        (app-ustore app)
+                                        value)
+                          out)))
+         (lambda (sum)
+           (inexact (/ sum count))))))))
+
 (define (handle app body options port)
   (let ((query (parse body)))
     (match (car query)
@@ -112,6 +176,33 @@
                                    (cdr query)
                                    options
                                    port)))))
+      ("sum"
+       (let ((out (sum app (cadr query) (cddr query))))
+         (if out
+             (begin
+               (start-response port 200 "OK")
+               (write out port))
+             (begin
+               (start-response port 400 "Bad Request")
+               (write "nomunofu!" port)))))
+      ("average"
+       (let ((out (average app (cadr query) (cddr query))))
+         (if out
+             (begin
+               (start-response port 200 "OK")
+               (write out port))
+             (begin
+               (start-response port 400 "Bad Request")
+               (write "nomunofu!" port)))))
+      ("count"
+       (let ((out (count app (cadr query) (cddr query))))
+         (if out
+             (begin
+               (start-response port 200 "OK")
+               (write out port))
+             (begin
+               (start-response port 400 "Bad Request")
+               (write "nomunofu!" port)))))
       (else
        (start-response port 400 "Bad Request")
        (write "Unkown action" port)))))
@@ -127,7 +218,8 @@
   (log-info "web server starting at PORT" port)
   (run-server port
               (lambda (request body port)
-                (guard (ex (else (on-error ex) #f))
+                ;; (guard (ex (else (on-error ex) #f))
+                (begin
                   (let ((options (and=> (uri-query (request-uri request)) decode)))
                     (handle app body options port)))
                 (close-port port))))

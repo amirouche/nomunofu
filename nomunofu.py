@@ -26,17 +26,27 @@ class Nomunofu:
     def __init__(self, url):
         self.url = url
 
-    def query(self, *patterns, limit=None, offset=None):
-        # Validation
-        for pattern in patterns:
-            assert len(pattern) == 3  # noqa
-            for item in pattern:
-                assert type(item) in (int, float, str, var)  # noqa
+    def _request(self, json, params=None):
+        response = requests.get(self.url, json=json, params=params)
+        if response.status_code == 400:
+            raise NomunofuException(response.json())
+        response.raise_for_status()
+        return response
 
+    def _valid(self, patterns):
+        for pattern in patterns:
+            if len(pattern) != 3:
+                return False
+            for item in pattern:
+                if type(item) not in (int, float, str, var):
+                    return False
+        return True
+
+    def _make_query(self, patterns):
         # Translate into what is expected by the server.  This will
         # rely only on lists because it is faster server side to
         # parse.  Still, it is valid JSON, albeit somewhat unusual.
-        query = ['query']
+        query = []
         for pattern in patterns:
             out = []
             for item in pattern:
@@ -50,17 +60,20 @@ class Nomunofu:
             query.append(out)
 
         log.debug("query is: %r", query)
+        return query
 
-        params = dict()
+    def query(self, *patterns, limit=None, offset=None):
+        assert self._valid(patterns)
+
+        query = ['query'] + self._make_query(patterns)
+
+        options = dict()
         if offset is not None:
-            params['offset'] = offset
+            options['offset'] = offset
         if limit is not None:
-            params['limit'] = limit
-        response = requests.get(self.url, data=json.dumps(query), params=params)
-        if response.status_code == 400:
-            raise NomunofuException(response.json())
+            options['limit'] = limit
 
-        response.raise_for_status()
+        response = self._request(query, options)
 
         # Then parse json lines using io.StringIO to allow to stream
         # lines and avoid the need for at least double the memory of
@@ -70,6 +83,21 @@ class Nomunofu:
                 item = json.loads(line)
                 yield item
 
+    def _aggregation(self, operation, name, patterns):
+        assert self._valid(patterns)
+        query = [operation, name] + self._make_query(patterns)
+        response = self._request(query)
+        return response.json()
+
+    def average(self, name, *patterns):
+        return self._aggregation('average', name, patterns)
+
+    def sum(self, name, *patterns):
+        return self._aggregation('sum', name, patterns)
+
+    def count(self, name, *patterns):
+        return self._aggregation('count', name, patterns)
+
 # helpers for rdf namespaces
 
 def rdfschema(suffix):
@@ -77,3 +105,6 @@ def rdfschema(suffix):
 
 def schema(suffix):
     return "http://schema.org/" + suffix
+
+def wikibase(suffix):
+    return 'http://wikiba.se/ontology#' + suffix
