@@ -1,5 +1,7 @@
 WiredTiger*
 okvs.wt*
+work
+done
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
