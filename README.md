@@ -9,12 +9,18 @@ Querying wikidata made easy
 nomunofu is database server written in GNU Guile that is powered by
 WiredTiger ordered key-value store, based on SRFI-167 and SRFI-168.
 
-It allows to store and query triples. The goal is to make it much
+It allows to store and query triples.  The goal is to make it much
 easier, definitely faster to query as much as possible tuples of three
-items. To achieve that goal, the server part of the database is made
-very simple, and it only knows how to do pattern matching. Also, it is
-possible to swap the storage engine to something that is horizontally
-scalable and resilient (read: foundationdb).
+items.  To achieve that goal, the server part of the database is made
+very simple, and it only knows how to do pattern matching.  Also, it
+is possible to swap the storage engine to something that is
+horizontally scalable and resilient (read: foundationdb).
+
+The *thin server*, *thick client* was choosen to allow the end-user to
+more easily workaround bugs in the data, and it also allows to offload
+the servers hosting the data from heavy computations.
+
+The server speaks JSON.
 
 Portable binaries for the current release (v0.1.3) with a small database
 file can be retrieved with the following command:
