@@ -22,17 +22,17 @@ the servers hosting the data from heavy computations.
 
 The server speaks JSON.
 
-Portable binaries for the current release (v0.1.3) with a small database
-file can be retrieved with the following command:
+Portable binaries for the current release (v0.1.4) with a small
+database file can be retrieved with the following command:
 
-> $ wget [https://hyper.dev/nomunofu-v0.1.3.tar.gz](https://hyper.dev/nomunofu-v0.1.3.tar.gz)
+> $ wget [https://hyper.dev/nomunofu-v0.1.4.tar.bz](https://hyper.dev/nomunofu-v0.1.4.tar.bz)
 
-The uncompressed directory is 7GB.
+The uncompressed directory is 11GB, it contains all wikidata lexemes.
 
 Once you have downloaded the tarball, you can do the following cli
 dance to run the database server:
 
-> $ tar xf nomunofu-v0.1.3.tar.gz && cd nomunofu && ./nomunofu serve 8080
+> $ tar xf nomunofu-v0.1.4.tar.bz2 && cd nomunofu && ./nomunofu serve 8080
 
 The database will be available on port 8080. Then you can use the
 python client `nomunofu.py` to do queries.
