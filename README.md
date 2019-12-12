@@ -1,6 +1,6 @@
 # nomunofu
 
-**status: early draft**
+**status: draft**
 
 Querying wikidata made easy
 
@@ -19,14 +19,14 @@ scalable and resilient (read: foundationdb).
 Portable binaries for the current release (v0.1.3) with a small database
 file can be retrieved with the following command:
 
-  $ wget [https://hyper.dev/nomunofu-v0.1.3.tar.gz](https://hyper.dev/nomunofu-v0.1.3.tar.gz)
+> $ wget [https://hyper.dev/nomunofu-v0.1.3.tar.gz](https://hyper.dev/nomunofu-v0.1.3.tar.gz)
 
 The uncompressed directory is 7GB.
 
 Once you have downloaded the tarball, you can do the following cli
 dance to run the database server:
 
-$ tar xf nomunofu-v0.1.3.tar.gz && cd nomunofu && ./nomunofu serve 8080
+> $ tar xf nomunofu-v0.1.3.tar.gz && cd nomunofu && ./nomunofu serve 8080
 
 The database will be available on port 8080. Then you can use the
 python client `nomunofu.py` to do queries.
@@ -98,6 +98,6 @@ imported.
 
 You can grab the source code with the following command:
 
-$ git clone [https://github.com/amirouche/nomunofu](https://github.com/amirouche/nomunofu)
+> $ git clone [https://github.com/amirouche/nomunofu](https://github.com/amirouche/nomunofu)
 
 I hope you have a good day!
