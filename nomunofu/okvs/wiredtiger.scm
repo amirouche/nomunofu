@@ -70,7 +70,7 @@
       ;; cache is size number in bytes, convert to MB
       (let ((cache (inexact->exact (round (/ cache 1024)))))
         (set! out (cons (string-append "cache_size=" (number->string cache) "MB") out))))
-    (unless create?
+    (when create?
       (set! out (cons "create" out)))
     (when memory?
       (set! out (cons "in_memory" out)))
