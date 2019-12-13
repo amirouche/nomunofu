@@ -39,6 +39,20 @@
       ;; try to get ulid from sha256->ulid subspace
       (engine-ref engine transaction key))))
 
+(define (ask? transaction ustore uid)
+  (let* ((engine (ustore-engine ustore)))
+    (engine-ref engine transaction
+                (engine-pack engine
+                             (append (ustore-prefix ustore)
+                                     %ulid->sha256
+                                     (list uid))))))
+
+(define (ulid* transaction ustore)
+  (let loop ((uid (ulid)))
+    (if (ask? transaction ustore uid)
+        (loop (ulid))
+        uid)))
+
 (define-public (object->ulid transaction ustore object)
   (let ((engine (ustore-engine ustore)))
     (let* ((value (engine-pack engine object))
@@ -52,7 +66,7 @@
         (if out
             out
             ;; otherwise, create a new identifier and store it.
-            (let ((out (ulid)))
+            (let ((out (ulid* transaction ustore)))
               (engine-set! engine transaction
                            (engine-pack engine
                                         (append (ustore-prefix ustore)
