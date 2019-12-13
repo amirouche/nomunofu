@@ -32,11 +32,12 @@
 ;;
 (define-module (nomunofu wiredtiger))
 
+(import (scheme base))
 (import (bytestructures guile))
 (import (prefix (nomunofu cffi) ffi:))
 (import (nomunofu wiredtiger config))
 (import (rnrs bytevectors))
-(import (only (rnrs) raise))
+
 
 ;;; ffi helpers
 
