@@ -25,7 +25,7 @@ latest-lexemes.nt:
 	bzip2 -d latest-lexemes.nt.bz2
 
 index: ## Index test.nt
-	guile -L . nomunofu.scm index test.nt
+	time guile -L . nomunofu.scm index test.nt
 
 query: ## Send a query to the server
 	./query.py
