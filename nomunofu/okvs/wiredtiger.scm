@@ -174,21 +174,23 @@
     (lambda (cache isolation create? memory? wal read-only? eviction-trigger eviction-target eviction mmap)
       (unless home
         (error 'okvs/wiredtiger NO-HOME-ERROR home))
-      (let ((cnx (wt:connection-open home
-                                     (connection-config cache
-                                                        create?
-                                                        memory?
-                                                        wal
-                                                        read-only?
-                                                        eviction-trigger
-                                                        eviction-target
-                                                        eviction
-                                                        mmap))))
-        (when (and create? (not read-only?))
-          (let ((session (wt:session-open cnx "")))
-            (wt:session-create session "table:okvs" "key_format=u,value_format=u")
-            (wt:session-close session)))
-        (make-okvs cnx isolation (make-mutex) '() (make-hook 1) (make-hook 1))))))
+      (let ((config
+             (connection-config cache
+                                create?
+                                memory?
+                                wal
+                                read-only?
+                                eviction-trigger
+                                eviction-target
+                                eviction
+                                mmap)))
+        (log-info "Opening wiredtiger at HOME with CONFIG" (cons home config))
+        (let ((cnx (wt:connection-open home config)))
+          (when (and create? (not read-only?))
+            (let ((session (wt:session-open cnx "")))
+              (wt:session-create session "table:okvs" "key_format=u,value_format=u")
+              (wt:session-close session)))
+          (make-okvs cnx isolation (make-mutex) '() (make-hook 1) (make-hook 1)))))))
 
 (define-public okvs-open
   (case-lambda
@@ -230,16 +232,25 @@
                                     (okvs-sessions (transaction-okvs transaction))))))
 
 
+
 (define (%okvs-in-transaction okvs proc failure success make-state config)
-  (let ((transaction (okvs-transaction-begin okvs make-state config)))
-    (guard (ex
-            (else
-             (okvs-transaction-roll-back transaction)
-             (failure ex)))
+  (let loop ((index 5))
+    (when (zero? index)
+      (failure (cons 'wiredtiger 'too-many-retry)))
+    (let ((transaction (okvs-transaction-begin okvs make-state config)))
+      (guard (ex
+              ((and (pair? ex)
+                    (eq? (car ex) 'wiredtiger)
+                    (= (cdr ex) -31800))
+               (okvs-transaction-roll-back transaction)
+               (loop (- index 1)))
+              (else
+               (okvs-transaction-roll-back transaction)
+               (failure ex)))
       (call-with-values (lambda () (proc transaction))
         (lambda out
           (okvs-transaction-commit transaction)
-          (apply success out))))))
+          (apply success out)))))))
 
 (define-public okvs-in-transaction
   (case-lambda
