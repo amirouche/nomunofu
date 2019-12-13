@@ -33,7 +33,7 @@
 
 (define (make-config read-only?)
   `((cache . ,(exact (round (* (memory-total) 0.8))))
-    (wal . ,(* 1 1024 1024))
+    ;; (wal . ,(* 1 1024 1024))
     (read-only? . ,read-only?)
     (mmap . #f)
     (eviction-trigger . 65)
