@@ -22,14 +22,12 @@
 ;;
 (define-module (nomunofu okvs wiredtiger))
 
-(import (only (rnrs) eof-object))
-(import (only (rnrs) raise))
-(import (only (rnrs) error))
-(import (only (rnrs) guard))
+(import (scheme base))
 (import (rnrs bytevectors))
 (import (srfi srfi-9))
 (import (ice-9 threads))
 (import (prefix (nomunofu wiredtiger) wt:))
+(import (nomunofu log))
 (import (nomunofu fash))
 (import (nomunofu generator))
 (import (nomunofu okvs engine))
