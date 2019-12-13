@@ -31,15 +31,20 @@
 ;;
 ;; TODO: Check statistics.
 
-;; TODO: when opening for serving, it is possible to open the database
-;; in readonly mode
-(define %config `((cache . ,(exact (round (* (memory-total) 0.8))))
-                  (wal . ,(* 1 1024 1024))
-                  (mmap . #f)
-                  (eviction-trigger . 65)
-                  (eviction-target . 50)
-                  (eviction (min . 1)
-                            (max . ,(current-processor-count)))))
+(define (make-config read-only?)
+  `((cache . ,(exact (round (* (memory-total) 0.8))))
+    (wal . ,(* 1 1024 1024))
+    (read-only? . ,read-only?)
+    (mmap . #f)
+    (eviction-trigger . 65)
+    (eviction-target . 50)
+    (eviction (min . 1)
+              (max . ,(current-processor-count)))))
+
+(define %config
+  (if (string=? (cadr (program-arguments)) "serve")
+      (make-config #t)
+      (make-config #f)))
 
 (define engine (make-default-engine))
 (define ustore (make-ustore engine '(0)))
