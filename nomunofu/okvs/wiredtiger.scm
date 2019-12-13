@@ -135,7 +135,7 @@
 (define (okvs-config config)
   (let ((cache #f)
         (isolation #f)
-        (create? #f)
+        (create? #t)
         (memory? #f)
         (wal #f)
         (read-only? #f)
@@ -186,7 +186,7 @@
                                                         eviction-target
                                                         eviction
                                                         mmap))))
-        (unless create?
+        (when (and create? (not read-only?))
           (let ((session (wt:session-open cnx "")))
             (wt:session-create session "table:okvs" "key_format=u,value_format=u")
             (wt:session-close session)))
