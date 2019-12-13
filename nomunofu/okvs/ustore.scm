@@ -39,6 +39,12 @@
       ;; try to get ulid from sha256->ulid subspace
       (engine-ref engine transaction key))))
 
+(define-public (ustore-gensym)
+  (let loop ((uid (random-bytes 16)))
+    (if (maybe-object->ulid uid)
+        (loop (random-bytes 16))
+        uid)))
+
 (define (ask? transaction ustore uid)
   (let* ((engine (ustore-engine ustore)))
     (engine-ref engine transaction
