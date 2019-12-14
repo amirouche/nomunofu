@@ -7,6 +7,7 @@
 (define-public test-000
   ;; flat list
   (let ((expected (list %null
+                        3.141592653589793
                         #t
                         #f
                         0

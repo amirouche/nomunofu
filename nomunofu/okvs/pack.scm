@@ -27,14 +27,15 @@
 
 (export pack unpack %null)
 
-(import (srfi srfi-1))
-(import (rnrs bytevectors))
-(import (rnrs arithmetic bitwise))
+(import (scheme base))
+(import (scheme list))
+(import (scheme bytevector))
+(import (scheme generator))
+
+(import (scheme bitwise))
 (import (rnrs io ports))
-(import (nomunofu generator))
 
 
-(define exact inexact->exact)
 
 (define %null '(null))
 
@@ -154,6 +155,27 @@
                                       #xFF))
             (loop (- index 1)))))))
 
+(define (flip bv)
+  (let loop ((index 0))
+    (unless (zero? (- (bytevector-length bv) index))
+      (let ((byte (bytevector-u8-ref bv index)))
+        (bytevector-u8-set! bv index (bitwise-xor byte #xFF))))))
+
+(define (%%pack-inexact value accumulator)
+  (let ((bv (make-bytevector 8)))
+    (bytevector-ieee-double-set! bv 0 value 'big)
+    ;; If sign bit is 1 (negative), flip all of the bits. Otherwise,
+    ;; just flip sign. TODO: explain why.
+    (let ((byte (bytevector-u8-ref bv 0)))
+      (if (not (= (bitwise-and byte #x80) 0))
+          (flip bv)
+          (bytevector-u8-set! bv 0 (bitwise-xor byte #x80)))
+      (accumulator *double-code*)
+      (let loop ((index 0))
+        (unless (zero? (- (bytevector-length bv) index))
+          (accumulator (bytevector-u8-ref bv index))
+          (loop (+ index 1)))))))
+
 (define (%%pack accumulator)
   (lambda (value)
     (cond
@@ -169,6 +191,10 @@
      ((and (number? value) (exact? value) (< value 0)) (%%pack-negative-integer value accumulator))
      ((and (number? value) (exact? value) (= value 0)) (accumulator *int-zero-code*))
      ((and (number? value) (exact? value) (> value 0)) (%%pack-positive-integer value accumulator))
+     ((and (number? value) (rational? value))
+      (%%pack-inexact (inexact value) accumulator))
+     ((and (number? value) (inexact? value))
+      (%%pack-inexact value accumulator))
      ((pair? value)
       (accumulator *nested-code*)
       (%%pack-bytes (apply pack value) accumulator))
@@ -250,6 +276,20 @@
                                        (bytevector-u8-ref bv (+ position 2 (car range)))))))
             (+ position 2 length))))
 
+(define (unpack-inexact bv position)
+  (let ((tmp (make-bytevector 8)))
+    (let loop ((index 0))
+      (unless (= index 8)
+        (bytevector-u8-set! tmp index (bytevector-u8-ref bv (+ position index)))
+        (loop (+ index 1))))
+    ;; sign bit is 0 (negative), flip all of the bits. Otherwise, just
+    ;; flip sign. TODO: explain why.
+    (let ((byte (bytevector-u8-ref tmp 0)))
+      (if (not (= (bitwise-and byte #x80) #x80))
+          (flip tmp)
+          (bytevector-u8-set! tmp 0 (bitwise-xor byte #x80))))
+    (values (bytevector-ieee-double-ref tmp 0 'big) (+ position 8))))
+
 (define (unpack bv)
   (let loop ((position 0)
              (out '()))
@@ -289,5 +329,9 @@
             (call-with-values (lambda () (unpack-bytes bv (+ position 1)))
               (lambda (value position)
                 (loop position (cons (unpack value) out)))))
+           ((= code *double-code*)
+            (call-with-values (lambda () (unpack-inexact bv (+ position 1)))
+              (lambda (value position)
+                (loop position (cons value out)))))
            ;; oops
            (else (error 'unpack "unsupported code" code)))))))
