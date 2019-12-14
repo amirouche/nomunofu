@@ -24,7 +24,7 @@
 
 (define (%make-pattern txn ustore item)
   (if (pair? item)
-      (nstore-var (string->symbol (car item)))
+      (nstore-var (cadr item))
       (maybe-object->ulid txn ustore item)))
 
 (define (make-pattern txn ustore pattern)
@@ -52,7 +52,9 @@
     (call-with-values (lambda () (limit+offset options))
       (lambda (limit offset)
         (generator-for-each
-         (lambda (item) (write (resolve transaction ustore (fash->alist item)) port))
+         (lambda (item)
+           (write (resolve transaction ustore (fash->alist item)) port)
+           (display #\newline port))
          (let loop ((patterns (cdr patterns))
                     (generator (nstore-select transaction nstore pattern)))
            (if (null? patterns)
@@ -137,7 +139,7 @@
 (define (handle app body options port)
   (let ((query (parse body)))
     (match (car query)
-      ("query"
+      ('query
        (if (null? (cdr query))
            (begin
              (start-response port 400 "Bad Request")
@@ -150,7 +152,7 @@
                                    (cdr query)
                                    options
                                    port)))))
-      ("sum"
+      ('sum
        (let ((out (sum app (cadr query) (cddr query))))
          (if out
              (begin
@@ -159,7 +161,7 @@
              (begin
                (start-response port 400 "Bad Request")
                (write "nomunofu!" port)))))
-      ("average"
+      ('average
        (let ((out (average app (cadr query) (cddr query))))
          (if out
              (begin
@@ -168,7 +170,7 @@
              (begin
                (start-response port 400 "Bad Request")
                (write "nomunofu!" port)))))
-      ("count"
+      ('count
        (let ((out (count app (cddr query))))
          (if out
              (begin
@@ -193,6 +195,7 @@
   (run-server port
               (lambda (request body port)
                 (guard (ex (else (on-error ex) #f))
-                  (let ((options (and=> (uri-query (request-uri request)) decode)))
-                    (handle app body options port)))
+                  ;; (begin
+                    (let ((options (and=> (uri-query (request-uri request)) decode)))
+                      (handle app body options port)))
                 (close-port port))))

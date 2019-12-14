@@ -21,7 +21,7 @@
 (import (web uri))
 
 ;;;
-;;; decode
+;;; decode, TODO: rewrite.
 ;;;
 
 (define (acons-list k v alist)

@@ -27,8 +27,5 @@ latest-lexemes.nt:
 index: ## Index test.nt
 	time guile -L . nomunofu.scm index 3 test.nt
 
-query: ## Send a query to the server
-	./query.py
-
 clean:
 	rm -f okvs.wt* WiredTiger*
