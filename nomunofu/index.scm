@@ -10,64 +10,26 @@
 (import (nomunofu okvs ustore))
 
 
-(define (string->triples transaction ustore string)
-  (let ((chars (string->list string)))
-    (call-with-values (lambda () (turtle-parse-item chars))
-      (lambda (subject rest)
-        (if (not subject)
-            #f
-            (call-with-values (lambda () (turtle-parse-item rest))
-              (lambda (predicate rest)
-                (call-with-values (lambda () (turtle-parse-item rest))
-                  (lambda (object rest)
-                    (cond
-                     ((not object) #f)
-                     ((char=? (car rest) #\^)
-                      (let ((type (list->string
-                                   (take-while (compose not char-whitespace?) rest))))
-                        (cond
-                         ((string=? type "^^<http://www.w3.org/2001/XMLSchema#dateTime>")
-                          (list (list subject predicate (turtle-parse-datetime object))))
-                         ((string=? type "^^<http://www.w3.org/2001/XMLSchema#integer>")
-                          (list (list subject predicate (string->number object))))
-                         ((string=? type "^^<http://www.w3.org/2001/XMLSchema#decimal>")
-                          ;; TODO: add support in okvs/pack
-                          (let ((out (string->number object)))
-                            (if (exact? out)
-                                (list (list subject predicate out))
-                                #f)))
-                         ((string=? type "^^<http://www.opengis.net/ont/geosparql#wktLiteral>")
-                          ;; TODO: support Point(5.4726111111111 49.497111111111)
-                          #f)
-                         ((string=? type "^^<http://www.w3.org/2001/XMLSchema#double>")
-                          ;; TODO: add support in okvs/pack
-                          (let ((out (string->number object)))
-                            (if (exact? out)
-                                (list (list subject predicate out))
-                                #f)))
-                         (else (raise type)))))
-                     ((char=? (car rest) #\@)
-                      (let ((lang (list->string (take (drop rest 1) 2)))
-                            (sym (ustore-gensym transaction ustore)))
-                        (list
-                         (list subject predicate sym)
-                         (list sym
-                               (string->symbol (string-append "nomunofu/lang/" lang))
-                               object))))
-                     ((and subject predicate object)
-                      (list (list subject predicate object)))
-                     (else (raise (list subject predicate object)))))))))))))
-
+(define (string->tuple transaction ustore string)
+  (let loop ((chars (string->list string))
+             (out '()))
+    (if (or (char=? (car chars) #\.)
+            (and (char=? (car chars) #\space)
+                 (char=? (cadr chars) #\.)))
+        (reverse out)
+        (call-with-values (lambda () (turtle-parse-item chars))
+          (lambda (item rest)
+            (if item
+                (let ((item (object->ulid transaction ustore item)))
+                  (loop rest (cons item out)))
+                #f))))))
 
 (define (add/transaction transaction nstore ustore line)
-  (let ((triples (string->triples transaction ustore line)))
-     (when triples
-       (for-each (lambda (triple)
-                   (nstore-add! transaction
-                                nstore
-                                (map (lambda (item) (object->ulid transaction ustore item))
-                                     triple)))
-                 triples))))
+  (let ((tuple (string->tuple transaction ustore line)))
+    (when tuple
+      (nstore-add! transaction
+                   nstore
+                   tuple))))
 
 (define (add app line)
   (engine-in-transaction (app-engine app) (app-okvs app)
@@ -89,10 +51,51 @@
                         out))
             (loop (cdr chars) (cons (car chars) out))))))
 
+
+(define (parse-escaped-string chars)
+  (let loop ((chars chars)
+             (previous #\space)
+             (out '()))
+    (if (char=? (car chars) #\")
+        (values (reverse out) chars)
+        (if (and (char=? (car chars) #\\)
+                 (char=? (cadr chars) #\"))
+            (loop (cddr chars) #\" (cons #\" out))
+            (loop (cdr chars) (car chars) (cons (car chars) out))))))
+
 (define (turtle-parse-string chars)
-  (call-with-values (lambda () (span (lambda (x) (not (char=? x #\"))) chars))
+  (call-with-values (lambda () (parse-escaped-string chars))
     (lambda (item rest)
-      (values (decode item) (cdr rest)))))
+      (cond
+       ((char=? (cadr rest) #\space)
+        (values (decode item) (cdr rest)))
+       ((char=? (cadr rest) #\^)
+        (call-with-values (lambda () (span (compose not char-whitespace?) (cdddr rest)))
+          (lambda (type rest)
+            (let ((type (list->string type))
+                  (item (list->string item)))
+              (cond
+               ((string=? type "<http://www.w3.org/2001/XMLSchema#dateTime>")
+                (values (turtle-parse-datetime item) rest))
+               ((string=? type "<http://www.w3.org/2001/XMLSchema#integer>")
+                (values (string->number item) rest))
+               ((string=? type "<http://www.w3.org/2001/XMLSchema#decimal>")
+                (values (string->number item) rest))
+               ((string=? type "<http://www.opengis.net/ont/geosparql#wktLiteral>")
+                ;; TODO: support Point(5.4726111111111 49.497111111111)
+                (values item rest))
+               ((string=? type "<http://www.w3.org/2001/XMLSchema#double>")
+                (values (string->number item) rest))
+               ((string=? type "<http://www.w3.org/1998/Math/MathML>")
+                (values item rest))
+               (else (raise (cons 'unknown-type type))))))))
+       ((char=? (cadr rest) #\@)
+        (call-with-values (lambda () (span (compose not char-whitespace?) (cdr rest)))
+          (lambda (lang rest)
+            (values (list (decode item) (list->string (cdr lang))) (cdr rest)))))
+       (else
+        (log-warn "boggus STRING; ignoring the whole tuple!" (list->string chars))
+        (values #f #f))))))
 
 (define (turtle-parse-iri chars)
   (call-with-values (lambda () (span (lambda (x) (not (char=? x #\>))) chars))

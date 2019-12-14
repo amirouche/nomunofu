@@ -18,14 +18,14 @@ repl: ## Start a guile REPL with rlwrap
 	rlwrap guile -L .
 
 web: ## Start the default web server
-	guile -L . nomunofu.scm serve 8080
+	guile -L . nomunofu.scm serve 3 8080
 
 latest-lexemes.nt:
 	wget https://dumps.wikimedia.org/wikidatawiki/entities/latest-lexemes.nt.bz2
 	bzip2 -d latest-lexemes.nt.bz2
 
 index: ## Index test.nt
-	time guile -L . nomunofu.scm index test.nt
+	time guile -L . nomunofu.scm index 3 test.nt
 
 query: ## Send a query to the server
 	./query.py

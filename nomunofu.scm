@@ -24,16 +24,15 @@
            (value (car (string-split value #\space))))
       (string->number value))))
 
-;; TODO: rework the config to include eviction trigger and eviction
-;; target, max number of thread set to the count of cpu core:
+
+;; TODO: Check statistics:
 ;;
 ;;   https://source.wiredtiger.com/3.2.0/tune_cache.html
 ;;
-;; TODO: Check statistics.
 
 (define (make-config read-only?)
   `((cache . ,(exact (round (* (memory-total) 0.8))))
-    ;; (wal . ,(* 1 1024 1024))
+    ;; (wal . ,(* 1 1024 1024)) ;; TODO: make all this configurable
     (read-only? . ,read-only?)
     (mmap . #f)
     (eviction-trigger . 65)
@@ -41,27 +40,26 @@
     (eviction (min . 1)
               (max . ,(current-processor-count)))))
 
-(define %config
-  (if (string=? (cadr (program-arguments)) "serve")
-      (make-config #t)
-      (make-config #f)))
-
-(define engine (make-default-engine))
-(define ustore (make-ustore engine '(0)))
-(define nstore (nstore engine '(1) '(graph subject predicate object)))
-
-(define directory (getcwd))
-(define okvs (engine-open engine directory %config))
-(define app (make-app engine okvs ustore nstore))
+(define (make-app* n read-only?)
+  (define engine (make-default-engine))
+  (define ustore (make-ustore engine '(0)))
+  (define nstore* (nstore engine '(1) (iota n)))
+  (define config (make-config read-only?))
+  (define directory (getcwd))
+  (define okvs (engine-open engine directory config))
+  (values engine okvs (make-app engine okvs ustore nstore*)))
 
 (match (cdr (program-arguments))
-  (`("serve" ,port)
-   (subcommand-serve app (string->number port)))
-  (`("index" ,filename)
-   (subcommand-index app filename))
+  (`("serve" ,n ,port)
+   (call-with-values (lambda () (make-app* (string->number n) #t))
+     (lambda (engine okvs app)
+       (subcommand-serve app (string->number port)))))
+  (`("index" ,n ,filename)
+   (call-with-values (lambda () (make-app* (string->number n) #f))
+     (lambda (engine okvs app)
+       (subcommand-index app filename)
+       (engine-close engine okvs))))
   (else (display "Usage:
 
-  nomunofu index FILENAME
-  nomunofu serve PORT\n")))
-
-(engine-close engine okvs)
+  nomunofu index N FILENAME
+  nomunofu serve N PORT\n")))
