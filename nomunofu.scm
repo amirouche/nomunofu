@@ -48,7 +48,7 @@
 
 (define engine (make-default-engine))
 (define ustore (make-ustore engine '(0)))
-(define nstore (nstore engine '(1) '(subject predicate object)))
+(define nstore (nstore engine '(1) '(graph subject predicate object)))
 
 (define directory (getcwd))
 (define okvs (engine-open engine directory %config))
