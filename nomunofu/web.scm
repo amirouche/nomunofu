@@ -13,7 +13,6 @@
 (import (nomunofu app))
 (import (nomunofu log))
 (import (nomunofu fash))
-(import (nomunofu json))
 (import (nomunofu generator))
 (import (nomunofu okvs engine))
 (import (nomunofu okvs nstore))
@@ -29,34 +28,7 @@
       (maybe-object->ulid txn ustore item)))
 
 (define (make-pattern txn ustore pattern)
-  (assume (= (length pattern) 3))
   (map (lambda (item) (%make-pattern txn ustore item)) pattern))
-
-(define (alist->json txn ustore alist port)
-  (put-char port #\{)
-  (let loop ((alist alist))
-    (if (pair? (cdr alist))
-        (let* ((head (car alist))
-               (object (ulid->object txn ustore (cdr head))))
-          (put-char port #\")
-          (put-string port (symbol->string (car head)))
-          (put-char port #\")
-          (put-char port #\:)
-          (write object port)
-          (put-char port #\,)
-          (loop (cdr alist)))
-        (let* ((head (car alist))
-               (object (ulid->object txn ustore (cdr head))))
-          (put-char port #\")
-          (put-string port (symbol->string (car head)))
-          (put-char port #\")
-          (put-char port #\:)
-          (write object port))))
-  (put-char port #\})
-  (put-char port #\newline))
-
-(define (invalid? pattern)
-  (every nstore-var? pattern))
 
 (define (limit+offset options)
   (let* ((limit (and options (and=> (assq 'limit options)
@@ -64,54 +36,53 @@
          (offset (and options (and=> (assq 'offset options)
                                      (compose string->number cadr)))))
     (if limit
+        ;; TODO: make min limit configurable
         (set! limit (min 1000 limit))
         (set! limit 1000))
     (values limit offset)))
 
+(define (resolve transaction ustore alist)
+  (map (lambda (key+value) (cons (car key+value)
+                                 (ulid->object transaction ustore (cdr key+value))))
+       alist))
+
 (define (query/transaction transaction nstore ustore patterns options port)
   (let ((pattern (make-pattern transaction ustore (car patterns))))
-    (if (invalid? pattern)
-        (begin
-          (start-response port 400 "Bad request")
-          (write "A query can not start with a pattern that is only variables" port))
-        (begin
-          (start-response port 200 "OK")
-          (call-with-values (lambda () (limit+offset options))
-            (lambda (limit offset)
-              (generator-for-each
-               (lambda (item) (alist->json transaction ustore (fash->alist item) port))
-               (let loop ((patterns (cdr patterns))
-                          (generator (nstore-select transaction nstore pattern)))
-                 (if (null? patterns)
-                     (begin
-                       (when offset
-                         (set! generator (gdrop generator offset)))
-                       (when limit
-                         (set! generator (gtake generator limit)))
-                       generator)
-                     (let ((pattern (make-pattern transaction ustore (car patterns))))
-                       (loop (cdr patterns)
-                             ((nstore-where transaction nstore pattern) generator))))))))))))
-
-(define (parse bytevector)
-  (json->scheme (utf8->string bytevector)))
-
-(define (aggregate symbol transaction nstore ustore patterns seed proc)
-  (let ((pattern (make-pattern transaction ustore (car patterns))))
-    (if (invalid? pattern)
-        #f
-        (generator-fold
-         (lambda (item out) (and out
-                                 (and=> (fash-ref item symbol)
-                                        (lambda (value) (proc value out)))))
-         seed
+    (start-response port 200 "OK")
+    (call-with-values (lambda () (limit+offset options))
+      (lambda (limit offset)
+        (generator-for-each
+         (lambda (item) (write (resolve transaction ustore (fash->alist item)) port))
          (let loop ((patterns (cdr patterns))
                     (generator (nstore-select transaction nstore pattern)))
            (if (null? patterns)
-               generator
+               (begin
+                 (when offset
+                   (set! generator (gdrop generator offset)))
+                 (when limit
+                   (set! generator (gtake generator limit)))
+                 generator)
                (let ((pattern (make-pattern transaction ustore (car patterns))))
                  (loop (cdr patterns)
-                       ((nstore-where transaction nstore pattern) generator)))))))))
+                       ((nstore-where transaction nstore pattern) generator))))))))))
+
+(define (parse bytevector)
+  (call-with-input-string (utf8->string bytevector) read))
+
+(define (aggregate symbol transaction nstore ustore patterns seed proc)
+  (let ((pattern (make-pattern transaction ustore (car patterns))))
+    (generator-fold
+     (lambda (item out) (and out
+                             (and=> (fash-ref item symbol)
+                                    (lambda (value) (proc value out)))))
+     seed
+     (let loop ((patterns (cdr patterns))
+                (generator (nstore-select transaction nstore pattern)))
+       (if (null? patterns)
+           generator
+           (let ((pattern (make-pattern transaction ustore (car patterns))))
+             (loop (cdr patterns)
+                   ((nstore-where transaction nstore pattern) generator))))))))
 
 (define (sum app name patterns)
   (engine-in-transaction (app-engine app) (app-okvs app)
@@ -132,18 +103,16 @@
   (engine-in-transaction (app-engine app) (app-okvs app)
     (lambda (transaction)
       (let ((pattern (make-pattern transaction (app-ustore app) (car patterns))))
-        (if (invalid? pattern)
-            #f
-            (generator-fold
-             (lambda (item out) out (+ out 1))
-             0
-             (let loop ((patterns (cdr patterns))
-                        (generator (nstore-select transaction (app-nstore app) pattern)))
-               (if (null? patterns)
-                   generator
-                   (let ((pattern (make-pattern transaction (app-ustore app) (car patterns))))
-                     (loop (cdr patterns)
-                           ((nstore-where transaction (app-nstore app) pattern) generator)))))))))))
+        (generator-fold
+         (lambda (item out) out (+ out 1))
+         0
+         (let loop ((patterns (cdr patterns))
+                    (generator (nstore-select transaction (app-nstore app) pattern)))
+           (if (null? patterns)
+               generator
+               (let ((pattern (make-pattern transaction (app-ustore app) (car patterns))))
+                 (loop (cdr patterns)
+                       ((nstore-where transaction (app-nstore app) pattern) generator))))))))))
 
 (define (average app name patterns)
   (engine-in-transaction (app-engine app) (app-okvs app)
