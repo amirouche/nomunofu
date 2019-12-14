@@ -56,3 +56,6 @@ following command:
 > $ git clone [https://github.com/amirouche/nomunofu](https://github.com/amirouche/nomunofu)
 
 Happy hacking!
+
+
+[Amirouche](mailto:amirouche@hyper.dev) ~ zig ~ https://hyper.dev
