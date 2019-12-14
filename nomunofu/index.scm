@@ -120,7 +120,7 @@
 
 (define (turtle-parse-datetime object)
   (guard (ex (else object)) ;; TODO: sometime there is weird values
-                            ;; like: -34000-01-01T00:00:00Z
+    ;; like: -34000-01-01T00:00:00Z
     (car (mktime (car (strptime "%FT%T" object)) "UTC"))))
 
 (define-public (subcommand-index app filename)
