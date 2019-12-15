@@ -154,6 +154,6 @@ raise an error.
 
 #### `(listen sock backlog)`
 
-## `(fd->port fd)`
+#### `(fd->port fd)`
 
 Return a port based on `FD`.
