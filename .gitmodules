@@ -10,3 +10,12 @@
 [submodule "upstream/wiredtiger"]
 	path = submodules/wiredtiger
 	url = https://github.com/wiredtiger/wiredtiger
+[submodule "submodules/mbed-crypto"]
+	path = submodules/mbed-crypto
+	url = https://github.com/ARMmbed/mbed-crypto
+[submodule "submodules/--branch"]
+	path = submodules/--branch
+	url = https://github.com/jedisct1/libsodium
+[submodule "submodules/libsodium"]
+	path = submodules/libsodium
+	url = https://github.com/jedisct1/libsodium

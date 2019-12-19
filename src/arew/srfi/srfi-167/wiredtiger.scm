@@ -44,7 +44,7 @@
     (state okvs-transaction-state))
 
   (define (assq-ref alist key)
-    (and=> (assq alist key) cdr))
+    (and=> (assq key alist) cdr))
 
   ;; TODO: redo this with an alist
   (define (connection-config cache create? memory? wal read-only? eviction-trigger eviction-target eviction mmap)

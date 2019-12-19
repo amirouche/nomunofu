@@ -114,6 +114,11 @@ wiredtiger:
 	cd submodules/wiredtiger/ && make -j 2
 	cd submodules/wiredtiger/ && make install
 
+libsoduim:
+	cd submodules/libsodium/ && ./configure --prefix="$(PWD)/local"
+	cd submodules/libsodium/ && make -j 2
+	cd submodules/libsodium/ && make install
+
 init: sqlite-lsm yxml termbox
 
 doc:
