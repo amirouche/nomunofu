@@ -11,6 +11,7 @@
 (import (nomunofu okvs wiredtiger))
 (import (nomunofu okvs ustore))
 (import (nomunofu okvs nstore))
+(use-modules (statprof))
 
 
 (log-toggle!)
@@ -55,10 +56,11 @@
      (lambda (engine okvs app)
        (subcommand-serve app (string->number port)))))
   (`("index" ,n ,filename)
-   (call-with-values (lambda () (make-app* (string->number n) #f))
-     (lambda (engine okvs app)
-       (subcommand-index app filename)
-       (engine-close engine okvs))))
+   (statprof (lambda ()
+               (call-with-values (lambda () (make-app* (string->number n) #f))
+                 (lambda (engine okvs app)
+                   (subcommand-index app filename)
+                   (engine-close engine okvs))))))
   (else (display "Usage:
 
   nomunofu index N FILENAME
