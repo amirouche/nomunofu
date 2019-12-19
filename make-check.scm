@@ -76,6 +76,7 @@
         "./src/arew/srfi/srfi-167/pack-tests.scm"
 	      "./src/arew/srfi/srfi-167/memory-tests.scm"
 	      "./src/arew/srfi/srfi-167/wiredtiger-tests.scm"
+        "./src/arew/srfi/srfi-168-tests.scm"
         ;; pfds
        	"./src/arew/pfds/fingertrees-tests.scm"
         ;; arew

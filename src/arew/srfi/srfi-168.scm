@@ -3,19 +3,19 @@
 
   (export nstore-engine nstore nstore-ask? nstore-add! nstore-delete!
           nstore-var nstore-var? nstore-var-name
-          nstore-from nstore-where nstore-query
+          nstore-select nstore-where nstore-query
           nstore-hook-on-add nstore-hook-on-delete)
 
   (import (arew scheme base)
           (arew scheme case-lambda)
           (arew scheme sort)
-          (arew srfi-145)
+          (arew scheme assume)
           (arew scheme list)
           (arew scheme comparator)
           (arew scheme mapping hash)
           (arew scheme generator)
           (arew srfi srfi-167 engine)
-          (srfi srfi-173))
+          (arew srfi srfi-173))
 
   (begin
 
@@ -171,7 +171,6 @@
 
     (define nstore-add!
       (lambda (transaction nstore items)
-        (define true (engine-pack (nstore-engine nstore)) #t)
         (assume (= (length items) (nstore-n nstore)))
         (hook-run (nstore-hook-on-add nstore) nstore items)
         (let ((engine (nstore-engine nstore))
@@ -186,7 +185,7 @@
                                 (append nstore-prefix
                                         (list subspace)
                                         (permute items (car indices))))))
-                (engine-set! engine transaction key true)
+                (engine-set! engine transaction key #vu8(0))
                 (loop (cdr indices) (+ 1 subspace))))))))
 
     (define nstore-delete!
@@ -284,7 +283,7 @@
 
     (define comparator (make-eq-comparator))
 
-    (define nstore-from
+    (define nstore-select
       (case-lambda
         ((transaction nstore pattern)
          (assume (= (length pattern) (nstore-n nstore)))
