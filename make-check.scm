@@ -1,5 +1,6 @@
 #!/usr/bin/env -S scheme --program
 (import (chezscheme))
+(import (arew base))
 (import (only (arew srfi srfi-1) map-in-order))
 (import (tests))
 
@@ -74,6 +75,7 @@
         "./src/arew/srfi/srfi-173-tests.scm"
         "./src/arew/srfi/srfi-167/pack-tests.scm"
 	      "./src/arew/srfi/srfi-167/memory-tests.scm"
+	      "./src/arew/srfi/srfi-167/wiredtiger-tests.scm"
         ;; pfds
        	"./src/arew/pfds/fingertrees-tests.scm"
         ;; arew

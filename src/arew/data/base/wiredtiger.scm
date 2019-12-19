@@ -194,8 +194,8 @@
         (check (proc (ftype->pointer session) config))))
 
     (define (session-transaction-rollback session config)
-      (let ((proc (ftype-ref %session (rollback-transaction) session)))
-        (check (proc (ftype->pointer session) 0))))
+      (let ((proc (ftype-ref %session (rollback-transaction *) session)))
+        (check (proc (ftype->pointer session) config))))
 
     ;; cursor
 
@@ -287,7 +287,7 @@
 
     (define (cursor-key-ref cursor)
       (let ((out (make-double-pointer))
-            (proc (ftype-ref %cursor (get-key) cursor)))
+            (proc (ftype-ref %cursor (get-key *) cursor)))
         (check (proc (ftype->pointer cursor) out))
         (item->bytevector out)))
 
