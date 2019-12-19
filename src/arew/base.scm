@@ -27,6 +27,22 @@
   (define-syntax-rule (const value)
     (lambda args value))
 
+  (define-syntax compose
+    (lambda (x)
+      (syntax-case x ()
+        [(k exp0 . exps)
+         (let* ([reversed (cons (syntax->datum #'exp0)
+                                (syntax->datum #'exps))]
+                [out (let loop ([first (car reversed)]
+                                [rest (cdr reversed)])
+                       (if (null? rest)
+                           first
+                           (let ([func (car first)]
+                                 [args (cdr first)])
+                             (append `(,func ,@args)
+                                     (list (loop (car rest) (cdr rest)))))))])
+           (datum->syntax #'k out))])))
+
   (define-syntax ->
     (lambda (x)
       (syntax-case x ()
