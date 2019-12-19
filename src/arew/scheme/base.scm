@@ -83,22 +83,6 @@
 
     (define u8-ready? input-port-ready?)
 
-    (define (and=> v proc)
-      (if v (proc v) #f))
-
-    (define (const value)
-      (lambda _ value))
-
-    (define (compose . procs)
-      ;; TODO: make it a macro
-      (let ((procs (reverse procs)))
-        (lambda args
-          (let loop ((procs (cdr procs))
-                     (arg (apply (car procs) args)))
-            (if (null? procs)
-                arg
-                (loop (cdr procs) ((car procs) arg)))))))
-
   (define (error message . irritants)
     (if (and (symbol? message) (pair? irritants) (string? (car irritants)))
         (apply r6:error message irritants)
