@@ -3,7 +3,7 @@
 ;; SPDX-License-Identifier: CC0-1.0
 #!r6rs
 
-(library (scheme char)
+(library (arew scheme char)
   (export
     char-alphabetic? char-ci<=? char-ci<? char-ci=? char-ci>=?
     char-ci>? char-downcase char-foldcase char-lower-case?
@@ -13,7 +13,7 @@
     string-upcase)
   (import
     (rnrs)
-    (only (srfi srfi-43) vector-binary-search))
+    (only (arew srfi srfi-43) vector-binary-search))
 
 ;; The table can be extracted with:
 ;; awk -F ';' '/ZERO;Nd/ {print "#x"$1}' UnicodeData.txt

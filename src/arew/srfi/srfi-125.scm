@@ -174,7 +174,7 @@
          (success (s69:hash-table-ref ht key failure)))))
 
     (define (hash-table-ref/default ht key default)
-      (hash-table-ref ht key (const default)))
+      (hash-table-ref ht key (lambda args default)))
 
     (define (hash-table-set! ht key value . rest)
       (s69:hash-table-set! ht key value)

@@ -9,7 +9,7 @@
   (import
    (rnrs)
    (only (chezscheme) foreign-procedure)
-   (srfi srfi-98))
+   (arew srfi srfi-98))
 
   (define (translate-status status)
     (case status
@@ -30,7 +30,7 @@
         (()
          (c-exit 0))
         ((status)
-         (c-exit status))))))
+         (c-exit status)))))
 
   (define emergency-exit
     (case-lambda
