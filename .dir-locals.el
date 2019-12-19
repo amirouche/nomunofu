@@ -4,6 +4,7 @@
 		 (eval . (progn
                            ;; okvs
                            (put 'okvs-in-transaction 'scheme-indent-function 1)
+                           (put 'call-with-new-directory 'scheme-indent-function 1)
 			   ;; sfx
 			   (put 'section 'scheme-indent-function 1)
 			   ;; (put 'library 'scheme-indent-function 1)

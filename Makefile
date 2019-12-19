@@ -108,6 +108,12 @@ termbox: local/lib
 	cd submodules/termbox-truecolor/ && ./waf
 	cp submodules/termbox-truecolor/build/src/libtermbox.so local/lib/
 
+wiredtiger:
+	cd submodules/wiredtiger/ && ./autogen.sh
+	cd submodules/wiredtiger/ && ./configure --prefix="$(PWD)/local"
+	cd submodules/wiredtiger/ && make -j 2
+	cd submodules/wiredtiger/ && make install
+
 init: sqlite-lsm yxml termbox
 
 doc:

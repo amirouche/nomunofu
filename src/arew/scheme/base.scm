@@ -5,7 +5,7 @@
 ;;
 (library (arew scheme base)
   (export
-   compose const and=> sort _ pk
+   compose const and=> sort _
    ... => else
    * + - / < <= = > >= abs and append apply assoc assq assv begin
    binary-port? boolean=? boolean? bytevector bytevector-append
@@ -82,14 +82,6 @@
   (begin
 
     (define u8-ready? input-port-ready?)
-
-    (define pk
-      (lambda stuff
-        (newline (current-error-port))
-        (display ";; " (current-error-port))
-        (write stuff (current-error-port))
-        (newline (current-error-port))
-        (car (reverse stuff))))
 
     (define (and=> v proc)
       (if v (proc v) #f))

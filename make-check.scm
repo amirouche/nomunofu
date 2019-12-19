@@ -78,6 +78,7 @@
        	"./src/arew/pfds/fingertrees-tests.scm"
         ;; arew
         "./src/arew/data/json-tests.scm"
+        "./src/arew/data/base/wiredtiger-tests.scm"
         ))
 
 (define (exit* count)

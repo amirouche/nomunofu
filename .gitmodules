@@ -7,3 +7,6 @@
 [submodule "submodules/termbox-truecolor"]
 	path = submodules/termbox-truecolor
 	url = https://github.com/amirouche/termbox-truecolor
+[submodule "upstream/wiredtiger"]
+	path = submodules/wiredtiger
+	url = https://github.com/wiredtiger/wiredtiger
