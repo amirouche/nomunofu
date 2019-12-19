@@ -5,7 +5,7 @@
 ;;
 (library (arew scheme base)
   (export
-   compose const and=> sort _
+   _
    ... => else
    * + - / < <= = > >= abs and append apply assoc assq assv begin
    binary-port? boolean=? boolean? bytevector bytevector-append
