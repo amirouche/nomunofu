@@ -84,6 +84,7 @@ SOURCES = 					\
 	src/arew/data/json.md			\
 	src/arew/data/parser/combinator.md	\
 	src/arew/data/base/lsm.md		\
+	src/arew/data/base/wiredtiger.md	\
 	src/arew/network/socket.md		\
 
 help: ## This help.
