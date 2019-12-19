@@ -3,7 +3,12 @@
   (export pk define-syntax-rule -> const and=>)
 
   (import (arew scheme base)
-          (arew scheme write))
+          (arew scheme write)
+          (only (chezscheme)
+                syntax-case
+                datum->syntax
+                syntax->datum
+                syntax))
 
   (define (pk . args)
     (write args (current-error-port))
@@ -22,7 +27,6 @@
     (let ((v* v)
           (proc* proc))
       (if v* (proc* v*) #f)))
-
 
   (define-syntax-rule (const value)
     (lambda args value))
