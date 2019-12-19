@@ -1,6 +1,6 @@
 (library (arew cffi stdlib)
 
-  (export mkdtemp)
+  (export mkdtemp current-processor-count)
 
   (import (chezscheme))
   (import (arew base))
@@ -9,6 +9,11 @@
 
   (define-syntax-rule (foreign-procedure* return ptr args ...)
     (foreign-procedure ptr (args ...) return))
+
+  (define current-processor-count
+    (let ((proc (foreign-procedure* int "get_nprocs")))
+      (lambda ()
+        (proc))))
 
   (define mkdtemp
     (let ((proc (foreign-procedure* string "mkdtemp" string)))
