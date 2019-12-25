@@ -39,7 +39,7 @@
     (eviction-trigger . 65)
     (eviction-target . 50)
     (eviction (min . 1)
-              (max . ,(current-processor-count)))))
+              (max . ,(min (current-processor-count) 20)))))
 
 (define (make-app* n read-only?)
   (define engine (make-default-engine))
