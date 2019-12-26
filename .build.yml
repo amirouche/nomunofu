@@ -1,0 +1,7 @@
+image: ubuntu/cosmic
+packages:
+  - chezscheme
+sources:
+  - https://git.sr.ht/~amz3/arew-scheme
+tasks:
+  - check: cd arew-scheme && make check

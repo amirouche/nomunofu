@@ -1,0 +1,18 @@
+[submodule "submodules/libsodium"]
+	path = submodules/libsodium
+	url = https://github.com/jedisct1/libsodium
+[submodule "submodules/sqlite"]
+	path = submodules/sqlite
+	url = https://github.com/sqlite/sqlite
+[submodule "submodules/termbox-truecolor"]
+	path = submodules/termbox-truecolor
+	url = https://github.com/amirouche/termbox-truecolor
+[submodule "submodules/wiredtiger"]
+	path = submodules/wiredtiger
+	url = https://github.com/wiredtiger/wiredtiger
+[submodule "submodules/yxml"]
+	path = submodules/yxml
+	url = https://g.blicky.net/yxml.git/
+[submodule "submodules/ChezScheme"]
+	path = submodules/ChezScheme
+	url = https://github.com/cisco/ChezScheme/

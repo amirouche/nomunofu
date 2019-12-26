@@ -1,0 +1,10 @@
+#!/bin/bash
+if [[ -z "$VENV" ]]
+then
+    export CHEZSCHEMELIBDIRS="$PWD:$PWD/src"
+    unset CHEZSCHEMELIBEXTS
+    export PATH="$PWD:$PATH"
+    export VENV=1
+fi
+
+exec "${@:-$SHELL}"
