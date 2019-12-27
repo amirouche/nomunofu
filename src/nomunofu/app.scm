@@ -7,7 +7,7 @@
           app-ustore
           app-nstore)
 
-  (import (arew scheme base))
+  (import (scheme base))
 
 
   (define-record-type <app>

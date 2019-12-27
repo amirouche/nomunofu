@@ -14,7 +14,7 @@
    test-011
    test-012
    )
-  (import (arew scheme base)
+  (import (scheme base)
           (tests)
           (arew data json))
 

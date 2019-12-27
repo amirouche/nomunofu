@@ -50,10 +50,10 @@
    )
 
   (import
-   (arew scheme base)
-   (arew scheme charset)
+   (scheme base)
+   (scheme charset)
    (only (chezscheme) format)
-   (arew stream))
+   (stream))
 
   (define-syntax define-syntax-rule
     (syntax-rules ()

@@ -4,7 +4,7 @@
           test-001)
 
   (import (tests)
-          (arew scheme base)
+          (scheme base)
           (arew base)
           (arew cffi stdlib)
           (only (chezscheme) mkdir string-append)

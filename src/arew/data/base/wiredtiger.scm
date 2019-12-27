@@ -31,9 +31,9 @@
                   hash-table-map
                   hash-table-for-each
                   raise)
-          (only (arew scheme base) raise)
-          (arew scheme hash-table)
-          (arew scheme comparator)
+          (only (scheme base) raise)
+          (scheme hash-table)
+          (scheme comparator)
           (arew base))
 
   (begin

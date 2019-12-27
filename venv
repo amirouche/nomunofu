@@ -1,9 +1,9 @@
 #!/bin/bash
 if [[ -z "$VENV" ]]
 then
-    export CHEZSCHEMELIBDIRS="$PWD:$PWD/src"
+    export CHEZSCHEMELIBDIRS="$PWD/src"
     unset CHEZSCHEMELIBEXTS
-    export PATH="$PWD:$PATH"
+    export PATH="$PWD/local/bin:$PATH"
     export VENV=1
 fi
 

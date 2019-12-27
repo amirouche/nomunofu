@@ -2,8 +2,8 @@
 
   (export pk define-syntax-rule const and=> compose)
 
-  (import (arew scheme base)
-          (arew scheme write)
+  (import (scheme base)
+          (scheme write)
           (only (chezscheme)
                 syntax-case
                 datum->syntax

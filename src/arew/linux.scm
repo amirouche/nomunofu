@@ -2,7 +2,7 @@
 
   (export memory-total)
 
-  (import (arew scheme base)
+  (import (scheme base)
           (only (chezscheme) open-input-file)
           (only (arew srfi srfi-13) string-trim-both))
 

@@ -22,7 +22,7 @@
           ;; stream-sort
           )
   (import
-    (arew scheme base))
+    (scheme base))
 
   (define (list->stream lst)
     (let loop ((lst lst))

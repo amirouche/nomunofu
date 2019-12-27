@@ -1,7 +1,7 @@
 (library (arew data microxml)
   (export microxml->sxml)
   (import
-   (arew scheme base)
+   (scheme base)
    (arew data yxml)
    (arew srfi srfi-145))
 

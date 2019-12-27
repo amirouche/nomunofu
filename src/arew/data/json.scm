@@ -25,10 +25,10 @@
    json->scm
    )
   (import
-   (arew scheme base)
-   (arew scheme list)
-   (arew scheme cxr)
-   (arew scheme charset)
+   (scheme base)
+   (scheme list)
+   (scheme cxr)
+   (scheme charset)
    (only (chezscheme) logior ash)
    (arew data parser combinator)
    (arew stream))
