@@ -1,4 +1,5 @@
 #!/usr/bin/env -S scheme --program
+#!chezscheme
 (import (only (chezscheme) import current-directory))
 (import (arew cffi stdlib))
 (import (arew scheme base))
@@ -19,6 +20,7 @@
 (import (arew cffi sodium))
 (import (nomunofu app))
 
+(import (only (arew srfi srfi-167 ulid) current-milliseconds))
 (import (only (chezscheme) call-with-input-file))
 
 
@@ -54,18 +56,19 @@
 
 
 (define (string->tuple transaction ustore string)
-  (let loop ((chars (string->list string))
-             (out '()))
-    (if (or (char=? (car chars) #\.)
-            (and (char=? (car chars) #\space)
-                 (char=? (cadr chars) #\.)))
-        (reverse out)
-        (call-with-values (lambda () (turtle-parse-item chars))
-          (lambda (item rest)
-            (if item
-                (let ((item (object->ulid transaction ustore item)))
-                  (loop rest (cons item out)))
-                #f))))))
+  (guard (ex (else #f))
+         (let loop ((chars (string->list string))
+                    (out '()))
+           (if (or (char=? (car chars) #\.)
+                   (and (char=? (car chars) #\space)
+                        (char=? (cadr chars) #\.)))
+               (reverse out)
+               (call-with-values (lambda () (turtle-parse-item chars))
+                 (lambda (item rest)
+                   (if item
+                       (let ((item (object->ulid transaction ustore item)))
+                         (loop rest (cons item out)))
+                       #f)))))))
 
 (define (add/transaction transaction nstore ustore line)
   (let ((tuple (string->tuple transaction ustore line)))
@@ -74,10 +77,8 @@
                    nstore
                    tuple))))
 
-(define (add app line)
-  (engine-in-transaction (app-engine app) (app-okvs app)
-    (lambda (transaction)
-      (add/transaction transaction (app-nstore app) (app-ustore app) line))))
+(define (add app transaction line)
+  (add/transaction transaction (app-nstore app) (app-ustore app) line))
 
 (define (decode chars)
   (let loop ((chars chars)
@@ -176,40 +177,53 @@
       (let loop ((line (read-line port))
                  (index 0))
         (unless (eof-object? line)
-          (when (= (modulo index 10000) 0)
-            (display index) (newline))
-          (add app line)
-          (loop (read-line port)
-                (+ index 1)))))))
+                (when (= (modulo index 10000000) 0)
+                      (display index) (newline))
+                (engine-in-transaction (app-engine app) (app-okvs app)
+                                       (lambda (transaction)
+                                         (add app transaction line)))
+              (loop (read-line port)
+                    (+ index 1)))))))
 
-(define (massage tx ustore item)
-  (pk 'an 'item)
-  (hashmap-for-each
-   (lambda (key value)
-     (pk key (ulid->object tx ustore value)))
-   item))
+(define (-> transaction ustore string)
+  (maybe-object->ulid transaction ustore (string->symbol string)))
 
 (define (query transaction app)
   (let* ((ustore (app-ustore app))
          (nstore (app-nstore app)))
-    (generator-for-each (lambda (item) (massage transaction ustore item))
-                        (nstore-select transaction
-                                       nstore
-                                       (list (nstore-var 's)
-                                             (nstore-var 'p)
-                                             (nstore-var 'o))
-                                       '((limit . 10))))))
+    (generator-fold (lambda (item out) (+ out 1))
+                    0
+                    (nstore-query
+                     (nstore-select transaction
+                                    nstore
+                                    (list (nstore-var 's)
+                                          (-> transaction ustore "http://purl.org/dc/terms/language")
+                                          (-> transaction ustore "http://www.wikidata.org/entity/Q150")))
+                     (nstore-where transaction
+                                   nstore
+                                   (list (nstore-var 's)
+                                         (-> transaction ustore "http://wikiba.se/ontology#lexicalCategory")
+                                         (-> transaction ustore "http://www.wikidata.org/entity/Q1084")))
+                     (nstore-where transaction
+                                   nstore
+                                   (list (nstore-var 's)
+                                         (-> transaction ustore "http://www.w3.org/2000/01/rdf-schema#label")
+                                         (nstore-var 'o)))))))
+                                        
 
 (define (subcommand-serve app port)
-  (engine-in-transaction (app-engine app) (app-okvs app)
-    (lambda (transaction)
-      (query transaction app))))
+  (let ((start (current-milliseconds)))
+    (pk (engine-in-transaction (app-engine app) (app-okvs app)
+                           (lambda (transaction)
+                             (query transaction app))))
+    (pk 'ms (- (current-milliseconds) start))))
 
 (match (cdr (command-line))
   (`("serve" ,n ,port)
    (call-with-values (lambda () (make-app* (string->number n) #t))
      (lambda (engine okvs app)
-       (subcommand-serve app (string->number port)))))
+       (subcommand-serve app (string->number port))
+       (subcommand-serve app (string->number port)))))       
   (`("import" ,n ,filename)
    (call-with-values (lambda () (make-app* (string->number n) #f))
      (lambda (engine okvs app)

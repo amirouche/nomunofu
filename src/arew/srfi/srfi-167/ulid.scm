@@ -20,7 +20,7 @@
 ;;
 (library (arew srfi srfi-167 ulid)
 
-  (export ulid random-bytes)
+  (export ulid random-bytes current-milliseconds)
 
   (import (arew scheme base)
           (arew scheme bitwise)
